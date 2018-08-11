@@ -7,7 +7,7 @@
 
 
     <!-- Custom fonts for this template -->
-    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -28,21 +28,40 @@
 
   </head>
 
-<section>
-     <header class="masthead">
-      <div style="padding-top:200px" class="container d-flex h-100 ">
-        <div class="mx-auto text-center">
-          <h1 class="mx-auto my-0 text-uppercase">Welcome To</h1>
-          <h2 class="text-white-50 mx-auto mt-2 mb-5"><img src="../img/logo.png" style="width:200px"/></h2>
-          <a href="login.html" class="btn btn-primary js-scroll-trigger">Get Started</a>
-        </div>
-      </div>
-    </header>
-    </section>
+<div class="masthead" style="padding-top:150px;">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				
+				<div class="modal-body" >
+					<form class="form-signin">
+		              <div class="form-label-group">
+		              	<label for="inputEmail">Email address</label>
+		                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+		                
+		              </div>
+
+		              <div class="form-label-group">
+		              	<label for="inputPassword">Password</label>
+		                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		                
+		              </div>
+		              <br/>
+		              <a class="btn btn-primary btn-block" href="package.html">Login</a>
+		              <!-- <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" >Sign in</button> -->
+		              <hr class="my-4">
+		              <div class="text-center">
+		                <!-- <a class="d-block small mt-3" href="register.html">Register an Account</a><br/> -->
+		                <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+		              </div>
+		            </form>
+					
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
 	
-	
-	
-		
 	<!-- Bootstrap core JavaScript-->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
