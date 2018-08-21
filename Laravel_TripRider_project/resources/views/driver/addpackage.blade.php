@@ -24,8 +24,8 @@
               </div>
 
               <div class="form-label-group">
-			   <label for="inputEmail">To</label>
-                <input type="text" id="inputEmail" class="form-control" placeholder="To" required>
+			   <label for="to">To</label>
+                <input type="text" id="to" class="form-control" placeholder="To" required>
                
               </div>
           
@@ -38,8 +38,7 @@
               
               <div class="form-label-group">
 			        <label for="inputConfirmPassword">Description</label>
-                <textarea type="text" rows="4" id="inputConfirmPassword" class="form-control" placeholder="Description" required>
-				</textarea>
+                <textarea type="text" rows="4" id="inputConfirmPassword" class="form-control" placeholder="Description" required></textarea>
           
               </div>
 			  

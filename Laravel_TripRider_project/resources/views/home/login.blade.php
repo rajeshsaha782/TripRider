@@ -12,6 +12,7 @@
 			<div class="modal-content">
 				
 				<div class="modal-body" >
+					
 					<form class="form-signin">
 		              <div class="form-label-group">
 		              	<label for="inputEmail">Email address</label>
@@ -25,8 +26,8 @@
 		                
 		              </div>
 		              <br/>
-		              <a class="btn btn-primary btn-block" href="../Rider/index.html">Login</a>
-		              <!-- <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" >Sign in</button> -->
+		              <!-- <a class="btn btn-primary btn-block" href="../Rider/index.html">Login</a> -->
+		             <button class="btn btn-primary btn-block text-uppercase" type="submit">Login</button>
 		              <hr class="my-4">
 					  <!--
 		              <div class="text-center">

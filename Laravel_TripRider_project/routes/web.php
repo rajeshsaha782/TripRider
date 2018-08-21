@@ -28,3 +28,12 @@ Route::get('/driver/packageedit', 'DriverController@packageedit')->name('driver.
 Route::get('/driver/viewprofile', 'DriverController@viewprofile')->name('driver.viewprofile');
 Route::get('/driver/editprofile', 'DriverController@editprofile')->name('driver.editprofile');
 Route::get('/driver/changepassword', 'DriverController@changepassword')->name('driver.changepassword');
+
+
+Route::get('/rider/dashboard', 'RiderController@dashboard')->name('rider.dashboard');
+Route::get('/rider/packages', 'RiderController@packages')->name('rider.packages');
+Route::get('/rider/mytrips', 'RiderController@mytrips')->name('rider.mytrips');
+Route::get('/rider/viewprofile', 'RiderController@viewprofile')->name('rider.viewprofile');
+Route::get('/rider/editprofile', 'RiderController@editprofile')->name('rider.editprofile');
+Route::get('/rider/changepassword', 'RiderController@changepassword')->name('rider.changepassword');
+
