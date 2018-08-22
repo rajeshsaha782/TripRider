@@ -9,6 +9,8 @@ use App\Http\Requests\SignupDriverRequest;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use Mail;
+use App\Mail\EmailVerification;
 
 class HomeController extends Controller
 {
@@ -34,20 +36,40 @@ class HomeController extends Controller
         }
         else
         {
-            $request->session()->put('user', $user);
 
-            if($user->type=="Rider")
+            if($user->status=="Block")
             {
-                return redirect()->route('rider.dashboard');
+                $request->session()->flash('message', 'Sorry!!! Your account is Blocked');
+                return redirect()->route('login');
             }
-            else if($user->type=="Driver")
+            else if($user->status=="emailNotActivate")
             {
-                return redirect()->route('driver.dashboard');
-            } 
-            else if($user->type=="Admin")
-            {
-                return redirect()->route('admin.dashboard');
+                $request->session()->flash('message', 'Please validate your E-mail !!!');
+                return redirect()->route('login');
             }
+            else
+            {
+                $request->session()->put('user', $user);
+
+                if($user->type=="Rider")
+                {
+                    return redirect()->route('rider.dashboard');
+                }
+                else if($user->type=="Driver")
+                {
+                    return redirect()->route('driver.dashboard');
+                } 
+                else if($user->type=="Admin")
+                {
+                    return redirect()->route('admin.dashboard');
+                }
+                else
+                {
+                    $request->session()->flash('message', 'Invalid Type !!!');
+                    return redirect()->route('login');
+                }
+            }
+            
         
             
             
@@ -55,6 +77,25 @@ class HomeController extends Controller
 
     	return view('home.login');
     } 
+
+    public function emailVerification($email,$token,Request $request)
+    {
+       $user=User::where('email', $email)
+                ->first();
+        if($user->email_token==$token)
+        {
+            $user->status="Active";
+            $user->save();
+            return redirect()->route('login');
+        }
+        else
+        {
+            $request->session()->flash('message', 'Invalid Token or Email !!!');
+            return redirect()->route('login');
+        }
+
+       
+    }
 
     public function signupRider(Request $request)
     {
@@ -71,6 +112,8 @@ class HomeController extends Controller
         $user->status="emailNotActivate";
         $user->email_token=Str::random(30);
         $user->save();
+
+        Mail::to($user->email)->send(new EmailVerification($user));
 
     	return redirect()->route('login');
     }
@@ -91,6 +134,8 @@ class HomeController extends Controller
         $user->status="emailNotActivate";
         $user->email_token=Str::random(30);
         $user->save();
+
+        Mail::to($user->email)->send(new EmailVerification($user));
 
         return redirect()->route('login');
     }

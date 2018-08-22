@@ -24,6 +24,7 @@ Route::post('/signupRider', 'HomeController@createRider');
 Route::get('/signupDriver', 'HomeController@signupDriver')->name('signupDriver');
 Route::post('/signupDriver', 'HomeController@createDriver');
 
+Route::get('/emailVerification/{email}/{token}', 'HomeController@emailVerification')->name('emailVerification');
 
 Route::get('/driver/dashboard', 'DriverController@dashboard')->name('driver.dashboard');
 Route::get('/driver/addpackage', 'DriverController@addpackage')->name('driver.addpackage');

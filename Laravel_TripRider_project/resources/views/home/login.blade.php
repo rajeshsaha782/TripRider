@@ -8,7 +8,7 @@
 
 <header class="masthead">
       <div class="masthead" style="padding-top:150px;">
-		<div class="modal-dialog modal-sm">
+		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				
 				<div class="modal-body" >
@@ -22,6 +22,18 @@
 			            </ul>
 			          </div>
 			          @endif
+
+			         
+			          	@if(session('message'))
+				          	<div class="card-body"style="background-color: red;opacity: 0.7;">
+				            <ul>
+				             
+				                <li style="color: white">{{session('message')}}</li>
+				              
+				            </ul>
+				          </div>
+							
+						@endif
 
 					<form method="post" class="form-signin">
 						{{csrf_field()}}
@@ -40,10 +52,11 @@
 		              <!-- <a class="btn btn-primary btn-block" href="../Rider/index.html">Login</a> -->
 		             <button class="btn btn-primary btn-block text-uppercase" type="submit">Login</button>
 		              <hr class="my-4">
-					  <!--
+					  
 		              <div class="text-center">
-		                <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
-		              </div>-->
+		              	Not a Member yet? 
+		                <a class="d-block small" href="{{route('signupRider')}}">Signup as Rider</a>
+		              </div>
 		            </form>
 					
 					
