@@ -30,9 +30,11 @@ Route::get('/driver/dashboard', 'DriverController@dashboard')->name('driver.dash
 Route::get('/driver/addpackage', 'DriverController@addpackage')->name('driver.addpackage');
 Route::get('/driver/packages', 'DriverController@packages')->name('driver.packages');
 Route::get('/driver/packageedit', 'DriverController@packageedit')->name('driver.packageedit');
-Route::get('/driver/viewprofile', 'DriverController@viewprofile')->name('driver.viewprofile');
-Route::get('/driver/editprofile', 'DriverController@editprofile')->name('driver.editprofile');
+Route::get('/driver/viewprofile/{id}', 'DriverController@viewprofile')->name('driver.viewprofile');
+Route::get('/driver/editprofile/{id}', 'DriverController@editprofile')->name('driver.editprofile');
+Route::post('/driver/editprofile/{id}', 'DriverController@saveeditprofile');
 Route::get('/driver/changepassword', 'DriverController@changepassword')->name('driver.changepassword');
+Route::post('/driver/changepassword', 'DriverController@savechangepassword');
 
 
 Route::get('/rider/dashboard', 'RiderController@dashboard')->name('rider.dashboard');

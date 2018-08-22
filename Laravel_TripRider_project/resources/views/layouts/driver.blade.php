@@ -91,10 +91,10 @@
               
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <img src="/img/user_pic.jpg" class="img-circle" alt="user" height="30px" width="30px"> Rajesh<i class="fa fa-caret-down"></i>
+                        <img src="/img/user_pic.jpg" class="img-circle" alt="user" height="30px" width="30px"> {{session('user')->name}}<i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="viewProfile"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                <li><a href="{{route('driver.viewprofile',session('user')->id)}}"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
@@ -139,10 +139,10 @@
                             <a href="#"><i class="fa fa-user fa-fw"></i> My Profile<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a  href="{{route('driver.viewprofile')}}">View Profile</a>
+                                    <a  href="{{route('driver.viewprofile',session('user')->id)}}">View Profile</a>
                                 </li>
                                 <li>
-                                    <a  href="{{route('driver.editprofile')}}">Edit Profile</a>
+                                    <a  href="{{route('driver.editprofile',session('user')->id)}}">Edit Profile</a>
                                 </li>
                                 <li>
                                     <a  href="{{route('driver.changepassword')}}">Change Password</a>

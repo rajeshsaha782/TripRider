@@ -13,32 +13,32 @@
             </div>
 			
 			<div class="row">
+	<form method="post" class="form-signin">
+		{{csrf_field()}}
             <div class="col-md-8">
 			
-           <form class="form-signin">
-				<div class="form-label-group">
+        
+			<div class="form-label-group">
 			  <label for="inputUserame">Name</label>
-                <input type="text" id="inputName" class="form-control" placeholder="name" value="Name" required autofocus>
+                <input type="text" id="inputName" name="Name" class="form-control" placeholder="name" value="{{$driver->name}}" required autofocus>
                 
               </div>
               <div class="form-label-group">
 			  <label for="inputUserame">Email</label>
-                <input type="email" id="inputName" class="form-control" placeholder="email" value="r@gmail.com" required autofocus>
+                <input type="email" id="inputName" name="Email" class="form-control" placeholder="email" value="{{$driver->email}}" disabled>
                 
               </div>
 
               <div class="form-label-group">
-			   <label for="inputEmail">Address</label>
-               <textarea type="text" rows="4" id="inputConfirmPassword" class="form-control" placeholder="Address"  required>Address
-				</textarea>
-          
+			   <label for="inputEmail">Phone number</label>
+               <input type="number" id="number" name="PhoneNumber" class="form-control" placeholder="PhoneNumber" value="{{$driver->phonenumber}}" required autofocus>
                
               </div>
           
 
               <div class="form-label-group">
-			         <label for="inputPassword">Phone Number</label>
-                <input type="number" id="inputPassword" class="form-control" placeholder="Phone Number" value="89869869869" required>
+			         <label for="inputPassword">Car Number</label>
+                <input type="number" id="number" name="CarNumber" class="form-control" placeholder="Car Number" value="{{$driver->phonenumber}}" disabled>
          
               </div>
               
@@ -52,12 +52,14 @@
                
 			   
 			<div class="col-4">
-				<img src="../img/user_pic.jpg" class="img-rounded" alt="Cinque Terre" height="200px" width="200px"><br/>
+				<img src="/img/user_pic.jpg" class="img-rounded" alt="Cinque Terre" height="200px" width="200px"><br/>
 				Change Image<input type="file"/>
 			</div>
 			
-            </div>
+            
 			
 			  <br/><button class="btn btn-success btn-lg btn-block text-uppercase" type="submit">Save Changes</button>
-			</form>
+
+	</form>
+	</div>
 @endsection
