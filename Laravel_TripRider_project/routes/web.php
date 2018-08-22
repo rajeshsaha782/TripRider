@@ -15,10 +15,14 @@
 //     return view('welcome');
 // });
 
-Route::get('/', 'HomeController@index')->name('index');
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/logout', 'HomeController@logout')->name('logout');
 Route::get('/login', 'HomeController@login')->name('login');
+Route::post('/login', 'HomeController@verify');
 Route::get('/signupRider', 'HomeController@signupRider')->name('signupRider');
+Route::post('/signupRider', 'HomeController@createRider');
 Route::get('/signupDriver', 'HomeController@signupDriver')->name('signupDriver');
+Route::post('/signupDriver', 'HomeController@createDriver');
 
 
 Route::get('/driver/dashboard', 'DriverController@dashboard')->name('driver.dashboard');

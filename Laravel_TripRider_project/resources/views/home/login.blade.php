@@ -12,17 +12,28 @@
 			<div class="modal-content">
 				
 				<div class="modal-body" >
-					
-					<form class="form-signin">
+
+					 @if($errors->any())
+			          <div class="card-body"style="background-color: red;opacity: 0.7;">
+			            <ul>
+			              @foreach($errors->all() as $err)
+			                <li style="color: white">{{$err}}</li>
+			              @endforeach
+			            </ul>
+			          </div>
+			          @endif
+
+					<form method="post" class="form-signin">
+						{{csrf_field()}}
 		              <div class="form-label-group">
 		              	<label for="inputEmail">Email address</label>
-		                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+		                <input type="email" id="inputEmail" name="Email" value="{{old('Email')}}" class="form-control" placeholder="Email address" required autofocus>
 		                
 		              </div>
 
 		              <div class="form-label-group">
 		              	<label for="inputPassword">Password</label>
-		                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		                <input type="password" id="inputPassword" name="Password" class="form-control" placeholder="Password" required>
 		                
 		              </div>
 		              <br/>
