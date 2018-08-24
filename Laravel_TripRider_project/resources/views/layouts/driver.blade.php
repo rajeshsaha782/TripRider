@@ -23,7 +23,7 @@
     <!-- Custom Fonts -->
     <link href="{{asset('/vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
 
- 
+    @yield('mapjs')
 </head>
 
 <body>
@@ -91,7 +91,7 @@
               
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <img src="/img/user_pic.jpg" class="img-circle" alt="user" height="30px" width="30px"> {{session('user')->name}}<i class="fa fa-caret-down"></i>
+                        <img src="/img/user_pic.jpg" class="img-circle" alt="user" height="30px" width="30px"> {{$driver->name}}<i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                 <li><a href="{{route('driver.viewprofile',session('user')->id)}}"><i class="fa fa-user fa-fw"></i> User Profile</a>

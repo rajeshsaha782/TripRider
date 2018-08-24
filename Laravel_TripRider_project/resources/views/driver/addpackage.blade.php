@@ -4,53 +4,75 @@
 	Add Package |Driver
 @endsection
 
+@section('mapjs')
+  {!! $map['js'] !!}
+@endsection
+
 @section('content')
 <div class="row">
             <div class="col-lg-12">
                     <h2 class="page-header">Add Package</h2>
                 </div>
-                <!-- /.col-lg-12 -->
+                @if($errors->any())
+                <div class="card-body"style="background-color: red;opacity: 0.7;">
+                  <ul>
+                    @foreach($errors->all() as $err)
+                      <li style="color: white">{{$err}}</li>
+                    @endforeach
+                  </ul>
+                </div>
+                @endif
             </div>
-           <form class="form-signin">
+           <form method="post" class="form-signin">
+           	{{csrf_field()}}
 				<div class="form-label-group">
 			  <label for="inputUserame">Package Name</label>
-                <input type="text" id="inputName" class="form-control" placeholder="Package Name" required autofocus>
+                <input type="text" name="Name" id="inputName" class="form-control" placeholder="Package Name" required autofocus>
                 
               </div>
+
               <div class="form-label-group">
+              	
 			  <label for="inputUserame">From</label>
-                <input type="text" id="inputName" class="form-control" placeholder="From" required autofocus>
+                <input type="text" name="From" id="inputName" class="form-control" placeholder="From" required autofocus>
                 
               </div>
 
               <div class="form-label-group">
 			   <label for="to">To</label>
-                <input type="text" id="to" class="form-control" placeholder="To" required>
+                <input type="text" name="To" id="to" class="form-control" placeholder="To" required>
                
               </div>
           
 
               <div class="form-label-group">
 			         <label for="inputPassword">Triplength(days)</label>
-                <input type="number" id="inputPassword" class="form-control" placeholder="Triplength" required>
+                <input type="number" name="Triplength" id="inputPassword" class="form-control" placeholder="Triplength" required>
          
               </div>
               
               <div class="form-label-group">
-			        <label for="inputConfirmPassword">Description</label>
-                <textarea type="text" rows="4" id="inputConfirmPassword" class="form-control" placeholder="Description" required></textarea>
+              <label for="inputConfirmPassword">Description</label>
+                <textarea type="text" rows="4" name="Description" id="inputConfirmPassword" class="form-control" placeholder="Description" required></textarea>
+          
+              </div>
+
+              <div class="form-label-group">
+			        <label for="inputConfirmPassword">Trip Type</label>
+                 <input type="radio" name="Trip_Type" value="oneway" id="inputPassword" class="form-control" required>Oneway 
+                 <input type="radio" name="Trip_Type" value="bothway" id="inputPassword" class="form-control" required>Bothway
           
               </div>
 			  
 			  <div class="form-label-group">
 			         <label for="inputPassword">Total Sits(Number of People allowed)</label>
-                <input type="number" id="inputPassword" class="form-control" placeholder="Total Sits" required>
+                <input type="number" name="TotalSits" id="inputPassword" class="form-control" placeholder="Total Sits" required>
          
               </div>
 			  <div class="form-label-group">
 			         <label for="inputPassword">Total Cost(Tk)</label>
 					
-                <input type="number" id="inputPassword" class="form-control" placeholder="Total Cost" required>
+                <input type="number" name="TotalCost" id="inputPassword" class="form-control" placeholder="Total Cost" required>
          
               </div>
 			  <div class="form-label-group">
@@ -61,19 +83,70 @@
               </div>
 			  <br/>
 			  <div class="form-label-group">
-			         <div id="googleMap" style="height:400px;width:100%;"></div>
+			         {!! $map['html'] !!}
               </div>
 			  
-			  <script>
-		function myMap() {
-			var myCenter = new google.maps.LatLng(23.822324, 90.427520);
-			var mapProp = {center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.ROADMAP};
-			var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-			var marker = new google.maps.Marker({position:myCenter});
-			marker.setMap(map);
-		}
-	</script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7a-pVRxc_cx00QNTiPWQZW50qxiqZGO0&callback=myMap"></script>
+			  <script type="text/javascript">
+
+          function getLocation() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(success, fail);
+          } else { 
+              alert("Browser not supported");
+          }
+
+          function success(position) 
+          {
+             
+               $.ajax({
+                  // method: 'POST', 
+                  data: { 'start_lat': position.coords.latitude, 'start_lan': position.coords.longitude },
+                  url : "{{action('DriverController@start')}}", 
+                  success : function (data) {
+                      //alert(data);
+                      window.location="{{route('driver.addpackage')}}";
+                  }
+                  });
+          }
+          function fail() {
+              alert("it fails to get CurrentPosition");
+          }
+      }
+      </script>
+
+      <script type="text/javascript">
+    //geoLocationInit();
+        function set_start(newLat, newLng)
+        {
+            //alert(newLat+","+newLng);
+
+            $.ajax({
+            // method: 'POST', 
+            data: { 'start_lat': newLat, 'start_lan': newLng },
+            url : "{{action('DriverController@start')}}", 
+            success : function (data) {
+                alert(data);
+            }
+            });
+        }
+
+         function set_end(newLat, newLng)
+        {
+            //alert(newLat+","+newLng);
+
+            $.ajax({
+            // method: 'POST', 
+            data: { 'end_lat': newLat, 'end_lan': newLng },
+            url : "{{action('DriverController@end')}}", 
+            success : function (data) {
+                alert(data);
+            }
+            });
+        }
+      </script>
+
+
+
 
               <br/><button class="btn btn-success btn-lg btn-block text-uppercase" type="submit">Add Package</button>
           

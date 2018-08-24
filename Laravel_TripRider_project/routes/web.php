@@ -26,8 +26,12 @@ Route::post('/signupDriver', 'HomeController@createDriver');
 
 Route::get('/emailVerification/{email}/{token}', 'HomeController@emailVerification')->name('emailVerification');
 
+Route::get('/start', 'DriverController@start');
+Route::get('/end', 'DriverController@end');
+
 Route::get('/driver/dashboard', 'DriverController@dashboard')->name('driver.dashboard');
 Route::get('/driver/addpackage', 'DriverController@addpackage')->name('driver.addpackage');
+Route::post('/driver/addpackage', 'DriverController@saveaddpackage');
 Route::get('/driver/packages', 'DriverController@packages')->name('driver.packages');
 Route::get('/driver/packageedit', 'DriverController@packageedit')->name('driver.packageedit');
 Route::get('/driver/viewprofile/{id}', 'DriverController@viewprofile')->name('driver.viewprofile');

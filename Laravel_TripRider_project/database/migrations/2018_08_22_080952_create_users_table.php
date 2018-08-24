@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('phonenumber');
             $table->string('type');
-            $table->string('carnumber');
-            $table->string('image');
+            $table->string('carnumber')->nullable();
+            $table->string('image')->nullable();
             $table->string('status');
             $table->string('email_token');
 
