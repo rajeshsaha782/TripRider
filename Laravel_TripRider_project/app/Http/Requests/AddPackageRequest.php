@@ -25,14 +25,24 @@ class AddPackageRequest extends FormRequest
     {
         return [
             'Name' => 'required',
-            'From' => 'required',
-            'To' => 'required',
             'Triplength' => 'required|numeric',
             'Trip_Type' => 'required',
             'Description' => 'required',
             'TotalSits' => 'required|numeric',
-            'TotalCost' => 'required|numeric'
+            'TotalCost' => 'required|numeric',
+            'image' => 'required|image|mimes:jpg,jpeg,png',
+            'startaddress' => 'required',
+            'endaddress' => 'required',
+
             
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'startaddress.required' => 'Set Start point into the Map Properly.',
+            'endaddress.required'  => 'Set End point into the Map Properly.',
         ];
     }
 }

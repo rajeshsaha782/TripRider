@@ -66,6 +66,7 @@ class DriverController extends Controller
         $marker_end['ondragend'] = 'set_end(event.latLng.lat(), event.latLng.lng());';
         GMaps::add_marker($marker_end);
 
+
         GMaps:: initialize($config);
 
         $map=GMaps::create_map();
@@ -93,11 +94,23 @@ class DriverController extends Controller
 
     public function saveaddpackage(AddPackageRequest $request)
     {
+        $file = $request->file('image');
+        
+        dd($file);
+        // $extention=$file->getClientOriginalExtension();
+        
+        // if($extention!="jpg" || $extention!="png" || $extention!="jpeg")
+        // {
+        //     $request->session()->flash('message', 'Profile Updated.');
+        //     return  redirect()->route('driver.viewprofile',$id);
+        // }
        
+        
+
         $Package=new Package();
         $Package->name=$request->Name;
-        $Package->from=$request->From;
-        $Package->to=$request->To;
+        $Package->from=$request->startaddress;
+        $Package->to=$request->endaddress;
         $Package->tripLength=$request->Triplength;
         $Package->description=$request->Description;
         $Package->car_type="abc";
