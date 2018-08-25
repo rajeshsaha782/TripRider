@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddPackageRequest;
 use Illuminate\Support\Facades\DB;
+use Mail;
+use App\Mail\ChangePasswordAlert;
 use GMaps;
 use App\User;
 use App\Package;
@@ -144,9 +146,12 @@ class DriverController extends Controller
 
     	return  redirect()->route('driver.viewprofile',$id);
     }
+
     public function changepassword(Request $request)
     {
-        return view('driver.changepassword');
+        $driver=User::Find(session('user')->id);
+
+        return view('driver.changepassword')->with('driver',$driver);
     }
     public function savechangepassword(Request $request)
     {
@@ -166,6 +171,8 @@ class DriverController extends Controller
         $driver->password=$request->repass;
 
         $driver->save();
+
+        Mail::to($driver->email)->send(new ChangePasswordAlert($driver));
 
         $request->session()->flash('message', 'Password Successfully Changed.');
         return  redirect()->route('driver.changepassword');
