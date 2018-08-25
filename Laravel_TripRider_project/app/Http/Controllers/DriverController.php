@@ -144,6 +144,7 @@ class DriverController extends Controller
 
         $driver->save();
 
+        $request->session()->flash('message', 'Profile Updated.');
     	return  redirect()->route('driver.viewprofile',$id);
     }
 

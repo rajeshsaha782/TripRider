@@ -38,7 +38,7 @@
 
               <div class="form-label-group">
 			         <label for="inputPassword">Car Number</label>
-                <input type="number" id="number" name="CarNumber" class="form-control" placeholder="Car Number" value="{{$driver->phonenumber}}" disabled>
+                <input type="number" id="number" name="CarNumber" class="form-control" placeholder="Car Number" value="{{$driver->carnumber}}" disabled>
          
               </div>
               
