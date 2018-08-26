@@ -6,12 +6,54 @@
 
 @section('mapjs')
 <script type="text/javascript">
-    var centreGot = false;
+    // function getLocation(type) 
+    //     {
+    //       if (navigator.geolocation) {
+    //           navigator.geolocation.getCurrentPosition(success, fail);
+    //       } else { 
+    //           alert("Browser not supported");
+    //       }
+
+    //       function success(position) 
+    //       {
+    //         if(type=="start")
+    //         {
+    //             $.ajax({
+    //               // method: 'POST', 
+    //               data: { 'start_lat': position.coords.latitude, 'start_lan': position.coords.longitude },
+    //               url : "{{action('DriverController@start')}}", 
+    //               success : function (data) {
+    //                   //alert(data);
+    //                   address(newLat,newLng,"start");
+    //                   window.location="{{route('driver.addpackage')}}";
+    //               }
+    //               });
+    //         }
+    //         else if(type=="end")
+    //         {
+    //             $.ajax({
+    //               // method: 'POST', 
+    //               data: { 'end_lat': position.coords.latitude, 'end_lan': position.coords.longitude },
+    //               url : "{{action('DriverController@end')}}", 
+    //               success : function (data) {
+    //                   //alert(data);
+    //                   address(newLat,newLng,"end");
+    //                   window.location="{{route('driver.addpackage')}}";
+    //               }
+    //               });
+    //         }
+
+               
+    //       }
+    //       function fail() {
+    //           alert("it fails to get CurrentPosition");
+    //       }
   </script>
   {!! $map['js'] !!}
 @endsection
 
 @section('content')
+
 <div class="row">
             <div class="col-lg-12">
                     <h2 class="page-header">Add Package</h2>
@@ -105,14 +147,25 @@
                 </div>
                @endif 
 
+               <button class="btn btn-primary" onclick="getLocation_start()" >Set Start as my current location</button>
+               <button class="btn btn-primary" onclick="getLocation_end()" >Set End as my current location</button>
 			         {!! $map['html'] !!}
                <input id="startaddress" style="visibility: hidden;" name="startaddress" />
                <input id="endaddress" style="visibility: hidden;" name="endaddress" />
               </div>
 			  
-			  <script type="text/javascript">
+		
 
-          function getLocation() {
+
+              <br/><button class="btn btn-success btn-lg btn-block text-uppercase" type="submit">Add Package</button>
+          
+              <hr class="my-4">
+              
+            </form>
+
+        <script type="text/javascript">
+
+          function getLocation_start() {
           if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(success, fail);
           } else { 
@@ -138,6 +191,34 @@
       }
       </script>
 
+      <script type="text/javascript">
+
+          function getLocation_end() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(success, fail);
+          } else { 
+              alert("Browser not supported");
+          }
+
+          function success(position) 
+          {
+             
+               $.ajax({
+                  // method: 'POST', 
+                  data: { 'end_lat': position.coords.latitude, 'end_lan': position.coords.longitude },
+                  url : "{{action('DriverController@end')}}", 
+                  success : function (data) {
+                      //alert(data);
+                      window.location="{{route('driver.addpackage')}}";
+                  }
+                  });
+          }
+          function fail() {
+              alert("it fails to get CurrentPosition");
+          }
+      }
+      </script>
+
 
 
       <script type="text/javascript">
@@ -145,15 +226,15 @@
         function set_start(newLat, newLng)
         {
             //alert(newLat+","+newLng);
-            address(newLat,newLng,"start");
+            
 
             $.ajax({
             // method: 'POST', 
-            data: { 'start_lat': newLat, 'start_lan': newLng ,'startaddress': document.getElementById('startaddress').value},
+            data: { 'start_lat': newLat, 'start_lan': newLng },
             url : "{{action('DriverController@start')}}", 
             success : function (data) {
                 //alert(data);
-                
+                address(newLat,newLng,"start");
             }
             });
         }
@@ -172,6 +253,8 @@
             }
             });
         }
+
+        
       </script>
 
       <script type="text/javascript">
@@ -213,13 +296,6 @@
         });
       }
 
-        
+
       </script>
-
-
-              <br/><button class="btn btn-success btn-lg btn-block text-uppercase" type="submit">Add Package</button>
-          
-              <hr class="my-4">
-              
-            </form>
 @endsection
