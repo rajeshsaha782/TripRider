@@ -145,14 +145,15 @@
         function set_start(newLat, newLng)
         {
             //alert(newLat+","+newLng);
+            address(newLat,newLng,"start");
 
             $.ajax({
             // method: 'POST', 
-            data: { 'start_lat': newLat, 'start_lan': newLng },
+            data: { 'start_lat': newLat, 'start_lan': newLng ,'startaddress': document.getElementById('startaddress').value},
             url : "{{action('DriverController@start')}}", 
             success : function (data) {
                 //alert(data);
-                address(newLat,newLng,"start");
+                
             }
             });
         }
@@ -194,11 +195,13 @@
               {
                 //alert('start address set');
                 document.getElementById('startaddress').value = results[0].formatted_address;
+
               } 
               else
               {
                 //alert('end address set');
                 document.getElementById('endaddress').value = results[0].formatted_address;
+              
               } 
                 
 

@@ -27,7 +27,7 @@ class DriverController extends Controller
 
 
         $config['zoom']='auto';
-        $config['map_height']='500px';
+        $config['map_height']='800px';
         $config['scrollwheel']=true;
         $config['trafficOverlay'] = TRUE;
 
@@ -45,7 +45,8 @@ class DriverController extends Controller
         $marker_start['position'] = $start_pos;
         $marker_start['draggable'] = true;
         $marker_start['ondragend'] = 'set_start(event.latLng.lat(), event.latLng.lng());';
-
+        $marker_start['infowindow_content'] = 'Start Address';
+        $marker_start['onclick'] = 'alert(\'Start Address: \' +  document.getElementById(\'startaddress\').value);';
         GMaps::add_marker($marker_start);
 
 
@@ -64,6 +65,8 @@ class DriverController extends Controller
         $marker_end['position'] = $end_pos;
         $marker_end['draggable'] = true;
         $marker_end['ondragend'] = 'set_end(event.latLng.lat(), event.latLng.lng());';
+        $marker_end['infowindow_content'] = 'End Address';
+        $marker_end['onclick'] = 'alert(\'End Address: \' +  document.getElementById(\'endaddress\').value);';
         GMaps::add_marker($marker_end);
 
 
@@ -81,6 +84,7 @@ class DriverController extends Controller
     {
         $request->session()->put('start_lat',$request->input('start_lat'));
         $request->session()->put('start_lan',$request->input('start_lan'));
+        $request->session()->put('startaddress',$request->input('startaddress'));
         
         return (session('start_lan'));
     }
@@ -95,8 +99,8 @@ class DriverController extends Controller
     public function saveaddpackage(AddPackageRequest $request)
     {
         $file = $request->file('image');
-        
-        dd($file);
+        $file->move('uploads',$file->getClientOriginalName());
+        //dd($file);
         // $extention=$file->getClientOriginalExtension();
         
         // if($extention!="jpg" || $extention!="png" || $extention!="jpeg")
