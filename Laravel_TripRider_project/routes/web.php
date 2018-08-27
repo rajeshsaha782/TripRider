@@ -34,6 +34,7 @@ Route::get('/driver/addpackage', 'DriverController@addpackage')->name('driver.ad
 Route::post('/driver/addpackage', 'DriverController@saveaddpackage');
 Route::get('/driver/packages', 'DriverController@packages')->name('driver.packages');
 Route::get('/driver/packageedit', 'DriverController@packageedit')->name('driver.packageedit');
+Route::post('/driver/packageedit', 'DriverController@savepackageedit');
 Route::get('/driver/viewprofile/{id}', 'DriverController@viewprofile')->name('driver.viewprofile');
 Route::get('/driver/editprofile/{id}', 'DriverController@editprofile')->name('driver.editprofile');
 Route::post('/driver/editprofile/{id}', 'DriverController@saveeditprofile');

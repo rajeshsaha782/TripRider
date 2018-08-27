@@ -27,7 +27,7 @@ class DriverController extends Controller
 
 
         $config['zoom']='auto';
-        $config['map_height']='800px';
+        $config['map_height']='600px';
         $config['scrollwheel']=true;
         $config['trafficOverlay'] = TRUE;
 
@@ -129,6 +129,12 @@ class DriverController extends Controller
         $Package->image="abc";
         $Package->save();
 
+        $request->session()->forget('start_lat');
+        $request->session()->forget('start_lan');
+        $request->session()->forget('end_lat');
+        $request->session()->forget('end_lan');
+
+
     	return redirect()->route('driver.dashboard');
     }
 
@@ -138,7 +144,92 @@ class DriverController extends Controller
     }
     public function packageedit(Request $request)
     {
-    	return view('driver.packageedit');
+        $driver=User::Find(session('user')->id);
+        $package=Package::Find(2);
+
+        $config['zoom']='auto';
+        $config['map_height']='600px';
+        $config['scrollwheel']=true;
+        $config['trafficOverlay'] = TRUE;
+
+        $marker_start = array();
+        if(!session('start_lan'))
+        {
+            $request->session()->put('start_lat',$package->start_latitude);
+            $request->session()->put('start_lan',$package->start_longitude);
+
+        }
+        $start_pos=session('start_lat').','.session('start_lan');
+
+        $marker_start['animation']= 'DROP';
+        $marker_start['icon'] = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=S|9999FF|000000';
+        $marker_start['position'] = $start_pos;
+        $marker_start['draggable'] = true;
+        $marker_start['ondragend'] = 'set_start(event.latLng.lat(), event.latLng.lng());';
+        $marker_start['infowindow_content'] = 'Start Address';
+        $marker_start['onclick'] = 'alert(\'Start Address: \' +  document.getElementById(\'startaddress\').value);';
+        GMaps::add_marker($marker_start);
+
+
+        $marker_end = array();
+
+        if(!session('end_lat'))
+        {
+            $request->session()->put('end_lat',$package->end_latitude);
+            $request->session()->put('end_lan',$package->end_longitude);
+
+        }
+        $end_pos=session('end_lat').','.session('end_lan');
+
+        $marker_end['animation']= 'DROP';
+        $marker_end['icon'] = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=E|9999FF|000000';
+        $marker_end['position'] = $end_pos;
+        $marker_end['draggable'] = true;
+        $marker_end['ondragend'] = 'set_end(event.latLng.lat(), event.latLng.lng());';
+        $marker_end['infowindow_content'] = 'End Address';
+        $marker_end['onclick'] = 'alert(\'End Address: \' +  document.getElementById(\'endaddress\').value);';
+        GMaps::add_marker($marker_end);
+
+
+        GMaps:: initialize($config);
+
+        $map=GMaps::create_map();
+
+    	return view('driver.packageedit')
+                ->with('driver',$driver)
+                ->with('package',$package)
+                ->with('map',$map);
+    }
+    public function savepackageedit(Request $request)
+    {
+        
+
+        $Package=Package::Find(2);
+
+        $Package->name=$request->Name;
+        $Package->from=$request->startaddress;
+        $Package->to=$request->endaddress;
+        $Package->tripLength=$request->Triplength;
+        $Package->description=$request->Description;
+        $Package->car_type="abc";
+        $Package->trip_type=$request->Trip_Type;
+        $Package->driver_id=session('user')->id;
+        $Package->total_sits=$request->TotalSits;
+        $Package->total_cost=$request->TotalCost;
+        $Package->start_latitude=session('start_lat');
+        $Package->start_longitude=session('start_lan');
+        $Package->end_latitude=session('end_lat');
+        $Package->end_longitude=session('end_lan');
+        $Package->image="abc";
+        $Package->save();
+
+        $request->session()->forget('start_lat');
+        $request->session()->forget('start_lan');
+        $request->session()->forget('end_lat');
+        $request->session()->forget('end_lan');
+
+
+        return redirect()->route('driver.packageedit');
     }
 
     public function viewprofile($id,Request $request)

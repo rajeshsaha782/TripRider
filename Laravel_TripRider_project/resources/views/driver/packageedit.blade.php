@@ -4,90 +4,255 @@
 	Package Edit|Driver
 @endsection
 
+@section('mapjs')
+
+  {!! $map['js'] !!}
+@endsection
+
 @section('content')
+
 <div class="row">
             <div class="col-lg-12">
-                    <h2 class="page-header">Edit Package</h2>
+                    <h2 class="page-header">Package: <small>{{$package->from}}  To  {{$package->to}}</small>  </h2>
                 </div>
-                <!-- /.col-lg-12 -->
+                
             </div>
-			
-			<div class="row">
-            <div class="col-md-8">
-			
-           <form class="form-signin">
+
+
+
+            @if($errors->any())
+                <div class="card-body"style="background-color: red;opacity: 0.7;">
+                  <ul>
+                    @foreach($errors->all() as $err)
+                      <li style="color: white">{{$err}}</li>
+                    @endforeach
+                  </ul>
+                </div>
+                @endif
+
+           <form method="post" enctype="multipart/form-data" class="form-signin">
+           	{{csrf_field()}}
 				<div class="form-label-group">
-			  <label for="inputUserame">Package name</label>
-                <input type="text" id="inputName" class="form-control" placeholder="Package name" value="Name" required autofocus>
+			  <label for="inputUserame">Package Name</label>
+                <input type="text" name="Name" id="inputName" value="{{$package->name}}" class="form-control" placeholder="Package Name" required autofocus>
                 
               </div>
-              <div class="form-label-group">
+
+              <!-- <div class="form-label-group">
+              	
 			  <label for="inputUserame">From</label>
-                <input type="text" id="inputName" class="form-control" placeholder="From" value="Dhaka" required autofocus>
+                <input type="text" name="From"  value="{{$package->from}}" class="form-control" disabled>
                 
               </div>
 
               <div class="form-label-group">
-			   <label for="inputEmail">To</label>
-                <input type="text" id="inputEmail" class="form-control" placeholder="To" value="Comilla" required>
+			   <label for="to">To</label>
+                <input type="text" name="To" value="{{$package->to}}" class="form-control" disabled>
                
-              </div>
+              </div> -->
           
 
               <div class="form-label-group">
 			         <label for="inputPassword">Triplength(days)</label>
-                <input type="number" id="inputPassword" class="form-control" placeholder="Triplength" value="2" required>
+                <input type="number" name="Triplength" value="{{$package->tripLength}}" id="inputPassword" class="form-control" placeholder="Triplength" required>
          
               </div>
               
               <div class="form-label-group">
-			        <label for="inputConfirmPassword">Description</label>
-                <textarea type="text" rows="4" id="inputConfirmPassword" class="form-control" placeholder="Description"  required>Description
-				</textarea>
+              <label for="inputConfirmPassword">Description</label>
+                <textarea type="text" rows="4" name="Description"  id="inputConfirmPassword" class="form-control" placeholder="Description" required>{{$package->description}}</textarea>
           
               </div>
-			  
+
+              <br/>
+              <div class="form-label-group">
+			        <label for="">Trip Type</label>
+               <input type="radio" name="Trip_Type" value="oneway" @if ($package->trip_type =="oneway" ){{ 'checked'}} @endif required>Oneway 
+                 <input type="radio" name="Trip_Type" value="bothway" @if ($package->trip_type)=="bothway" ){{ 'checked'}} @endif required>Bothway
+          
+              </div>
+			         <br/>
+
 			  <div class="form-label-group">
 			         <label for="inputPassword">Total Sits(Number of People allowed)</label>
-                <input type="number" id="inputPassword" class="form-control" placeholder="Total Sits" value="4" required>
+                <input type="number" name="TotalSits" id="inputPassword" value="{{$package->total_sits}}" class="form-control" placeholder="Total Sits" required>
          
               </div>
 			  <div class="form-label-group">
 			         <label for="inputPassword">Total Cost(Tk)</label>
 					
-                <input type="number" id="inputPassword" class="form-control" placeholder="Total Cost" value="1200" required>
+                <input type="number" name="TotalCost" id="inputPassword" value="{{$package->total_cost}}" class="form-control" placeholder="Total Cost" required>
          
               </div>
+			  <div class="form-label-group">
+			    <label for="">Image</label>
+					
+                <input  type="file" name="image" id="image"  class="form-control" required>
+                <span style="color: red">{{$errors->first('image')}}</span>
+              </div>
 			  <br/>
-			  
+			  <div class="form-label-group">
 
-            
+          @if($errors->first('startaddress') || $errors->first('endaddress'))
+                <div class="card-body"style="background-color: red;opacity: 0.7;">
+                  <ul>
+                   
+                      <span style="color: white">{{$errors->first('startaddress')}}</span><br/>
+                      <span style="color: white">{{$errors->first('endaddress')}}</span>
+                    
+                  </ul>
+                </div>
+               @endif 
+
+               <button class="btn btn-primary" onclick="getLocation_start()" >Set Start as my current location</button>
+               <button class="btn btn-primary" onclick="getLocation_end()" >Set End as my current location</button>
+			         {!! $map['html'] !!}
+               <input id="startaddress" value="{{$package->from}}" style="visibility: hidden;" name="startaddress" />
+               <input id="endaddress"  value="{{$package->to}}" style="visibility: hidden;" name="endaddress" />
+              </div>
+			  
+		
+
+
+              <br/><button class="btn btn-success btn-lg btn-block text-uppercase" type="submit">Save Changes</button>
           
               <hr class="my-4">
               
+            </form>
+
+        <script type="text/javascript">
+
+          function getLocation_start() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(success, fail);
+          } else { 
+              alert("Browser not supported");
+          }
+
+          function success(position) 
+          {
+             
+               $.ajax({
+                  // method: 'POST', 
+                  data: { 'start_lat': position.coords.latitude, 'start_lan': position.coords.longitude },
+                  url : "{{action('DriverController@start')}}", 
+                  success : function (data) {
+                      //alert(data);
+                      window.location="{{route('driver.packageedit')}}";
+                  }
+                  });
+          }
+          function fail() {
+              alert("it fails to get CurrentPosition");
+          }
+      }
+      </script>
+
+      <script type="text/javascript">
+
+          function getLocation_end() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(success, fail);
+          } else { 
+              alert("Browser not supported");
+          }
+
+          function success(position) 
+          {
+             
+               $.ajax({
+                  // method: 'POST', 
+                  data: { 'end_lat': position.coords.latitude, 'end_lan': position.coords.longitude },
+                  url : "{{action('DriverController@end')}}", 
+                  success : function (data) {
+                      //alert(data);
+                      window.location="{{route('driver.packageedit')}}";
+                  }
+                  });
+          }
+          function fail() {
+              alert("it fails to get CurrentPosition");
+          }
+      }
+      </script>
+
+
+
+      <script type="text/javascript">
+    //geoLocationInit();
+        function set_start(newLat, newLng)
+        {
+            //alert(newLat+","+newLng);
             
-			</div>
-               
-			   
-			<div class="col-4">
-				<img src="../img/p1.jpg" class="img-rounded" alt="Cinque Terre" height="200px" width="300px"><br/>
-				Change Image<input type="file"/>
-			</div>
-           
-			<div class="form-label-group">
-			         <div id="googleMap" style="height:400px;width:100%;"></div>
-              </div>
-			  
-			  <script>
-		function myMap() {
-			var myCenter = new google.maps.LatLng(23.822324, 90.427520);
-			var mapProp = {center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.ROADMAP};
-			var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-			var marker = new google.maps.Marker({position:myCenter});
-			marker.setMap(map);
-		}
-	</script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7a-pVRxc_cx00QNTiPWQZW50qxiqZGO0&callback=myMap"></script>
-			  <br/><button class="btn btn-success btn-lg btn-block text-uppercase" type="submit">Save Changes</button>
-			</form>
+
+            $.ajax({
+            // method: 'POST', 
+            data: { 'start_lat': newLat, 'start_lan': newLng },
+            url : "{{action('DriverController@start')}}", 
+            success : function (data) {
+                //alert(data);
+                address(newLat,newLng,"start");
+            }
+            });
+        }
+
+         function set_end(newLat, newLng)
+        {
+            //alert(newLat+","+newLng);
+
+            $.ajax({
+            // method: 'POST', 
+            data: { 'end_lat': newLat, 'end_lan': newLng },
+            url : "{{action('DriverController@end')}}", 
+            success : function (data) {
+                //alert(data);
+                address(newLat,newLng,"end");
+            }
+            });
+        }
+
+        
+      </script>
+
+      <script type="text/javascript">
+
+        
+
+      function address(lat,lan,type)
+      {
+
+        //alert('address called');
+
+        var latLng = new google.maps.LatLng(lat, lan);
+        geocoder.geocode( { 'latLng': latLng}, function(results, status) 
+        {
+          if (status == google.maps.GeocoderStatus.OK) 
+          {
+            if (results[0]) 
+            {
+              alert(results[0].formatted_address);
+              if(type=="start")
+              {
+                //alert('start address set');
+                document.getElementById('startaddress').value = results[0].formatted_address;
+
+              } 
+              else
+              {
+                //alert('end address set');
+                document.getElementById('endaddress').value = results[0].formatted_address;
+              
+              } 
+                
+
+              }
+          } 
+          else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+
+
+      </script>
 @endsection
