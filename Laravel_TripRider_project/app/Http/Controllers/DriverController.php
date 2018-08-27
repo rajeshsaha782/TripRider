@@ -170,13 +170,13 @@ class DriverController extends Controller
         $config['map_height']='500px';
         $config['scrollwheel']=true;
 
-        $request->session()->put('start_lat',$package->start_latitude);
-        $request->session()->put('start_lan',$package->start_longitude);
-        $request->session()->put('end_lat',$package->end_latitude);
-        $request->session()->put('end_lan',$package->end_longitude);
+        // $request->session()->put('start_lat',$package->start_latitude);
+        // $request->session()->put('start_lan',$package->start_longitude);
+        // $request->session()->put('end_lat',$package->end_latitude);
+        // $request->session()->put('end_lan',$package->end_longitude);
 
-        $start_pos=session('start_lat').','.session('start_lan');
-        $end_pos=session('end_lat').','.session('end_lan');
+        $start_pos=$package->start_latitude.','.$package->start_longitude;
+        $end_pos=$package->end_latitude.','.$package->end_longitude;
 
 
 
@@ -206,10 +206,10 @@ class DriverController extends Controller
 
        
 
-        // $config['directions'] = TRUE;
-        // $config['directionsStart'] = $start_pos;
-        // $config['directionsEnd'] = $end_pos;
-        // $config['directionsDivID'] = 'directionsDiv';
+        $config['directions'] = TRUE;
+        $config['directionsStart'] = $start_pos;
+        $config['directionsEnd'] = $end_pos;
+        $config['directionsDivID'] = 'directionsDiv';
         // $config['trafficOverlay'] = TRUE;
 
         GMaps:: initialize($config);
