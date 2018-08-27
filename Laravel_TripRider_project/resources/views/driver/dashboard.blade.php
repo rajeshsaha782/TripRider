@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">26</div>
-                                    <div>Admin</div>
+                                    <div>Total Packages</div>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">12</div>
-                                    <div>Driver</div>
+                                    <div>Total Active Trips</div>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">124</div>
-                                    <div>Rider</div>
+                                    <div>Pending Trips</div>
                                 </div>
                             </div>
                         </div>

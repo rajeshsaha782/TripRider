@@ -113,11 +113,11 @@ class DriverController extends Controller
 
         $Package=new Package();
         $Package->name=$request->Name;
-        $Package->from=$request->startaddress;
-        $Package->to=$request->endaddress;
-        $Package->tripLength=$request->Triplength;
+        $Package->from=$request->from;
+        $Package->to=$request->to;
+        $Package->trip_length=$request->Triplength;
         $Package->description=$request->Description;
-        $Package->car_type="abc";
+        $Package->car_type=$request->Car_type;
         $Package->trip_type=$request->Trip_Type;
         $Package->driver_id=session('user')->id;
         $Package->total_sits=$request->TotalSits;
@@ -137,15 +137,95 @@ class DriverController extends Controller
 
     	return redirect()->route('driver.dashboard');
     }
+     
 
     public function packages(Request $request)
     {
-    	return view('driver.packages');
+        $driver=User::Find(session('user')->id);
+        $packages=DB::table('users')
+                ->join('packages', 'packages.driver_id', '=', 'users.id')
+                ->where('driver_id',session('user')->id)
+                ->select('users.name as driverName', 'users.*','packages.name as packageName','packages.*')
+                ->get();
+        //dd($packages);
+
+    	return view('driver.packages')
+                ->with('driver',$driver)
+                ->with('packages',$packages);
     }
-    public function packageedit(Request $request)
+
+    public function packagedetail($id,Request $request)
     {
         $driver=User::Find(session('user')->id);
-        $package=Package::Find(2);
+        $package=DB::table('users')
+                ->join('packages', 'packages.driver_id', '=', 'users.id')
+                ->where('driver_id',session('user')->id)
+                ->select('users.name as driverName', 'users.*','packages.name as packageName','packages.*')
+                ->where('packages.id',$id)
+                ->first();
+
+       // dd($package);
+
+        $config['zoom']='auto';
+        $config['map_height']='500px';
+        $config['scrollwheel']=true;
+
+        $request->session()->put('start_lat',$package->start_latitude);
+        $request->session()->put('start_lan',$package->start_longitude);
+        $request->session()->put('end_lat',$package->end_latitude);
+        $request->session()->put('end_lan',$package->end_longitude);
+
+        $start_pos=session('start_lat').','.session('start_lan');
+        $end_pos=session('end_lat').','.session('end_lan');
+
+
+
+        $marker_start['animation']= 'DROP';
+        $marker_start['icon'] = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=S|9999FF|000000';
+        $marker_start['position'] = $start_pos;
+        // $marker_start['draggable'] = true;
+        // $marker_start['ondragend'] = 'set_start(event.latLng.lat(), event.latLng.lng());';
+        $marker_start['infowindow_content'] = 'Start Address: '.$package->from;
+        // $marker_start['onclick'] = 'alert(\'Start Address: \' +  document.getElementById(\'startaddress\').value);';
+        GMaps::add_marker($marker_start);
+
+
+        $marker_end = array();
+
+        $marker_end['animation']= 'DROP';
+        $marker_end['icon'] = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=E|9999FF|000000';
+        $marker_end['position'] = $end_pos;
+        // $marker_end['draggable'] = true;
+        // $marker_end['ondragend'] = 'set_end(event.latLng.lat(), event.latLng.lng());';
+        $marker_end['infowindow_content'] = 'End Address: '.$package->to;
+        // $marker_end['onclick'] = 'alert(\'End Address: \' +  document.getElementById(\'endaddress\').value);';
+        GMaps::add_marker($marker_end);
+
+
+        
+
+       
+
+        // $config['directions'] = TRUE;
+        // $config['directionsStart'] = $start_pos;
+        // $config['directionsEnd'] = $end_pos;
+        // $config['directionsDivID'] = 'directionsDiv';
+        // $config['trafficOverlay'] = TRUE;
+
+        GMaps:: initialize($config);
+
+        $map=GMaps::create_map();
+
+        return view('driver.packagedetail')
+                ->with('driver',$driver)
+                ->with('package',$package)
+                ->with('map',$map);
+    }
+
+    public function packageedit($id,Request $request)
+    {
+        $driver=User::Find(session('user')->id);
+        $package=Package::Find($id);
 
         $config['zoom']='auto';
         $config['map_height']='600px';
@@ -200,18 +280,18 @@ class DriverController extends Controller
                 ->with('package',$package)
                 ->with('map',$map);
     }
-    public function savepackageedit(Request $request)
+    public function savepackageedit($id,Request $request)
     {
         
 
-        $Package=Package::Find(2);
+        $Package=Package::Find($id);
 
         $Package->name=$request->Name;
-        $Package->from=$request->startaddress;
-        $Package->to=$request->endaddress;
-        $Package->tripLength=$request->Triplength;
+        $Package->from=$request->from;
+        $Package->to=$request->to;
+        $Package->trip_length=$request->Triplength;
         $Package->description=$request->Description;
-        $Package->car_type="abc";
+        $Package->car_type=$request->Car_type;
         $Package->trip_type=$request->Trip_Type;
         $Package->driver_id=session('user')->id;
         $Package->total_sits=$request->TotalSits;
@@ -229,7 +309,7 @@ class DriverController extends Controller
         $request->session()->forget('end_lan');
 
 
-        return redirect()->route('driver.packageedit');
+        return redirect()->route('driver.packageedit',$id);
     }
 
     public function viewprofile($id,Request $request)

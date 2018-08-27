@@ -54,13 +54,28 @@
 
               <div class="form-label-group">
 			         <label for="inputPassword">Triplength(days)</label>
-                <input type="number" name="Triplength" value="{{$package->tripLength}}" id="inputPassword" class="form-control" placeholder="Triplength" required>
+                <input type="number" name="Triplength" value="{{$package->trip_length}}" id="inputPassword" class="form-control" placeholder="Triplength" required>
          
               </div>
               
               <div class="form-label-group">
               <label for="inputConfirmPassword">Description</label>
                 <textarea type="text" rows="4" name="Description"  id="inputConfirmPassword" class="form-control" placeholder="Description" required>{{$package->description}}</textarea>
+          
+              </div>
+
+
+              <br/>
+              <div class="form-label-group">
+              <label for="">Car Type</label>
+              
+               <select name="Car_type" class="form-control" required>
+                 <option value="Taxi" @if ($package->Car_type=="Taxi" ){{ 'selected'}} @endif>Taxi</option>
+                 <option value="Micro" @if ($package->Car_type=="Micro" ){{ 'selected'}} @endif>Micro</option>
+                 <option value="Noah" @if ($package->Car_type=="Noah" ){{ 'selected'}} @endif>Noah</option>
+                 <option value="Hiace" @if ($package->Car_type=="Hiace" ){{ 'selected'}} @endif>Hiace</option>
+               </select>
+                
           
               </div>
 
@@ -104,6 +119,13 @@
                 </div>
                @endif 
 
+
+              <label >From</label><input id="from" value="{{$package->from}}" placeholder="From" class="form-control" name="from" />
+               <label >To</label><input id="to" value="{{$package->to}}"  placeholder="To" class="form-control"   name="to" />
+               <br/>
+              <br/>
+
+
                <button class="btn btn-primary" onclick="getLocation_start()" >Set Start as my current location</button>
                <button class="btn btn-primary" onclick="getLocation_end()" >Set End as my current location</button>
 			         {!! $map['html'] !!}
@@ -138,7 +160,7 @@
                   url : "{{action('DriverController@start')}}", 
                   success : function (data) {
                       //alert(data);
-                      window.location="{{route('driver.packageedit')}}";
+                      window.location="{{route('driver.packageedit',$package->id)}}";
                   }
                   });
           }
@@ -166,7 +188,7 @@
                   url : "{{action('DriverController@end')}}", 
                   success : function (data) {
                       //alert(data);
-                      window.location="{{route('driver.packageedit')}}";
+                      window.location="{{route('driver.packageedit',$package->id)}}";
                   }
                   });
           }
@@ -235,13 +257,13 @@
               {
                 //alert('start address set');
                 document.getElementById('startaddress').value = results[0].formatted_address;
-
+                document.getElementById('from').value = results[0].formatted_address;
               } 
               else
               {
                 //alert('end address set');
                 document.getElementById('endaddress').value = results[0].formatted_address;
-              
+                document.getElementById('to').value = results[0].formatted_address;
               } 
                 
 

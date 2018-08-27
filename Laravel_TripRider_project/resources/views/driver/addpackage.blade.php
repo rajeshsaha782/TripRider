@@ -109,6 +109,20 @@
 
               <br/>
               <div class="form-label-group">
+              <label for="">Car Type</label>
+              
+               <select name="Car_type" class="form-control" required>
+                 <option value="Taxi" @if (old( 'Car_type')=="Taxi" ){{ 'selected'}} @endif>Taxi</option>
+                 <option value="Micro"@if (old( 'Car_type')=="Micro" ){{ 'selected'}} @endif>Micro</option>
+                 <option value="Noah"@if (old( 'Car_type')=="Noah" ){{ 'selected'}} @endif>Noah</option>
+                 <option value="Hiace"@if (old( 'Car_type')=="Hiace" ){{ 'selected'}} @endif>Hiace</option>
+               </select>
+                
+          
+              </div>
+               
+              <br/>
+              <div class="form-label-group">
 			        <label for="">Trip Type</label>
                <input type="radio" name="Trip_Type" value="oneway" @if (old( 'Trip_Type')=="oneway" ){{ 'checked'}} @endif required>Oneway 
                  <input type="radio" name="Trip_Type" value="bothway" @if (old( 'Trip_Type')=="bothway" ){{ 'checked'}} @endif required>Bothway
@@ -147,10 +161,17 @@
                 </div>
                @endif 
 
+              
+               <label >From</label><input id="from" placeholder="From" class="form-control" name="from" />
+               <label >To</label><input id="to" placeholder="To" class="form-control"   name="to" />
+               <br/>
+              <br/>
+
                <button class="btn btn-primary" onclick="getLocation_start()" >Set Start as my current location</button>
                <button class="btn btn-primary" onclick="getLocation_end()" >Set End as my current location</button>
 			         {!! $map['html'] !!}
-               <input id="startaddress" style="visibility: hidden;" name="startaddress" />
+               
+                <input id="startaddress" style="visibility: hidden;" name="startaddress" />
                <input id="endaddress" style="visibility: hidden;" name="endaddress" />
               </div>
 			  
@@ -278,12 +299,14 @@
               {
                 //alert('start address set');
                 document.getElementById('startaddress').value = results[0].formatted_address;
+                document.getElementById('from').value = results[0].formatted_address;
 
               } 
               else
               {
                 //alert('end address set');
                 document.getElementById('endaddress').value = results[0].formatted_address;
+                document.getElementById('to').value = results[0].formatted_address;
               
               } 
                 
