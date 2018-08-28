@@ -29,18 +29,58 @@
     <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 	
-      <table style="padding-left:20px" width="60%"><tr><td>
-    <label >Departure Date:</label><input id="datepicker" width="276" /><br/>
-	</td><td>
-	<label >Return Date:</label><input id="datepicker2" width="276" /><br/>
-    </td>
-	</tr>
-	<tr><td>
-    <label >From:</label><input id="datepicker" width="276" /><br/>
-	</td><td>
-	<label >To:</label><input id="datepicker" width="276" /><br/>
-    </td>
-	</tr>
+    <table style="padding-left:20px" width="100%">
+		<tr height="70px"  colspan="3">
+			<td>
+				
+				  <label >Trip Type:</label>
+					<input type="radio"  id="oneway" name="optradio" value="oneway" checked />One Way
+				  
+					<input type="radio" id="bothway" name="optradio" value="bothway"/>Both Way
+				  
+				  <br/>
+				  <br/>
+			</td>
+			<td>
+				<label for="sel1">Car Type</label>
+				  <select id="cartype" name="cartype">
+					<option value="taxi">Taxi (max 4)</option>
+					<option value="micro">Micro (max 7)</option>
+					<option value="noah">Noah (max 7)</option>
+					<option value="haice">Haice (max 10)</option>
+				  </select>
+				  <br/>
+				  <br/>
+			</td>
+		</tr>
+		<tr colspan="3">
+			<td>
+				<label >Departure Date:</label><input id="datepicker"  width="276" /><br/>
+				  <br/>
+				  <br/>
+				  <br/>
+			</td>
+			<td>
+				<label >Return Date:</label><input id="datepicker2"  width="276" /><br/>
+				  <br/>
+				  <br/>
+				  <br/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label >From:</label><input  width="276" disabled /><br/>
+				  <br/>
+			</td>
+			<td>
+				<label >To:</label><input  width="276" disabled /><br/>
+				  <br/>
+			</td>
+			<td>
+				<label >Estimated Cost</label><input  width="276" disabled /><br/>
+				  <br/>
+			</td>
+		</tr>
 	</table>
 	<br/>
 	<div id="map" style="width:100%;height:400px;"></div><br/><br/>
