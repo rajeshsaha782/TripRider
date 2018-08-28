@@ -24,7 +24,7 @@ class DriverController extends Controller
         DB::table('users')
                 ->join('packages', 'packages.driver_id', '=', 'users.id')
                 ->where('driver_id',session('user')->id)
-                ->select('users.name as driverName', 'users.*','packages.name as packageName','packages.*')
+                ->select('users.name as driverName', 'users.*','packages.title as packageName','packages.*')
                 ->get();
 
             $activetrip=DB::table('users')
@@ -34,17 +34,17 @@ class DriverController extends Controller
                     ->where('booked_manual_trips.status',"Ongoing")
                     ->first();
 
-            if($activetrip==null)
-            {
-                $activetrip=DB::table('users')
-                    ->join('booked_package_trips', 'booked_package_trips.rider_id', '=', 'users.id')
-                    ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
-                    ->where('driver_id',session('user')->id)
-                    ->where('booked_package_trips.status',"Ongoing")
-                    ->first();
-            }        
+                if($activetrip==null)
+                {
+                    $activetrip=DB::table('users')
+                        ->join('booked_package_trips', 'booked_package_trips.rider_id', '=', 'users.id')
+                        ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
+                        ->where('booked_package_trips.driver_id',session('user')->id)
+                        ->where('booked_package_trips.status',"Ongoing")
+                        ->first();
+                }        
 
-           // dd($activetrip);
+           //dd($activetrip);
                     
         
 
@@ -148,7 +148,7 @@ class DriverController extends Controller
         
 
         $Package=new Package();
-        $Package->name=$request->Name;
+        $Package->title=$request->Name;
         $Package->from=$request->from;
         $Package->to=$request->to;
         $Package->trip_length=$request->Triplength;
@@ -181,7 +181,7 @@ class DriverController extends Controller
         $packages=DB::table('users')
                 ->join('packages', 'packages.driver_id', '=', 'users.id')
                 ->where('driver_id',session('user')->id)
-                ->select('users.name as driverName', 'users.*','packages.name as packageName','packages.*')
+                ->select('users.name as driverName', 'users.*','packages.title as packageName','packages.*')
                 ->get();
         //dd($packages);
 
@@ -222,7 +222,7 @@ class DriverController extends Controller
         $package=DB::table('users')
                 ->join('packages', 'packages.driver_id', '=', 'users.id')
                 ->where('driver_id',session('user')->id)
-                ->select('users.name as driverName', 'users.*','packages.name as packageName','packages.*')
+                ->select('users.name as driverName', 'users.*','packages.title as packageName','packages.*')
                 ->where('packages.id',$id)
                 ->first();
 
@@ -353,7 +353,7 @@ class DriverController extends Controller
 
         $Package=Package::Find($id);
 
-        $Package->name=$request->Name;
+        $Package->title=$request->Name;
         $Package->from=$request->from;
         $Package->to=$request->to;
         $Package->trip_length=$request->Triplength;

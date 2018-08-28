@@ -45,7 +45,7 @@
            	{{csrf_field()}}
 				<div class="form-label-group">
 			  <label for="inputUserame">Package Name</label>
-                <input type="text" name="Name" id="inputName" value="{{$package->name}}" class="form-control" placeholder="Package Name" required autofocus>
+                <input type="text" name="Name" id="inputName" value="{{$package->title}}" class="form-control" placeholder="Package Name" required autofocus>
                 
               </div>
 
@@ -168,7 +168,7 @@
                $.ajax({
                   // method: 'POST', 
                   data: { 'start_lat': position.coords.latitude, 'start_lan': position.coords.longitude },
-                  url : "{{action('DriverController@start')}}", 
+                  url : "{{action('RiderController@start')}}", 
                   success : function (data) {
                       //alert(data);
                       window.location="{{route('driver.packageedit',$package->id)}}";
@@ -196,7 +196,7 @@
                $.ajax({
                   // method: 'POST', 
                   data: { 'end_lat': position.coords.latitude, 'end_lan': position.coords.longitude },
-                  url : "{{action('DriverController@end')}}", 
+                  url : "{{action('RiderController@end')}}", 
                   success : function (data) {
                       //alert(data);
                       window.location="{{route('driver.packageedit',$package->id)}}";
@@ -221,7 +221,7 @@
             $.ajax({
             // method: 'POST', 
             data: { 'start_lat': newLat, 'start_lan': newLng },
-            url : "{{action('DriverController@start')}}", 
+            url : "{{action('RiderController@start')}}", 
             success : function (data) {
                 //alert(data);
                 address(newLat,newLng,"start");
@@ -236,7 +236,7 @@
             $.ajax({
             // method: 'POST', 
             data: { 'end_lat': newLat, 'end_lan': newLng },
-            url : "{{action('DriverController@end')}}", 
+            url : "{{action('RiderController@end')}}", 
             success : function (data) {
                 //alert(data);
                 address(newLat,newLng,"end");

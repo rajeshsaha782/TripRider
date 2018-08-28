@@ -135,7 +135,7 @@
                                     <hr/>
                                     <b style="font-size:16px">Trip Type: {{$activetrip->trip_type}}<br/>
                                     Payment Status: {{$activetrip->payment_info}}<br/>
-                                    Trip Fare: {{$activetrip->cost}}</b>
+                                    Trip Fare: {{$activetrip->total_cost}}</b>
                                     <button class="pull-right btn btn-primary" onclick="window.location='activetrip.html'">View</button>
                                 </div>
                         

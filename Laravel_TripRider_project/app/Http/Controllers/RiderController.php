@@ -232,7 +232,7 @@ class RiderController extends Controller
         $trip->to=$request->endaddress;
         $trip->car_type=$request->Car_type;
         $trip->trip_type=$request->Trip_Type;
-        $trip->cost=$request->totalcost;
+        $trip->total_cost=$request->totalcost;
         $trip->start_latitude=session('start_lat');
         $trip->start_longitude=session('start_lan');
         $trip->end_latitude=session('end_lat');
