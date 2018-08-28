@@ -46,6 +46,7 @@ Route::post('/driver/changepassword', 'DriverController@savechangepassword');
 
 Route::get('/rider/dashboard', 'RiderController@dashboard')->name('rider.dashboard');
 Route::get('/rider/packages', 'RiderController@packages')->name('rider.packages');
+Route::get('/rider/packagedetail/{id}', 'RiderController@packagedetail')->name('rider.packagedetail');
 Route::get('/rider/mytrips', 'RiderController@mytrips')->name('rider.mytrips');
 Route::get('/rider/viewprofile/{id}', 'RiderController@viewprofile')->name('rider.viewprofile');
 Route::get('/rider/editprofile/{id}', 'RiderController@editprofile')->name('rider.editprofile');
