@@ -88,76 +88,18 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach($result as $result)
                 <tr class="odd gradeX">
-                    <td><a href="viewprofile.html">rakib</a></td>
-                    <td><a href="packagedetails.html">Trident</a></td>
-                    
-                    <td>Khilkhet</td>
-                    <td>Chittagong</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">1200</td>
+                    <td><a href="{{route('admin.driverviewprofile', ['id' => $result->driver_id])}}">{{$result->name}}</a></td>
+                    <td><a href="{{route('admin.packagedetails', ['id' => $result->id])}}">Prremium</a></td>
+                    <td>{{$result->from}}</td>
+                    <td>{{$result->to}}</td>
+                    <td class="center">{{$result->start_date}}</td>
+                    <td class="center">{{$result->end_date}}</td>
+                    <td class="center">{{$result->total_cost}}</td>
                 </tr>
-                <tr class="even gradeC">
-                    <td><a href="viewprofile.html">rakib</a></td>
-                    <td><a href="packagedetails.html">Trident</a></td>
-                    
-                    <td>Kuril</td>
-                    <td>Comilla</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">500</td>
-                </tr>
-                <tr class="odd gradeA">
-                    <td><a href="viewprofile.html">rakib</a></td>
-                    <td><a href="packagedetails.html">Trident</a></td>
-                    
-                    <td>Comilla</td>
-                    <td>Borisal</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">500</td>
-                </tr>
-                <tr class="even gradeA">
-                    <td><a href="viewprofile.html">rakib</a></td>
-                    <td><a href="packagedetails.html">Trident</a></td>
-                   
-                    <td>Sylhet</td>
-                    <td>Dhaka</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">500</td>
-                </tr>
-                <tr class="odd gradeA">
-                    <td><a href="viewprofile.html">rakib</a></td>
-                    <td><a href="packagedetails.html">Trident</a></td>
-                    
-                    <td>Pubna</td>
-                    <td>Dhaka</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">500</td>
-                </tr>
-                <tr class="even gradeA">
-                    <td><a href="viewprofile.html">rakib</a></td>
-                    <td><a href="packagedetails.html">Trident</a></td>
-                    
-                    <td>Dhaka</td>
-                    <td>Comilla</td>
-                    <<td class="center">12-05-18</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">500</td>
-                </tr>
-                <tr class="gradeA">
-                    <td><a href="viewprofile.html">rakib</a></td>
-                    <td><a href="packagedetails.html">Trident</a></td>
-                    
-                    <td>Dhaka</td>
-                    <td>Comilla</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">500</td>
-                </tr>
+                 @endforeach
+                
             </tbody>
         </table>
     </div>

@@ -93,45 +93,6 @@
                     <td class="center">12-05-18</td>
                     <td class="center">1200</td>
                 </tr>
-                <tr class="even gradeC">
-                    <td><a href="viewprofilerider.html">Robi</a></td>
-                   
-                    <td class="center">12-05-18</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">500</td>
-                </tr>
-                <tr class="odd gradeA">
-                    <td><a href="viewprofilerider.html">Efti</a></td>
-                   
-                    <td class="center">12-05-18</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">500</td>
-                </tr>
-                <tr class="even gradeA">
-                    <td><a href="viewprofilerider.html">Rajesh</a></td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">500</td>
-                </tr>
-                <tr class="odd gradeA">
-                    <td><a href="viewprofilerider.html">Toma</a></td>
-                   
-                    <td class="center">12-05-18</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">500</td>
-                </tr>
-                <tr class="even gradeA">
-                    <td><a href="viewprofilerider.html">Tanim</a></td>
-                    <<td class="center">12-05-18</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">500</td>
-                </tr>
-                <tr class="gradeA">
-                    <td><a href="viewprofilerider.html">Rifat</a></td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">500</td>
-                </tr>
             </tbody>
         </table>
     </div>

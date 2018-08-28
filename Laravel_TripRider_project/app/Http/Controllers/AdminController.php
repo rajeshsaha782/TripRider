@@ -26,10 +26,10 @@ class AdminController extends Controller
         $result = DB::table('booked_package_trips')
          ->join('packages', 'booked_package_trips.package_id', '=', 'packages.id')
          ->join('users', 'booked_package_trips.rider_id', '=', 'users.id')
-         //->select('users.*', 'contacts.phone', 'orders.price')
          ->get()->toArray();
         //dd($TotalAdmin,$TotalDriver,$TotalRider,$result);
-          
+         //->select('users.*', 'contacts.phone', 'orders.price')
+          //dd($result);
 
         return view('admin.dashboard')
             ->with('admin',$admin)
@@ -58,7 +58,7 @@ class AdminController extends Controller
         $admin=User::Find(session('user')->id);
         $package=Package::Find($id);
 
-        //dd($package->id);
+        //dd($package);
         $driver=User::Find($package->driver_id);
         //dd($driver);
 
@@ -66,7 +66,7 @@ class AdminController extends Controller
         return view('admin.packagedetails') 
         ->with('admin',$admin)
         ->with('driver',$driver)
-        
+
         ->with('package',$package);
 
     }
@@ -120,6 +120,7 @@ class AdminController extends Controller
         $admin=User::Find(session('user')->id);
         $adminview=User::Find($id);
 
+         
 
         return view('admin.adminviewprofile') 
         ->with('admin',$admin)
@@ -134,8 +135,16 @@ class AdminController extends Controller
         $admin=User::Find(session('user')->id);
         $rider=User::Find($id);
 
+
+        $result = DB::table('booked_package_trips')
+         ->join('packages', 'booked_package_trips.package_id', '=', 'packages.id')
+         ->join('users', 'booked_package_trips.driver_id', '=', 'users.id')
+         ->get()->toArray();
+
         return view('admin.riderviewprofile')
             ->with('admin',$admin)
+            ->with('result',$result)
+
             ->with('rider',$rider);
 
     }
@@ -147,8 +156,17 @@ class AdminController extends Controller
         $admin=User::Find(session('user')->id);
         $driver=User::Find($id);
 
+     $result = DB::table('booked_package_trips')
+         ->join('packages', 'booked_package_trips.package_id', '=', 'packages.id')
+         ->join('users', 'booked_package_trips.rider_id', '=', 'users.id')
+         //->where('driver_id',$driver->id)
+
+         ->get()->toArray();
+       //dd($result);
         return view('admin.driverviewprofile')
             ->with('admin',$admin)
+            ->with('result',$result)
+
             ->with('driver',$driver);
 
     }
