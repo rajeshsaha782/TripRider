@@ -129,6 +129,7 @@ class HomeController extends Controller
         $user->email=$request->Email;
         $user->phonenumber=$request->PhoneNumber;
         $user->carnumber=$request->CarNumber;
+        $user->cartype=$request->Car_type;
         $user->password=$request->Password;
         $user->type="Driver";
         $user->status="emailNotActivate";

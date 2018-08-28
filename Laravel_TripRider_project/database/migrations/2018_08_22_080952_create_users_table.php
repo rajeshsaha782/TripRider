@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('phonenumber');
             $table->string('type');
             $table->string('carnumber')->nullable();
+            $table->string('cartype')->nullable();
             $table->string('image')->nullable();
             $table->string('status');
             $table->string('email_token');

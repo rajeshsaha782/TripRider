@@ -38,13 +38,27 @@
                    <div class="form-label-group">
 
                     <div class="row">
-                      <div class="col-6">
+                      <div class="col-4">
                          <label for="inputEmail">PhoneNumber</label>
                     <input type="number" id="PhoneNumber" name="PhoneNumber" value="{{old('PhoneNumber')}}" class="form-control" placeholder="PhoneNumber" required autofocus>
                       </div>
-                      <div class="col-6">
+                      <div class="col-4">
                          <label for="Car-number">Car Number</label>
                     <input type="text" id="Car-number" name="CarNumber" value="{{old('CarNumber')}}" class="form-control" placeholder="Car-number" required autofocus>
+                      </div>
+
+                      <br/>
+                      <div class="col-4">
+                      <label for="">Car Type</label>
+                      
+                       <select name="Car_type" class="form-control" required>
+                         <option value="Taxi" @if (old( 'Car_type')=="Taxi" ){{ 'selected'}} @endif>Taxi</option>
+                         <option value="Micro"@if (old( 'Car_type')=="Micro" ){{ 'selected'}} @endif>Micro</option>
+                         <option value="Noah"@if (old( 'Car_type')=="Noah" ){{ 'selected'}} @endif>Noah</option>
+                         <option value="Hiace"@if (old( 'Car_type')=="Hiace" ){{ 'selected'}} @endif>Hiace</option>
+                       </select>
+                        
+                  
                       </div>
                     </div>
                     
