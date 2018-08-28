@@ -49,7 +49,7 @@ class DriverController extends Controller
                 {
                     $activetrip=DB::table('users')
                     ->join('booked_trips', 'booked_trips.rider_id', '=', 'users.id')
-                    ->where('driver_id',session('user')->id)
+                    ->where('booked_trips.driver_id',session('user')->id)
                     ->where('booked_trips.status',"Ongoing")
                     ->join('packages','packages.id','=','booked_trips.trip_id')
                     ->first();

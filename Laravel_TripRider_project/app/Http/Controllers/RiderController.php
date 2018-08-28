@@ -10,7 +10,8 @@ use GMaps;
 use App\User;
 use App\Package;
 use App\Rider_requested_trip;
-use App\Booked_trip;
+use App\Booked_package_trip;
+use App\Booked_manual_trip;
 
 class RiderController extends Controller
 {
@@ -239,10 +240,9 @@ class RiderController extends Controller
 
         $trip->save();
 
-        $book=new Booked_trip();
+        $book=new Booked_manual_trip();
         $book->rider_id=session('user')->id;
-        $book->type="Manual";
-        $book->trip_id=$trip->id;
+        $book->rider_requested_trip_id=$trip->id;
         $book->start_date=$request->dDate;
         $book->end_date=$request->rDate;
         $book->status="Pending";
