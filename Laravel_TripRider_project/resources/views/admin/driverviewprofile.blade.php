@@ -5,16 +5,12 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <h1 class="page-header">Mr. Rifat Hasan</h1>
-        
+        <h1 class="page-header">{{$driver->name}}</h1>
     </div>
 </div>
 
-
-            <!-- /.row -->
 <div class="row">
     <div class="col-sm-4" align="center">  
-
         <h4 class="page-header" style="color: blue">Level one Driver</h4>
         <h2>Rating</h2>
             <span class="fa fa-star checked"></span>
@@ -27,7 +23,7 @@
          <table class="table table-striped">
             <tr >
               <td width="40%">Email</td>
-              <td class="text-justify">Rifat@gmail.com</td>
+              <td class="text-justify">{{$driver->name}}</td>
             </tr>
             <tr >
               <td width="40%">Address</td>
@@ -37,13 +33,13 @@
             </tr>
             <tr >
               <td width="40%">Phone number</td>
-              <td class="text-justify">019xxxxxxx</td>
+              <td class="text-justify">{{$driver->name}}</td>
             </tr>
           </table>
     </div>
     <div class="col-sm-4" style="color: blue;">
         <div class="row" align="center" >
-            <img src="../img/c.jpg" class="img-circle" alt="Cinque Terre" style="width: 70%">
+            <img src="../img/rajesh.jpg" class="img-circle" alt="Cinque Terre" style="width: 70%">
 
 
         </div>

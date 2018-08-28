@@ -39,7 +39,7 @@ Route::get('/admin/driverview', 'AdminController@driverview')->name('admin.drive
 Route::get('/admin/riderview', 'AdminController@riderview')->name('admin.riderview');
 Route::get('/admin/riderviewprofile/{id}', 'AdminController@riderviewprofile')->name('admin.riderviewprofile');
 Route::get('/admin/adminviewprofile/{id}', 'AdminController@adminviewprofile')->name('admin.adminviewprofile');
-Route::get('/admin/driverviewprofile/{id}', 'AdminController@riderviewprofile')->name('admin.driverviewprofile');
+Route::get('/admin/driverviewprofile/{id}', 'AdminController@driverviewprofile')->name('admin.driverviewprofile');
 Route::get('/admin/packages', 'AdminController@packages')->name('admin.packages');
 Route::get('/admin/packages/{id}', 'AdminController@packagedetails')->name('admin.packagedetails');
 

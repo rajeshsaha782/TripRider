@@ -5,19 +5,17 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Mr. Rakib Hasan</h1>
+        <h1 class="page-header">{{$rider->name}}</h1>
         
     </div>
 </div>
 
-
-            <!-- /.row -->
 <div class="row">
     <div class="col-sm-4" align="center">  
           <table class="table table-striped">
             <tr >
               <td width="40%">Email</td>
-              <td class="text-justify">Rifat@gmail.com</td>
+              <td class="text-justify">{{$rider->email}}</td>
             </tr>
             <tr >
               <td width="40%">Address</td>
@@ -27,7 +25,7 @@
             </tr>
             <tr >
               <td width="40%">Phone number</td>
-              <td class="text-justify">019xxxxxxx</td>
+              <td class="text-justify">{{$rider->phonenumber}}</td>
             </tr>
           </table>
         
@@ -35,7 +33,7 @@
     </div>
     <div class="col-sm-4" style="color: blue;">
         <div class="row" align="center" >
-            <img src="../img/c.jpg" class="img-circle" alt="Cinque Terre" style="width: 70%">
+            <img src="/img/rajesh.jpg" class="img-circle" alt="Cinque Terre" style="width: 70%">
 
 
         </div>
@@ -81,13 +79,12 @@
             </div>
 
     </div>
-</div>
 <div class="row">
     <div class="panel-body">
          <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
             <thead>
                 <tr>
-                    <th>Drider</th>
+                    <th>Driver</th>
                     <th>Package Name</th>
                     <th>From</th>
                     <th>To</th>

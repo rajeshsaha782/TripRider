@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\DB;
+
 
 
 class AdminController extends Controller
@@ -14,8 +16,19 @@ class AdminController extends Controller
       ///dd(session('user'));
 
         $admin=User::Find(session('user')->id);
+
+        $TotalAdmin= count(DB::table('users')->where('type','=','Admin') ->get());
+        $TotalDriver= count(DB::table('users')->where('type','=','Driver') ->get());
+        $TotalRider= count(DB::table('users')->where('type','=','Rider') ->get());
+        
+        //dd($TotalAdmin,$TotalDriver,$TotalRider);
+          
+
         return view('admin.dashboard')
-            ->with('admin',$admin);
+            ->with('admin',$admin)
+            ->with('TotalAdmin',$TotalAdmin)
+            ->with('TotalDriver',$TotalDriver)
+            ->with('TotalRider',$TotalRider);
     }
 
      public function packages(Request $request)
@@ -31,8 +44,13 @@ class AdminController extends Controller
       ///dd(session('user'));
 
         $admin=User::Find(session('user')->id);
+        //dd($admin);
+        $totaladmin= DB::table('users')->where('type','=','Admin') ->get()->toArray();
+
+        //dd($adminview);
         return view('admin.adminview')
-            ->with('admin',$admin);
+            ->with('admin',$admin)
+            ->with('totaladmin',$totaladmin);
     }
 
      public function driverview(Request $request)
@@ -40,8 +58,12 @@ class AdminController extends Controller
       ///dd(session('user'));
 
         $admin=User::Find(session('user')->id);
+        $totaldriver= DB::table('users')->where('type','=','Driver') ->get()->toArray();
+
         return view('admin.driverview')
-            ->with('admin',$admin);
+            ->with('admin',$admin)
+            ->with('totaldriver',$totaldriver);
+
     }
 
      public function riderview(Request $request)
@@ -49,8 +71,13 @@ class AdminController extends Controller
       ///dd(session('user'));
 
         $admin=User::Find(session('user')->id);
+
+        $totalrider= DB::table('users')->where('type','=','rider') ->get()->toArray();
+
         return view('admin.riderview')
-            ->with('admin',$admin);
+            ->with('admin',$admin)
+            ->with('totalrider',$totalrider);
+
     }
 
     public function adminviewprofile($id,Request $request)
@@ -58,7 +85,13 @@ class AdminController extends Controller
       ///dd(session('user'));
 
         $admin=User::Find(session('user')->id);
-        return view('admin.adminviewprofile') ->with('admin',$admin);
+        $adminview=User::Find($id);
+
+
+        return view('admin.adminviewprofile') 
+        ->with('admin',$admin)
+        ->with('adminview',$adminview);
+
     }
 
     public function riderviewprofile($id,Request $request)
@@ -66,8 +99,12 @@ class AdminController extends Controller
       ///dd(session('user'));
 
         $admin=User::Find(session('user')->id);
+        $rider=User::Find($id);
+
         return view('admin.riderviewprofile')
-            ->with('admin',$admin);
+            ->with('admin',$admin)
+            ->with('rider',$rider);
+
     }
 
     public function driverviewprofile($id,Request $request)
@@ -75,8 +112,12 @@ class AdminController extends Controller
       ///dd(session('user'));
 
         $admin=User::Find(session('user')->id);
+        $driver=User::Find($id);
+
         return view('admin.driverviewprofile')
-            ->with('admin',$admin);
+            ->with('admin',$admin)
+            ->with('driver',$driver);
+
     }
 
     public function viewprofile($id,Request $request)
