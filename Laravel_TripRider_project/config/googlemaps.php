@@ -23,3 +23,5 @@ return [
 
     'http_proxy' => env('HTTP_PROXY', null), // Proxy host and port
 ];
+//AIzaSyAXWf5kIl7mF3QMTatzK8Y7m-sO16lvr9A
+//AIzaSyA6PfzusjGCzRcG1S1zd34WUZZ3y-Dg6lk&libraries

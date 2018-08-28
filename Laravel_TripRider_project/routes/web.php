@@ -36,6 +36,7 @@ Route::get('/driver/packages', 'DriverController@packages')->name('driver.packag
 Route::get('/driver/packagedetail/{id}', 'DriverController@packagedetail')->name('driver.packagedetail');
 Route::get('/driver/packageedit/{id}', 'DriverController@packageedit')->name('driver.packageedit');
 Route::post('/driver/packageedit/{id}', 'DriverController@savepackageedit');
+Route::get('/driver/packagedelete/{id}', 'DriverController@packagedelete')->name('driver.packagedelete');
 Route::get('/driver/viewprofile/{id}', 'DriverController@viewprofile')->name('driver.viewprofile');
 Route::get('/driver/editprofile/{id}', 'DriverController@editprofile')->name('driver.editprofile');
 Route::post('/driver/editprofile/{id}', 'DriverController@saveeditprofile');
@@ -46,7 +47,9 @@ Route::post('/driver/changepassword', 'DriverController@savechangepassword');
 Route::get('/rider/dashboard', 'RiderController@dashboard')->name('rider.dashboard');
 Route::get('/rider/packages', 'RiderController@packages')->name('rider.packages');
 Route::get('/rider/mytrips', 'RiderController@mytrips')->name('rider.mytrips');
-Route::get('/rider/viewprofile', 'RiderController@viewprofile')->name('rider.viewprofile');
-Route::get('/rider/editprofile', 'RiderController@editprofile')->name('rider.editprofile');
+Route::get('/rider/viewprofile/{id}', 'RiderController@viewprofile')->name('rider.viewprofile');
+Route::get('/rider/editprofile/{id}', 'RiderController@editprofile')->name('rider.editprofile');
+Route::post('/rider/editprofile/{id}', 'RiderController@saveeditprofile');
 Route::get('/rider/changepassword', 'RiderController@changepassword')->name('rider.changepassword');
+Route::post('/rider/changepassword', 'RiderController@savechangepassword');
 

@@ -48,6 +48,8 @@
                 Trip type: {{$package->trip_type}} <br/>
                 Car: {{$package->car_type}}<br/>
                 Trip Length: {{$package->trip_length}}<br/>
+                One way Distance: {{$distance['distance']}}<br/>
+                One way Estimated time: {{$distance['time']}}<br/>
                 
                 <br/>
                 </p>
@@ -64,10 +66,11 @@
 
         <div class="panel-footer">
         <a href="{{route('driver.packageedit',$package->id)}}"><button type="button" class="btn btn-primary">Edit</button></a>
-        <button class="btn btn-danger" >Delete</button>
+
+        <a href="{{route('driver.packagedelete',$package->id)}}"><button type="button" class="btn btn-danger">Delete</button></a>
+        
         </div>
         <!-- /.panel-body -->
     </div>
-			
 
 @endsection

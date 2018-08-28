@@ -16,9 +16,11 @@ class DriverController extends Controller
     public function dashboard(Request $request)
     {
         $driver=User::Find(session('user')->id);
+        $totalPackages= Package::where('driver_id',session('user')->id)->count();
 
     	return view('driver.dashboard')
-            ->with('driver',$driver);
+            ->with('driver',$driver)
+            ->with('totalPackages',$totalPackages);
     }
 
     public function addpackage(Request $request)
@@ -154,6 +156,32 @@ class DriverController extends Controller
                 ->with('packages',$packages);
     }
 
+    public static function getdistance($lat1,$lon1,$lat2,$lon2)
+    {
+        // $theta = $lon1 - $lon2;
+        // $miles = (sin(deg2rad($lat1)) * sin(deg2rad($lat2))) + (cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta)));
+        // $miles = acos($miles);
+        // $miles = rad2deg($miles);
+        // $miles = $miles * 60 * 1.1515;
+        // $kilometers = $miles * 1.609344;
+        // return $kilometers; 
+
+        $url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=".$lat1.",".$lon1."&destinations=".$lat2.",".$lon2."&mode=driving&language=pl-PL";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $response_a = json_decode($response, true);
+        $dist = $response_a['rows'][0]['elements'][0]['distance']['text'];
+        $time = $response_a['rows'][0]['elements'][0]['duration']['text'];
+
+        return array('distance' => $dist, 'time' => $time);
+    }
+
     public function packagedetail($id,Request $request)
     {
         $driver=User::Find(session('user')->id);
@@ -165,6 +193,9 @@ class DriverController extends Controller
                 ->first();
 
        // dd($package);
+
+
+        
 
         $config['zoom']='auto';
         $config['map_height']='500px';
@@ -202,24 +233,23 @@ class DriverController extends Controller
         GMaps::add_marker($marker_end);
 
 
-        
-
-       
-
-        $config['directions'] = TRUE;
-        $config['directionsStart'] = $start_pos;
-        $config['directionsEnd'] = $end_pos;
-        $config['directionsDivID'] = 'directionsDiv';
+        // $config['directions'] = TRUE;
+        // $config['directionsStart'] = $start_pos;
+        // $config['directionsEnd'] = $end_pos;
+        // $config['directionsDivID'] = 'directionsDiv';
         // $config['trafficOverlay'] = TRUE;
 
         GMaps:: initialize($config);
 
         $map=GMaps::create_map();
 
+        $distance=DriverController::getdistance($package->start_latitude,$package->start_longitude,$package->end_latitude,$package->end_longitude);
+
         return view('driver.packagedetail')
                 ->with('driver',$driver)
                 ->with('package',$package)
-                ->with('map',$map);
+                ->with('map',$map)
+                ->with('distance',$distance);
     }
 
     public function packageedit($id,Request $request)
@@ -310,6 +340,14 @@ class DriverController extends Controller
 
 
         return redirect()->route('driver.packageedit',$id);
+    }
+    public function packagedelete($id,Request $request)
+    {
+        $package=Package::Find($id);
+        $package->delete();
+
+        return redirect()->route('driver.packages');
+
     }
 
     public function viewprofile($id,Request $request)

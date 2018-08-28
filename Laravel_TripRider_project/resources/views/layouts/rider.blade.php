@@ -28,7 +28,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="User">
-          <a class="nav-link"  href="viewProfile">
+          <a class="nav-link"  href="{{route('rider.viewprofile',session('user')->id)}}">
             <img class="rounded-circle" style="width:30px;" src="/img/user_pic.jpg"/></i>
             <span class="nav-link-text"> Md Mashiul Azam</span>
           </a>
@@ -59,10 +59,10 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a  href="{{route('rider.viewprofile')}}">View Profile</a>
+              <a  href="{{route('rider.viewprofile',session('user')->id)}}">View Profile</a>
             </li>
             <li>
-              <a  href="{{route('rider.editprofile')}}">Edit Profile</a>
+              <a  href="{{route('rider.editprofile',session('user')->id)}}">Edit Profile</a>
             </li>
 			<li>
               <a  href="{{route('rider.changepassword')}}">Change Password</a>
