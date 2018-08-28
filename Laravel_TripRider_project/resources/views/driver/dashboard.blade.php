@@ -123,14 +123,19 @@
                         
 						<div class="panel-body">
                                      <p>
-                                        <img class="rounded" width="10%" src="../img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Rider</strong><!--<img class="rounded" style="padding-left:15%" width="40%" src="../img/p1.jpg"/>-->
-                                        <span class="pull-right text-muted" style="font-size:16px"><br/>From-Bashundhara-To-Narayanganj<br/>Trip Started : 2018-08-28 23:59:59</span>
+                                        <img class="rounded" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Rider:{{$activetrip->name}}</strong><!--<img class="rounded" style="padding-left:15%" width="40%" src="../img/p1.jpg"/>-->
+                                        <span class="pull-right text-muted" style="font-size:16px"><br/>
+                                            <b>From</b>-{{$activetrip->from}}<br/>
+                                            <b>To</b>-{{$activetrip->to}}<br/>
+                                            <b>Trip Started</b>- {{$activetrip->start_date}}<br/>
+                                            <b>Trip Ended</b>- {{$activetrip->end_date}}<br/>
+                                        </span>
                                     </p>
-                                    <i>Phone no: 019xxxxxxxx</i>
+                                    <i>Phone no: {{$activetrip->phonenumber}}</i>
                                     <hr/>
-                                    <b style="font-size:16px">Trip Type: Both Way<br/>
-                                    Payment Status: Half paid<br/>
-                                    Trip Fare: 120</b>
+                                    <b style="font-size:16px">Trip Type: {{$activetrip->trip_type}}<br/>
+                                    Payment Status: {{$activetrip->payment_info}}<br/>
+                                    Trip Fare: {{$activetrip->cost}}</b>
                                     <button class="pull-right btn btn-primary" onclick="window.location='activetrip.html'">View</button>
                                 </div>
                         

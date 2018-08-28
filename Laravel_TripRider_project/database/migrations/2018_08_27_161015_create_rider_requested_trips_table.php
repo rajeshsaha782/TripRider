@@ -20,7 +20,7 @@ class CreateRiderRequestedTripsTable extends Migration
             $table->string('to');
             $table->string('car_type');
             $table->string('trip_type');
-            $table->float('cost',10,2);
+            $table->float('total_cost',10,2);
             $table->float('start_latitude',12,10);
             $table->float('start_longitude',12,10);
             $table->float('end_latitude',12,10);

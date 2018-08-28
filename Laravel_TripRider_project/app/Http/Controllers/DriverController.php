@@ -10,7 +10,8 @@ use App\Mail\ChangePasswordAlert;
 use GMaps;
 use App\User;
 use App\Package;
-use App\Booked_trip;
+use App\Booked_package_trip;
+use App\Booked_manual_trip;
 use App\Rider_requested_trip;
 
 class DriverController extends Controller
@@ -26,39 +27,34 @@ class DriverController extends Controller
                 ->select('users.name as driverName', 'users.*','packages.name as packageName','packages.*')
                 ->get();
 
-        $activetrip=DB::table('users')
-                    ->join('booked_trips', 'booked_trips.rider_id', '=', 'users.id')
+            $activetrip=DB::table('users')
+                    ->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', 'users.id')
+                    ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
                     ->where('driver_id',session('user')->id)
-                    ->where('booked_trips.status',"Ongoing")
+                    ->where('booked_manual_trips.status',"Ongoing")
                     ->first();
 
+            if($activetrip==null)
+            {
+                $activetrip=DB::table('users')
+                    ->join('booked_package_trips', 'booked_package_trips.rider_id', '=', 'users.id')
+                    ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
+                    ->where('driver_id',session('user')->id)
+                    ->where('booked_package_trips.status',"Ongoing")
+                    ->first();
+            }        
 
+           // dd($activetrip);
                     
         
 
-                if($activetrip->type=="Manual")
-                {
-                    $activetrip=DB::table('users')
-                    ->join('booked_trips', 'booked_trips.rider_id', '=', 'users.id')
-                    ->where('driver_id',session('user')->id)
-                    ->where('booked_trips.status',"Ongoing")
-                    ->join('rider_requested_trips','rider_requested_trips.id','=','booked_trips.trip_id')
-                    ->first();
-                }
-                else
-                {
-                    $activetrip=DB::table('users')
-                    ->join('booked_trips', 'booked_trips.rider_id', '=', 'users.id')
-                    ->where('booked_trips.driver_id',session('user')->id)
-                    ->where('booked_trips.status',"Ongoing")
-                    ->join('packages','packages.id','=','booked_trips.trip_id')
-                    ->first();
-                }
-                dd($activetrip);
+                
+                
 
     	return view('driver.dashboard')
             ->with('driver',$driver)
-            ->with('totalPackages',$totalPackages);
+            ->with('totalPackages',$totalPackages)
+            ->with('activetrip',$activetrip);
     }
 
     public function addpackage(Request $request)
