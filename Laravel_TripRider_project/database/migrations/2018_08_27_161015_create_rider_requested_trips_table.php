@@ -15,7 +15,7 @@ class CreateRiderRequestedTripsTable extends Migration
     {
         Schema::create('rider_requested_trips', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('driver_id');
+            $table->integer('rider_id');
             $table->string('from');
             $table->string('to');
             $table->string('car_type');

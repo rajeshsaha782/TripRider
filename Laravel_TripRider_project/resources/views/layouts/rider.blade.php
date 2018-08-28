@@ -34,6 +34,12 @@
           </a>
 		  <hr/>
         </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link"  href="{{route('rider.manualtrip')}}">
+            <i class="fa fa-fw fa-table"></i>
+            <span class="nav-link-text">Make Trip</span>
+          </a>
+        </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
           <a class="nav-link"  href="{{route('rider.dashboard')}}">
             <i class="fa fa-fw fa-dashboard"></i>
@@ -46,6 +52,7 @@
             <span class="nav-link-text">Trip Packages</span>
           </a>
         </li>
+        
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
           <a class="nav-link"  href="{{route('rider.mytrips')}}">
             <i class="fa fa-fw fa-table"></i>

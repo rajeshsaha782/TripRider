@@ -18,6 +18,17 @@
                 
             </div>
 
+            <form method="post" enctype="multipart/form-data" class="form-signin">
+            {{csrf_field()}}
+
+            <div class="row">
+            <div class="col-lg-12">
+                    <img src="/uploads/package/{{$package->image}}" height="200" width="280" class="img-rounded" alt="Cinque Terre">
+                    <input  type="file" name="image" id="image"  class="form-control"><br/>
+             </div>
+                
+            </div>
+
 
 
             @if($errors->any())
@@ -99,12 +110,12 @@
                 <input type="number" name="TotalCost" id="inputPassword" value="{{$package->total_cost}}" class="form-control" placeholder="Total Cost" required>
          
               </div>
-			  <div class="form-label-group">
+			  <!-- <div class="form-label-group">
 			    <label for="">Image</label>
 					
                 <input  type="file" name="image" id="image"  class="form-control" required>
                 <span style="color: red">{{$errors->first('image')}}</span>
-              </div>
+              </div> -->
 			  <br/>
 			  <div class="form-label-group">
 

@@ -14,7 +14,18 @@
         <li class="breadcrumb-item active">My Dashboard</li>
       </ol>
       <!-- Icon Cards-->
+    @if(session('message'))
+                <div class=""style="background-color: green;opacity: 0.7;">
+                <ul>
+                 
+                    <li style="color: white">{{session('message')}}</li>
+                  
+                </ul>
+              </div>
+                  
+    @endif
       <div class="row">
+
         <div class="col-xl-3 col-sm-6 mb-3">
           <div class="card text-white bg-primary o-hidden  "> <!--h-100-->
             <div class="card-body">

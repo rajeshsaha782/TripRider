@@ -16,13 +16,13 @@ class CreateBookedTripsTable extends Migration
         Schema::create('booked_trips', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('rider_id');
-            $table->integer('driver_id');
+            $table->integer('driver_id')->nullable();
             $table->string('type');
             $table->integer('trip_id');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->string('status');
-            $table->string('payment_info');
+            $table->string('payment_info')->nullable();
             $table->timestamps();
         });
     }

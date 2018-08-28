@@ -27,7 +27,7 @@
     <table>
             <tr>
             <td width="30%">
-            <img class="img-thumbnail center" alt="Cinque Terre"  style="width:100%;" src="/img/p1.jpg"/>
+            <img src="/uploads/package/{{$package->image}}" height="200" width="280" class="img-rounded" alt="Cinque Terre">
             </td>
             <td width="3%">
             </td>

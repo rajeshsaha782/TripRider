@@ -56,8 +56,8 @@ class DriverController extends Controller
 
         if(!session('end_lat'))
         {
-            $request->session()->put('end_lat',23.6149501);
-            $request->session()->put('end_lan',90.4982625);
+            $request->session()->put('end_lat',23.821988);
+            $request->session()->put('end_lan',90.426378);
 
         }
         $end_pos=session('end_lat').','.session('end_lan');
@@ -312,7 +312,10 @@ class DriverController extends Controller
     }
     public function savepackageedit($id,Request $request)
     {
-        
+        //$file = $request->file('image');
+       // $file->move('uploads\package',$file->getClientOriginalName());
+
+
 
         $Package=Package::Find($id);
 
@@ -330,7 +333,11 @@ class DriverController extends Controller
         $Package->start_longitude=session('start_lan');
         $Package->end_latitude=session('end_lat');
         $Package->end_longitude=session('end_lan');
-        $Package->image="abc";
+        if($Package->image!=null)
+        {
+            $Package->image=$file->getClientOriginalName();
+        }
+        
         $Package->save();
 
         $request->session()->forget('start_lat');

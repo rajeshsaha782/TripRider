@@ -74,6 +74,9 @@ Route::post('/driver/changepassword', 'DriverController@savechangepassword');
 
 });
 
+Route::get('/start', 'RiderController@start');
+Route::get('/end', 'RiderController@end');
+Route::get('/calculatecost', 'RiderController@calculatecost');
 
 Route::get('/rider/dashboard', 'RiderController@dashboard')->name('rider.dashboard');
 Route::get('/rider/packages', 'RiderController@packages')->name('rider.packages');
@@ -85,7 +88,8 @@ Route::post('/rider/editprofile/{id}', 'RiderController@saveeditprofile');
 Route::get('/rider/changepassword', 'RiderController@changepassword')->name('rider.changepassword');
 Route::post('/rider/changepassword', 'RiderController@savechangepassword');
 
-
+Route::get('/rider/manualtrip', 'RiderController@manualtrip')->name('rider.manualtrip');
+Route::post('/rider/manualtrip', 'RiderController@savemanualtrip');
 
 
 });

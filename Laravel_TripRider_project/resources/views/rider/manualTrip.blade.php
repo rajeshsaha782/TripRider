@@ -1,86 +1,278 @@
 @extends('layouts.rider')
 
 @section('title')
- Dashboard | Rider
+ Dashboard | Make Trip
+@endsection
+
+
+@section('mapjs')
+{!! $map['js'] !!}
 @endsection
 
 @section('content')
-    <div class="container-fluid">
-      <!-- Breadcrumbs
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.html">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">Blank Page</li>
-      </ol>
-	  -->
-	  
-	  
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
-    <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-	
-      <table style="padding-left:20px" width="60%"><tr><td>
-    <label >Departure Date:</label><input id="datepicker" width="276" /><br/>
-	</td><td>
-	<label >Return Date:</label><input id="datepicker2" width="276" /><br/>
-    </td>
-	</tr>
-	<tr><td>
-    <label >From:</label><input id="datepicker" width="276" /><br/>
-	</td><td>
-	<label >To:</label><input id="datepicker" width="276" /><br/>
-    </td>
-	</tr>
-	</table>
-	<br/>
-	<div id="map" style="width:100%;height:400px;"></div><br/><br/>
-	<table width="100%">
-	<tr>
-	<td style="text-align:center">
-	<button  type="submit" class="btn btn-outline-primary" data-toggle="modal" data-target="#successfulModal">Request</button>
-	</td>
-	</tr>
-	</table>
 
-<script>
-function myMap() {
-  var mapCanvas = document.getElementById("map");
-  var mapOptions = {
-    center: new google.maps.LatLng(23.821931, 90.427497), zoom: 10
-  };
-  var map = new google.maps.Map(mapCanvas, mapOptions);
-}
-</script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap"></script>
-	
-	
-	<script>
-        $('#datepicker').datepicker({
-            uiLibrary: 'bootstrap4'
-        });
-    </script>
-	<script>
-        $('#datepicker2').datepicker({
-            uiLibrary: 'bootstrap4'
-        });
-    </script>
-    </div>
-	<div class="modal fade" id="successfulModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Send Successful</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
+<form method="post" class="form-signin">
+            {{csrf_field()}}
+        <div class="form-label-group">
+
+          <div class="row">
+            <div class="col-6">
+              <label for="inputUserame">Departure Date</label>
+                <input type="date" name="dDate" id="inputName" value="{{old('dDate')}}" class="form-control" placeholder="Departure Date" required autofocus>
+            </div>
+            <div class="col-6">
+              <label for="inputUserame">Return Date</label>
+                <input type="date" name="rDate" id="inputName" value="{{old('rDate')}}" class="form-control" placeholder="Return Date" required autofocus>
+            </div>
           </div>
-          <div class="modal-body" style="margin: 0px auto;width:50%"><img src="../img/ok.png" style="width:100%" class="rounded-circle"> </div>
+
+        
+                
+          </div>
           
-        </div>
+            
+
+              <br/>
+
+              <div class="form-label-group">
+
+
+                <div class="row">
+            <div class="col-6">
+             <label for="">Car Type</label>
+              
+               <select name="Car_type" class="form-control" required>
+                 <option value="Taxi" @if (old( 'Car_type')=="Taxi" ){{ 'selected'}} @endif>Taxi</option>
+                 <option value="Micro"@if (old( 'Car_type')=="Micro" ){{ 'selected'}} @endif>Micro</option>
+                 <option value="Noah"@if (old( 'Car_type')=="Noah" ){{ 'selected'}} @endif>Noah</option>
+                 <option value="Hiace"@if (old( 'Car_type')=="Hiace" ){{ 'selected'}} @endif>Hiace</option>
+               </select>
+            </div>
+            <div class="col-6">
+              <br/>
+               <label for="">Trip Type</label>
+               <input type="radio" name="Trip_Type" value="oneway" @if (old( 'Trip_Type')=="oneway" ){{ 'checked'}} @endif required>Oneway 
+                 <input type="radio" name="Trip_Type" value="bothway" @if (old( 'Trip_Type')=="bothway" ){{ 'checked'}} @endif required>Bothway
+            </div>
+          </div>
+
+              
+                
+          
+              </div>
+               
+              
+
+      
+        <div>
+               
+
+                <label >From</label><input id="from" name="from" placeholder="From" disabled class="form-control" name="from" />
+               <label >To</label><input id="to" name="to" placeholder="To" disabled class="form-control"   name="to" />
+         
+         <div class="row">
+           <div class="col-4">
+             <label for="cost">Distance(km)</label>
+          
+                <input  id="dist" name="dist" value="{{old('dist')}}" disabled class="form-control" placeholder="Distance" required>
+           </div>
+           <div class="col-4">
+             <label for="cost">Estimated Cost(Tk)</label>
+          
+                <input  id="cost" name="cost" value="{{old('cost')}}" disabled class="form-control" placeholder="Estimated Cost" required>
+           </div>
+           <div class="col-4">
+             <label for="cost">Estimated Time</label>
+          
+                <input  id="time" name="time" value="{{old('cost')}}" disabled class="form-control" placeholder="Estimated Time" required>
+           </div>
+         </div>
+         
+
       </div>
-    </div>
-    
+
+  <br/>
+
+  <button class="btn btn-primary" onclick="getLocation_start()" >Set Start as my current location</button>
+  <button class="btn btn-primary" onclick="getLocation_end()" >Set End as my current location</button>
+               {!! $map['html'] !!}
+   <input id="startaddress" style="visibility: hidden;" name="startaddress" />
+    <input id="endaddress" style="visibility: hidden;" name="endaddress" />
+    <input id="totalcost" style="visibility: hidden;" name="totalcost" />
+
+
+  <br/><br/>
+  <table width="100%">
+  <tr>
+  <td style="text-align:center">
+  <button  type="submit" class="btn btn-primary" >Request</button>
+  </td>
+  </tr>
+  </table>
+
+   <hr class="my-4">
+              
+            </form>
+
+<script type="text/javascript">
+
+          function getLocation_start() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(success, fail);
+          } else { 
+              alert("Browser not supported");
+          }
+
+          function success(position) 
+          {
+             
+               $.ajax({
+                  // method: 'POST', 
+                  data: { 'start_lat': position.coords.latitude, 'start_lan': position.coords.longitude },
+                  url : "{{action('RiderController@start')}}", 
+                  success : function (data) {
+                      //alert(data);
+                      window.location="{{route('rider.manualtrip')}}";
+                  }
+                  });
+          }
+          function fail() {
+              alert("it fails to get CurrentPosition");
+          }
+      }
+      </script>
+
+      <script type="text/javascript">
+
+          function getLocation_end() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(success, fail);
+          } else { 
+              alert("Browser not supported");
+          }
+
+          function success(position) 
+          {
+             
+               $.ajax({
+                  // method: 'POST', 
+                  data: { 'end_lat': position.coords.latitude, 'end_lan': position.coords.longitude },
+                  url : "{{action('RiderController@end')}}", 
+                  success : function (data) {
+                      //alert(data);
+                      window.location="{{route('rider.manualtrip')}}";
+                  }
+                  });
+          }
+          function fail() {
+              alert("it fails to get CurrentPosition");
+          }
+      }
+      </script>
+
+
+
+      <script type="text/javascript">
+    //geoLocationInit();
+        function set_start(newLat, newLng)
+        {
+            //alert(newLat+","+newLng);
+            
+
+            $.ajax({
+            // method: 'POST', 
+            data: { 'start_lat': newLat, 'start_lan': newLng },
+            url : "{{action('RiderController@start')}}", 
+            success : function (data) {
+                //alert(data);
+                address(newLat,newLng,"start");
+                calculate_cost();
+            }
+            });
+        }
+
+        function set_end(newLat, newLng)
+        {
+            //alert(newLat+","+newLng);
+
+            $.ajax({
+            // method: 'POST', 
+            data: { 'end_lat': newLat, 'end_lan': newLng },
+            url : "{{action('RiderController@end')}}", 
+            success : function (data) {
+                //alert(data);
+                address(newLat,newLng,"end");
+                calculate_cost();
+            }
+            });
+        }
+
+
+        function calculate_cost()
+        {
+           // alert("called");
+
+            $.ajax({
+            // method: 'POST', 
+            //data: { 'end_lat': newLat, 'end_lan': newLng },
+            url : "{{action('RiderController@calculatecost')}}", 
+            success : function (data) {
+                //alert(data);
+                document.getElementById('totalcost').value = data['cost'];
+                document.getElementById('cost').value = data['cost'];
+                document.getElementById('dist').value = data['distance']/1000;
+                document.getElementById('time').value = data['time'];
+            }
+            });
+        }
+
+
+
+        
+      </script>
+
+      <script type="text/javascript">
+
+        
+
+      function address(lat,lan,type)
+      {
+
+        //alert('address called');
+
+        var latLng = new google.maps.LatLng(lat, lan);
+        geocoder.geocode( { 'latLng': latLng}, function(results, status) 
+        {
+          if (status == google.maps.GeocoderStatus.OK) 
+          {
+            if (results[0]) 
+            {
+              alert(results[0].formatted_address);
+              if(type=="start")
+              {
+                //alert('start address set');
+                document.getElementById('startaddress').value = results[0].formatted_address;
+                document.getElementById('from').value = results[0].formatted_address;
+
+              } 
+              else
+              {
+                //alert('end address set');
+                document.getElementById('endaddress').value = results[0].formatted_address;
+                document.getElementById('to').value = results[0].formatted_address;
+              
+              } 
+                
+
+              }
+          } 
+          else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+
+
+      </script>
 @endsection

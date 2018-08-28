@@ -9,6 +9,8 @@ use App\Mail\ChangePasswordAlert;
 use GMaps;
 use App\User;
 use App\Package;
+use App\Rider_requested_trip;
+use App\Booked_trip;
 
 class RiderController extends Controller
 {
@@ -46,7 +48,7 @@ class RiderController extends Controller
         $response = curl_exec($ch);
         curl_close($ch);
         $response_a = json_decode($response, true);
-        $dist = $response_a['rows'][0]['elements'][0]['distance']['text'];
+        $dist = $response_a['rows'][0]['elements'][0]['distance']['value'];
         $time = $response_a['rows'][0]['elements'][0]['duration']['text'];
 
         return array('distance' => $dist, 'time' => $time);
@@ -122,7 +124,138 @@ class RiderController extends Controller
     }
     public function mytrips(Request $request)
     {
-    	return view('rider.mytrips');
+        return view('rider.mytrips');
+    }
+    public function start(Request $request)
+    {
+        $request->session()->put('start_lat',$request->input('start_lat'));
+        $request->session()->put('start_lan',$request->input('start_lan'));
+        
+        return (session('start_lan'));
+    }
+    public function end(Request $request)
+    {
+        $request->session()->put('end_lat',$request->input('end_lat'));
+        $request->session()->put('end_lan',$request->input('end_lan'));
+        
+        return (session('end_lan'));
+    }
+    public static function calculatecost()
+    {
+        // $theta = $lon1 - $lon2;
+        // $miles = (sin(deg2rad($lat1)) * sin(deg2rad($lat2))) + (cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta)));
+        // $miles = acos($miles);
+        // $miles = rad2deg($miles);
+        // $miles = $miles * 60 * 1.1515;
+        // $kilometers = $miles * 1.609344;
+        // return $kilometers; 
+
+        if(session('start_lat')==null && session('start_lan')==null && session('end_lat')==null && session('end_lan')==null)
+        {
+            return 0;
+        }
+
+        $lat1=session('start_lat');
+        $lon1=session('start_lan');
+        $lat2=session('end_lat');
+        $lon2=session('end_lan');
+
+        $dist=RiderController::getdistance($lat1,$lon1,$lat2,$lon2);
+
+        $distance=$dist['distance']/1000;
+        
+        $dist['cost']=intval(($distance*20)+40);    
+
+        return $dist;
+    }
+    public function manualtrip(Request $request)
+    {
+        $config['zoom']='auto';
+        $config['map_height']='600px';
+        $config['scrollwheel']=true;
+        $config['trafficOverlay'] = TRUE;
+
+        $marker_start = array();
+        if(!session('start_lan'))
+        {
+            $request->session()->put('start_lat',23.6066873);
+            $request->session()->put('start_lan',90.5024867);
+
+        }
+        $start_pos=session('start_lat').','.session('start_lan');
+
+        $marker_start['animation']= 'DROP';
+        $marker_start['icon'] = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=S|9999FF|000000';
+        $marker_start['position'] = $start_pos;
+        $marker_start['draggable'] = true;
+        $marker_start['ondragend'] = 'set_start(event.latLng.lat(), event.latLng.lng());';
+        $marker_start['infowindow_content'] = 'Start Address';
+        $marker_start['onclick'] = 'alert(\'Start Address: \' +  document.getElementById(\'startaddress\').value);';
+        GMaps::add_marker($marker_start);
+
+
+        $marker_end = array();
+
+        if(!session('end_lat'))
+        {
+            $request->session()->put('end_lat',23.821988);
+            $request->session()->put('end_lan',90.426378);
+
+        }
+        $end_pos=session('end_lat').','.session('end_lan');
+
+        $marker_end['animation']= 'DROP';
+        $marker_end['icon'] = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=E|9999FF|000000';
+        $marker_end['position'] = $end_pos;
+        $marker_end['draggable'] = true;
+        $marker_end['ondragend'] = 'set_end(event.latLng.lat(), event.latLng.lng());';
+        $marker_end['infowindow_content'] = 'End Address';
+        $marker_end['onclick'] = 'alert(\'End Address: \' +  document.getElementById(\'endaddress\').value);';
+        GMaps::add_marker($marker_end);
+
+
+        GMaps:: initialize($config);
+
+        $map=GMaps::create_map();
+
+    	return view('rider.manualtrip')
+                 ->with('map',$map);
+    }
+    public function savemanualtrip(Request $request)
+    {
+        //dd($request);
+
+        $trip=new Rider_requested_trip();
+        $trip->rider_id=session('user')->id;
+        $trip->from=$request->startaddress;
+        $trip->to=$request->endaddress;
+        $trip->car_type=$request->Car_type;
+        $trip->trip_type=$request->Trip_Type;
+        $trip->cost=$request->totalcost;
+        $trip->start_latitude=session('start_lat');
+        $trip->start_longitude=session('start_lan');
+        $trip->end_latitude=session('end_lat');
+        $trip->end_longitude=session('end_lan');
+
+        $trip->save();
+
+        $book=new Booked_trip();
+        $book->rider_id=session('user')->id;
+        $book->type="Manual";
+        $book->trip_id=$trip->id;
+        $book->start_date=$request->dDate;
+        $book->end_date=$request->rDate;
+        $book->status="Pending";
+        $book->save();
+
+        $request->session()->forget('start_lat');
+        $request->session()->forget('start_lan');
+        $request->session()->forget('end_lat');
+        $request->session()->forget('end_lan');
+
+
+        $request->session()->flash('message', 'Your Trip Request Successfully Booked.Please Wait for the Driver.');
+        return view('rider.dashboard');
     }
     public function viewprofile($id,Request $request)
     {
