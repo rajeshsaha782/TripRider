@@ -21,12 +21,6 @@ class DriverController extends Controller
         $driver=User::Find(session('user')->id);
         $totalPackages= Package::where('driver_id',session('user')->id)->count();
 
-        DB::table('users')
-                ->join('packages', 'packages.driver_id', '=', 'users.id')
-                ->where('driver_id',session('user')->id)
-                ->select('users.name as driverName', 'users.*','packages.title as packageName','packages.*')
-                ->get();
-
             $activetrip=DB::table('users')
                     ->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', 'users.id')
                     ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')

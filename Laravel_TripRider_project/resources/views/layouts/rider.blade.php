@@ -30,7 +30,7 @@
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="User">
           <a class="nav-link"  href="{{route('rider.viewprofile',session('user')->id)}}">
             <img class="rounded-circle" style="width:30px;" src="/img/user_pic.jpg"/></i>
-            <span class="nav-link-text"> Md Mashiul Azam</span>
+            <span class="nav-link-text"> {{session('user')->name}}</span>
           </a>
 		  <hr/>
         </li>

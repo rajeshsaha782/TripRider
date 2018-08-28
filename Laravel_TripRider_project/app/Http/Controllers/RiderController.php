@@ -17,7 +17,41 @@ class RiderController extends Controller
 {
     public function dashboard(Request $request)
     {
-    	return view('rider.dashboard');
+        $activetrip=DB::table('users')
+                    ->join('booked_manual_trips', 'booked_manual_trips.driver_id', '=', 'users.id')
+                    ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
+                    ->where('booked_manual_trips.rider_id',session('user')->id)
+                    ->where('booked_manual_trips.status',"Ongoing")
+                    ->first();
+
+                if($activetrip==null)
+                {
+                    $activetrip=DB::table('users')
+                        ->join('booked_package_trips', 'booked_package_trips.driver_id', '=', 'users.id')
+                        ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
+                        ->where('booked_package_trips.rider_id',session('user')->id)
+                        ->where('booked_package_trips.status',"Ongoing")
+                        ->first();
+                }  
+
+        $requestedmanualtrips=DB::table('users')
+                    ->join('booked_manual_trips', 'booked_manual_trips.driver_id', '=', 'users.id')
+                    ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
+                    ->where('rider_requested_trips.rider_id',session('user')->id)
+                    ->where('booked_manual_trips.status',"Pending")
+                    ->get();
+
+        $requestedpackagetrips=DB::table('users')
+                        ->join('booked_package_trips', 'booked_package_trips.driver_id', '=', 'users.id')
+                        ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
+                    ->where('booked_package_trips.rider_id',session('user')->id)
+                    ->where('booked_package_trips.status',"Pending")
+                    ->get();
+
+    	return view('rider.dashboard')
+            ->with('activetrip',$activetrip)
+            ->with('requestedmanualtrips',$requestedmanualtrips)
+            ->with('requestedpackagetrips',$requestedpackagetrips);
     }
     public function packages(Request $request)
     {
