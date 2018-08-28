@@ -10,6 +10,8 @@ use App\Mail\ChangePasswordAlert;
 use GMaps;
 use App\User;
 use App\Package;
+use App\Booked_trip;
+use App\Rider_requested_trip;
 
 class DriverController extends Controller
 {
@@ -17,6 +19,19 @@ class DriverController extends Controller
     {
         $driver=User::Find(session('user')->id);
         $totalPackages= Package::where('driver_id',session('user')->id)->count();
+
+        DB::table('users')
+                ->join('packages', 'packages.driver_id', '=', 'users.id')
+                ->where('driver_id',session('user')->id)
+                ->select('users.name as driverName', 'users.*','packages.name as packageName','packages.*')
+                ->get();
+
+        $activetrip=DB::table('users')
+                    ->join('booked_trips', 'booked_trips.rider_id', '=', 'users.id')
+                    ->where('driver_id',session('user')->id)
+                    ->where('booked_trips.status',"Ongoing")
+                    ->first();
+        //dd($activetrip);
 
     	return view('driver.dashboard')
             ->with('driver',$driver)
@@ -82,21 +97,21 @@ class DriverController extends Controller
                 ->with('driver',$driver)
                 ->with('map',$map);
     }
-    public function start(Request $request)
-    {
-        $request->session()->put('start_lat',$request->input('start_lat'));
-        $request->session()->put('start_lan',$request->input('start_lan'));
-        $request->session()->put('startaddress',$request->input('startaddress'));
+    // public function start(Request $request)
+    // {
+    //     $request->session()->put('start_lat',$request->input('start_lat'));
+    //     $request->session()->put('start_lan',$request->input('start_lan'));
+    //     $request->session()->put('startaddress',$request->input('startaddress'));
         
-        return (session('start_lan'));
-    }
-    public function end(Request $request)
-    {
-        $request->session()->put('end_lat',$request->input('end_lat'));
-        $request->session()->put('end_lan',$request->input('end_lan'));
+    //     return (session('start_lan'));
+    // }
+    // public function end(Request $request)
+    // {
+    //     $request->session()->put('end_lat',$request->input('end_lat'));
+    //     $request->session()->put('end_lan',$request->input('end_lan'));
         
-        return (session('end_lan'));
-    }
+    //     return (session('end_lan'));
+    // }
 
     public function saveaddpackage(AddPackageRequest $request)
     {

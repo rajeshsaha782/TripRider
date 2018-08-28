@@ -55,8 +55,8 @@ Route::post('/admin/changepassword', 'AdminController@savechangepassword');
 
 Route::group(['middleware' => 'driverChk'], function(){
 
-Route::get('/start', 'DriverController@start');
-Route::get('/end', 'DriverController@end');
+// Route::get('/start', 'DriverController@start');
+// Route::get('/end', 'DriverController@end');
 
 Route::get('/driver/dashboard', 'DriverController@dashboard')->name('driver.dashboard');
 Route::get('/driver/addpackage', 'DriverController@addpackage')->name('driver.addpackage');

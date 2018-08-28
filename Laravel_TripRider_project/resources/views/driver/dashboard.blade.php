@@ -122,15 +122,16 @@
                         </div>
                         
 						<div class="panel-body">
-                                    <p>
-                                        <strong>Trip</strong>
-                                        <span class="pull-right text-muted">80% Complete</span>
+                                     <p>
+                                        <img class="rounded" width="10%" src="../img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Rider</strong><!--<img class="rounded" style="padding-left:15%" width="40%" src="../img/p1.jpg"/>-->
+                                        <span class="pull-right text-muted" style="font-size:16px"><br/>From-Bashundhara-To-Narayanganj<br/>Trip Started : 2018-08-28 23:59:59</span>
                                     </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                            
-                                        </div>
-                                    </div>
+                                    <i>Phone no: 019xxxxxxxx</i>
+                                    <hr/>
+                                    <b style="font-size:16px">Trip Type: Both Way<br/>
+                                    Payment Status: Half paid<br/>
+                                    Trip Fare: 120</b>
+                                    <button class="pull-right btn btn-primary" onclick="window.location='activetrip.html'">View</button>
                                 </div>
                         
                     </div>
@@ -146,10 +147,18 @@
                         </div>
                         
 						<div class="panel-body">
-                            <p>
-                                   <strong>Trip</strong>
-                                       
-                             </p>       
+                            <div class="panel panel-default">
+                                    <p>
+                                        <img class="rounded" width="10%" src="../img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Rider</strong><!--<img class="rounded" style="padding-left:15%" width="40%" src="../img/p1.jpg"/>-->
+                                        <span class="pull-right text-muted" style="font-size:16px"><br/>From-Bashundhara-To-Narayanganj</span>
+                                    </p>
+                                    <button class="pull-right btn btn-primary" onclick="window.location='pendingtrip.html'">View</button>
+                                    <i>Phone no: 019xxxxxxxx</i><br/><br/>
+                                    <b style="font-size:16px">Trip Type: Both Way<br/>
+                                    Trip Fare: 120</b>
+                                    </div>
+                                    
+                                    <hr/>      
                         </div>
                         
                     </div>

@@ -5,50 +5,7 @@
 @endsection
 
 @section('mapjs')
-<script type="text/javascript">
-    // function getLocation(type) 
-    //     {
-    //       if (navigator.geolocation) {
-    //           navigator.geolocation.getCurrentPosition(success, fail);
-    //       } else { 
-    //           alert("Browser not supported");
-    //       }
 
-    //       function success(position) 
-    //       {
-    //         if(type=="start")
-    //         {
-    //             $.ajax({
-    //               // method: 'POST', 
-    //               data: { 'start_lat': position.coords.latitude, 'start_lan': position.coords.longitude },
-    //               url : "{{action('DriverController@start')}}", 
-    //               success : function (data) {
-    //                   //alert(data);
-    //                   address(newLat,newLng,"start");
-    //                   window.location="{{route('driver.addpackage')}}";
-    //               }
-    //               });
-    //         }
-    //         else if(type=="end")
-    //         {
-    //             $.ajax({
-    //               // method: 'POST', 
-    //               data: { 'end_lat': position.coords.latitude, 'end_lan': position.coords.longitude },
-    //               url : "{{action('DriverController@end')}}", 
-    //               success : function (data) {
-    //                   //alert(data);
-    //                   address(newLat,newLng,"end");
-    //                   window.location="{{route('driver.addpackage')}}";
-    //               }
-    //               });
-    //         }
-
-               
-    //       }
-    //       function fail() {
-    //           alert("it fails to get CurrentPosition");
-    //       }
-  </script>
   {!! $map['js'] !!}
 @endsection
 
@@ -199,7 +156,7 @@
                $.ajax({
                   // method: 'POST', 
                   data: { 'start_lat': position.coords.latitude, 'start_lan': position.coords.longitude },
-                  url : "{{action('DriverController@start')}}", 
+                  url : "{{action('RiderController@start')}}", 
                   success : function (data) {
                       //alert(data);
                       window.location="{{route('driver.addpackage')}}";
@@ -227,7 +184,7 @@
                $.ajax({
                   // method: 'POST', 
                   data: { 'end_lat': position.coords.latitude, 'end_lan': position.coords.longitude },
-                  url : "{{action('DriverController@end')}}", 
+                  url : "{{action('RiderController@end')}}", 
                   success : function (data) {
                       //alert(data);
                       window.location="{{route('driver.addpackage')}}";
@@ -252,7 +209,7 @@
             $.ajax({
             // method: 'POST', 
             data: { 'start_lat': newLat, 'start_lan': newLng },
-            url : "{{action('DriverController@start')}}", 
+            url : "{{action('RiderController@start')}}", 
             success : function (data) {
                 //alert(data);
                 address(newLat,newLng,"start");
@@ -267,7 +224,7 @@
             $.ajax({
             // method: 'POST', 
             data: { 'end_lat': newLat, 'end_lan': newLng },
-            url : "{{action('DriverController@end')}}", 
+            url : "{{action('RiderController@end')}}", 
             success : function (data) {
                 //alert(data);
                 address(newLat,newLng,"end");
