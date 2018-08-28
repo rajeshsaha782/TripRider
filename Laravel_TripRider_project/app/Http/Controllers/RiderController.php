@@ -260,7 +260,13 @@ class RiderController extends Controller
     public function viewprofile($id,Request $request)
     {
         $rider = User::find($id);
-    	return view('rider.viewprofile')->with('rider',$rider);
+        return view('rider.viewprofile')->with('rider',$rider);
+    }
+
+    public function completedtrips(Request $request)
+    {
+        
+    	return view('rider.completedtrips');
     }
     public function editprofile($id,Request $request)
     {
