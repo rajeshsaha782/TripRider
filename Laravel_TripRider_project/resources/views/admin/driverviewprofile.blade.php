@@ -39,9 +39,7 @@
     </div>
     <div class="col-sm-4" style="color: blue;">
         <div class="row" align="center" >
-            <img src="../img/rajesh.jpg" class="img-circle" alt="Cinque Terre" style="width: 70%">
-
-
+            <img src="/img/rajesh.jpg" class="img-circle" alt="Cinque Terre" style="width: 70%">
         </div>
     </div>
     <div class="col-sm-4" align="center">
@@ -83,9 +81,7 @@
                 </table>
                                          
             </div>
-
     </div>
-</div>
 <div class="row">
     <div class="panel-body">
          <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">

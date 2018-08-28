@@ -14,6 +14,7 @@
                 <img src="/img/rajesh.jpg" class="img-circle" alt="Cinque Terre" style="width: 70%;" >
             </div>
             <div class="row" align="center">
+            <p>{{$rider->name}}</p>
                 <a href="{{route('admin.riderviewprofile', ['id' => $rider->id])}}"><button type="button" class="btn btn-success">View Profile</button></a>
             </div>
         </div>

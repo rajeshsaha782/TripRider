@@ -1,21 +1,18 @@
 @extends('layouts.admin')
 
-
 @section('content')
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Dashboard</h1>
     </div>
-    <!-- /.col-lg-12 -->
 </div>
-<!-- /.row -->
 <div class="row">
     <div class="col-lg-3 col-md-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-comments fa-5x"></i>
+                        <i class="fa fa-child fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">{{$TotalAdmin}}</div>
@@ -23,7 +20,7 @@
                     </div>
                 </div>
             </div>
-            <a href="admin.html">
+            <a href="{{route('admin.adminview')}}">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -37,7 +34,7 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-tasks fa-5x"></i>
+                        <i class="fa fa-taxi fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">{{$TotalDriver}}</div>
@@ -45,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            <a href="driver.html">
+            <a href="{{route('admin.driverview')}}">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -59,7 +56,7 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-shopping-cart fa-5x"></i>
+                        <i class="fa fa-street-view fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">{{$TotalRider}}</div>
@@ -67,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            <a href="rider.html">
+            <a href="{{route('admin.riderview')}}">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -81,7 +78,7 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-support fa-5x"></i>
+                        <i class="fa fa-exclamation-circle fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">13</div>
@@ -107,7 +104,7 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-comments fa-5x"></i>
+                        <i class="fa fa-tags fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">26</div>
@@ -130,7 +127,7 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-tasks fa-5x"></i>
+                        <i class="fa fa-check-circle fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">12</div>
@@ -153,7 +150,7 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-tasks fa-5x"></i>
+                        <i class="fa fa-cubes fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">12</div>
@@ -171,14 +168,9 @@
         </div>
     </div>
     
-    
-    
 </div>
-<!-- /.row -->
 <div class="row">
     <div class="col-lg-12">
-       
-        <!-- /.panel -->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-bar-chart-o fa-fw"></i> Bar Chart Example
@@ -202,7 +194,7 @@
                     </div>
                 </div>
             </div>
-            <!-- /.panel-heading -->
+            
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-12">
@@ -210,7 +202,7 @@
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th>Drider</th>
+                                        <th>Driver</th>
                                         <th>Rider</th>
                                         <th>Package Name</th>
                                         <th>From</th>
@@ -231,85 +223,13 @@
                                         <td class="center">12-05-18</td>
                                         <td class="center">1200</td>
                                     </tr>
-                                    <tr class="even gradeC">
-                                        <td><a href="viewprofile.html">rakib</a></td>
-                                        <td><a href="viewprofilerider.html">Robi</a></td>
-                                        <td><a href="packagedetails.html">Prremium</a></td>
-                                        <td>Kuril</td>
-                                        <td>Comilla</td>
-                                        <td class="center">12-05-18</td>
-                                        <td class="center">12-05-18</td>
-                                        <td class="center">500</td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td><a href="viewprofile.html">rakib</a></td>
-                                        <td><a href="viewprofilerider.html">Rajesh</a></td>
-                                        <td><a href="packagedetails.html">Prremium</a></td>
-                                        <td>Comilla</td>
-                                        <td>Borisal</td>
-                                        <td class="center">12-05-18</td>
-                                        <td class="center">12-05-18</td>
-                                        <td class="center">500</td>
-                                    </tr>
-                                    <tr class="even gradeA">
-                                        <td><a href="viewprofile.html">rakib</a></td>
-                                        <td><a href="viewprofilerider.html">Suvro</a></td>
-                                        <td><a href="packagedetails.html">Trident</a></td>
-                                        <td>Sylhet</td>
-                                        <td>Dhaka</td>
-                                        <td class="center">12-05-18</td>
-                                        <td class="center">12-05-18</td>
-                                        <td class="center">500</td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td><a href="viewprofile.html">rakib</a></td>
-                                        <td><a href="viewprofilerider.html">Tuli</a></td>
-                                        <td><a href="packagedetails.html">Trident</a></td>
-                                        <td>Pubna</td>
-                                        <td>Dhaka</td>
-                                        <td class="center">12-05-18</td>
-                                        <td class="center">12-05-18</td>
-                                        <td class="center">500</td>
-                                    </tr>
-                                    <tr class="even gradeA">
-                                        <td><a href="viewprofile.html">rakib</a></td>
-                                        <td><a href="viewprofilerider.html">Toma</a></td>
-                                        <td><a href="packagedetails.html">Trident</a></td>
-                                        <td>Dhaka</td>
-                                        <td>Comilla</td>
-                                        <<td class="center">12-05-18</td>
-                                        <td class="center">12-05-18</td>
-                                        <td class="center">500</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td><a href="viewprofile.html">rakib</a></td>
-                                        <td><a href="viewprofilerider.html">efti</a></td>
-                                        <td><a href="packagedetails.html">Gecko</a></td>
-                                        <td>Dhaka</td>
-                                        <td>Comilla</td>
-                                        <td class="center">12-05-18</td>
-                                        <td class="center">12-05-18</td>
-                                        <td class="center">500</td>
-                                    </tr>
                                 </tbody>
                              </table>
                         </div>
-                        <!-- /.table-responsive -->
                     </div>
-                    <!-- /.col-lg-4 (nested) -->
-                   
-                    <!-- /.col-lg-8 (nested) -->
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.panel-body -->
         </div>
-        
     </div>
-    <!-- /.col-lg-8 -->
-    
-        <!-- /.panel -->
     </div>
 @endsection
-
-<!-- /.row -->

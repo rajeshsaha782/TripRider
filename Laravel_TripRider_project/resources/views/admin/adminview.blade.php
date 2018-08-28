@@ -13,7 +13,9 @@
                 <img src="/img/rajesh.jpg" class="img-circle" alt="Cinque Terre" style="width: 70%;" >
             </div>
             <div class="row" align="center">
-                <a href="{{route('admin.adminviewprofile', ['id' => $admin->id])}}"><button type="button" class="btn btn-success">View Profile</button></a>
+                <p>{{$admin->name}}</p>
+                <a href="{{route('admin.adminviewprofile', ['id' => $admin->id])}}">
+                    <button type="button" class="btn btn-success">View Profile</button></a>
             </div>
           </div>
         @endforeach

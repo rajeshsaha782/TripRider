@@ -14,6 +14,7 @@
               <img src="/img/rajesh.jpg" class="img-circle" alt="Cinque Terre" style="width: 70%;" >
           </div>
           <div class="row" align="center">
+            <p>{{$driver->name}}</p>
               <a href="{{route('admin.driverviewprofile', ['id' => $driver->id])}}"><button type="button" class="btn btn-success">View Profile</button></a>
           </div>
         </div>

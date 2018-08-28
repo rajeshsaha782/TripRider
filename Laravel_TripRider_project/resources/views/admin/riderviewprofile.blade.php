@@ -28,14 +28,10 @@
               <td class="text-justify">{{$rider->phonenumber}}</td>
             </tr>
           </table>
-        
-
     </div>
     <div class="col-sm-4" style="color: blue;">
         <div class="row" align="center" >
             <img src="/img/rajesh.jpg" class="img-circle" alt="Cinque Terre" style="width: 70%">
-
-
         </div>
     </div>
     <div class="col-sm-4" align="center">
@@ -75,9 +71,7 @@
                         </tr>
                   </tbody>
                 </table>
-                                         
             </div>
-
     </div>
 <div class="row">
     <div class="panel-body">
@@ -168,6 +162,5 @@
         </table>
     </div>
 </div>
-  
 
 @endsection

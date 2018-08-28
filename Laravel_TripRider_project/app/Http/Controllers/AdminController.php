@@ -21,11 +21,16 @@ class AdminController extends Controller
         $TotalDriver= count(DB::table('users')->where('type','=','Driver') ->get());
         $TotalRider= count(DB::table('users')->where('type','=','Rider') ->get());
         
-        //dd($TotalAdmin,$TotalDriver,$TotalRider);
+        $result = DB::table('booked_package_trips')
+         ->join('packages', 'booked_package_trips.package_id', '=', 'packages.id')
+         ->join('users', 'booked_package_trips.rider_id', '=', 'users.id')
+         ->get()->toArray();
+        //dd($TotalAdmin,$TotalDriver,$TotalRider,$result);
           
 
         return view('admin.dashboard')
             ->with('admin',$admin)
+            ->with('result',$result)
             ->with('TotalAdmin',$TotalAdmin)
             ->with('TotalDriver',$TotalDriver)
             ->with('TotalRider',$TotalRider);
