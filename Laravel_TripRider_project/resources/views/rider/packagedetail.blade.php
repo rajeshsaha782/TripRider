@@ -104,7 +104,12 @@
                                         </tr>
                                     </table>
                                     <hr/>
-                        <button class="btn btn-primary">Purchase</button>
+                <div class="row " style="text-align: center;">
+                    <div class="col-12">
+                        <a href="{{route('rider.packagebook',$package->id)}}"><button class="btn btn-primary">Request</button></a>
+                    </div>
+                </div>
+                        
           </div>
         </div>
 

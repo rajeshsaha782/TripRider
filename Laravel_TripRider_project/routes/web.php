@@ -90,6 +90,7 @@ Route::post('/rider/changepassword', 'RiderController@savechangepassword');
 
 Route::get('/rider/manualtrip', 'RiderController@manualtrip')->name('rider.manualtrip');
 Route::post('/rider/manualtrip', 'RiderController@savemanualtrip');
+Route::get('/rider/packagebook/{id}', 'RiderController@packagebook')->name('rider.packagebook');
 Route::get('/rider/completedtrips', 'RiderController@completedtrips')->name('rider.completedtrips');
 
 

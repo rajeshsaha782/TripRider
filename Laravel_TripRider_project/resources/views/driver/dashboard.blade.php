@@ -54,7 +54,7 @@
                                     <i class="fa fa-car fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">1</div>
+                                    <div class="huge">{{count($completedtrips)}}</div>
                                     <div>Total Completed Trips</div>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">{{count($requestedtrips)}}</div>
-                                    <div>Requested Texi Trips</div>
+                                    <div>Requested {{session('user')->cartype}} Trips</div>
                                 </div>
                             </div>
                         </div>
@@ -98,8 +98,8 @@
                                     <i class="fa fa-support fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>Requests</div>
+                                    <div class="huge">{{count($requestedpackages)}}</div>
+                                    <div>Request for Package</div>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +172,7 @@
                                     <button class="pull-right btn btn-primary" onclick="window.location='pendingtrip.html'">View</button>
                                     <i>Phone no: {{$requestedtrip->phonenumber}}</i><br/><br/>
                                     <b style="font-size:16px">Trip Type: {{$requestedtrip->trip_type}}<br/>
-                                    Trip Fare: {{$requestedtrip->total_cost}}</b>
+                                    Trip Fare: {{$requestedtrip->total_cost}}Tk</b>
                                     </div>
                                     
                                     <hr/>   

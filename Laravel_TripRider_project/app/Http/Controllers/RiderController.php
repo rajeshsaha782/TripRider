@@ -23,7 +23,7 @@ class RiderController extends Controller
     {
         $packages=DB::table('users')
                 ->join('packages', 'packages.driver_id', '=', 'users.id')
-                ->select('users.name as driverName', 'users.*','packages.name as packageName','packages.*')
+                ->select('users.name as driverName', 'users.*','packages.title as packageName','packages.*')
                 ->get();
 
     	return view('rider.packages')
@@ -60,7 +60,7 @@ class RiderController extends Controller
         $rider=User::Find(session('user')->id);
         $package=DB::table('users')
                 ->join('packages', 'packages.driver_id', '=', 'users.id')
-                ->select('users.name as driverName', 'users.*','packages.name as packageName','packages.*')
+                ->select('users.name as driverName', 'users.*','packages.title as packageName','packages.*')
                 ->where('packages.id',$id)
                 ->first();
 
@@ -122,6 +122,22 @@ class RiderController extends Controller
                 ->with('package',$package)
                 ->with('map',$map)
                 ->with('distance',$distance);
+    }
+    public function packagebook($id,Request $request)
+    {
+        $package=Package::Find($id);
+
+        $packagebook=new Booked_package_trip();
+        $packagebook->rider_id=session('user')->id;
+        $packagebook->driver_id=$package->driver_id;
+        $packagebook->package_id=$package->id;
+        $packagebook->start_date="2018-08-03 00:00:00";
+        $packagebook->end_date="2018-08-03 00:00:00";
+        $packagebook->status="Pending";
+        $packagebook->save();
+
+    $request->session()->flash('message', 'Your Package Request Successfully Booked.Please Wait for the Driver\'s Response.');
+        return view('rider.dashboard');
     }
     public function mytrips(Request $request)
     {
@@ -254,7 +270,7 @@ class RiderController extends Controller
         $request->session()->forget('end_lan');
 
 
-        $request->session()->flash('message', 'Your Trip Request Successfully Booked.Please Wait for the Driver.');
+        $request->session()->flash('message', 'Your Trip Request Successfully Booked.Please Wait for the Driver\' Response.');
         return view('rider.dashboard');
     }
     public function viewprofile($id,Request $request)

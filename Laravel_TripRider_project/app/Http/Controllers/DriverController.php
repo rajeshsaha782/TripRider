@@ -54,7 +54,21 @@ class DriverController extends Controller
                     ->where('rider_requested_trips.car_type',session('user')->cartype)
                     ->where('booked_manual_trips.status',"Pending")
                     ->get();
-                    
+
+            $requestedpackages=DB::table('users')
+                    ->join('booked_package_trips', 'booked_package_trips.rider_id', '=', 'users.id')
+                    ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
+                    ->where('packages.driver_id',session('user')->id)
+                    ->where('booked_package_trips.status',"Pending")
+                    ->get();
+
+
+            $completedtrips=DB::table('users')
+                    ->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', 'users.id')
+                    ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
+                    ->where('rider_requested_trips.car_type',session('user')->cartype)
+                    ->where('booked_manual_trips.status',"Completed")
+                    ->get();        
         
 
                 
@@ -64,7 +78,9 @@ class DriverController extends Controller
             ->with('driver',$driver)
             ->with('totalPackages',$totalPackages)
             ->with('activetrip',$activetrip)
-            ->with('requestedtrips',$requestedtrips);
+            ->with('requestedtrips',$requestedtrips)
+            ->with('requestedpackages',$requestedpackages)
+            ->with('completedtrips',$completedtrips);
     }
 
     public function addpackage(Request $request)
