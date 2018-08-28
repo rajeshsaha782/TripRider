@@ -9,9 +9,20 @@
             <div class="col-lg-12">
                     <h2 class="page-header">Dashboard</h2>
                 </div>
+
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
+            @if(session('message'))
+                    <div class="card-body"style="background-color: green;opacity: 0.7;">
+                    <ul>
+                     
+                        <li style="color: white">{{session('message')}}</li>
+                      
+                    </ul>
+                  </div>
+              
+            @endif
             <div class="row">
                 <div class="col-md-3">
                     <div class="panel panel-primary">

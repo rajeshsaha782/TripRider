@@ -101,16 +101,16 @@ class DriverController extends Controller
     public function saveaddpackage(AddPackageRequest $request)
     {
         $file = $request->file('image');
-        $file->move('uploads',$file->getClientOriginalName());
+        
         //dd($file);
-        // $extention=$file->getClientOriginalExtension();
+        //$extention=$file->getClientOriginalExtension();
         
         // if($extention!="jpg" || $extention!="png" || $extention!="jpeg")
         // {
-        //     $request->session()->flash('message', 'Profile Updated.');
-        //     return  redirect()->route('driver.viewprofile',$id);
+        //     $request->session()->flash('message', 'File must be jpg/png/jepg');
+        //     return  redirect()->route('driver.addpackage');
         // }
-       
+        $file->move('uploads\package',$file->getClientOriginalName());
         
 
         $Package=new Package();
@@ -128,7 +128,7 @@ class DriverController extends Controller
         $Package->start_longitude=session('start_lan');
         $Package->end_latitude=session('end_lat');
         $Package->end_longitude=session('end_lan');
-        $Package->image="abc";
+        $Package->image=$file->getClientOriginalName();
         $Package->save();
 
         $request->session()->forget('start_lat');
@@ -136,7 +136,7 @@ class DriverController extends Controller
         $request->session()->forget('end_lat');
         $request->session()->forget('end_lan');
 
-
+        $request->session()->flash('message', 'Package added Successfully!!!');
     	return redirect()->route('driver.dashboard');
     }
      

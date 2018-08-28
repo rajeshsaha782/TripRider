@@ -145,7 +145,7 @@
 			    <label for="">Image</label>
 					
                 <input  type="file" name="image" id="image" value="{{old('myfile')}}" class="form-control" required>
-                <span style="color: red">{{$errors->first('image')}}</span>
+                <span style="color: red">{{session('message')}}</span>
               </div>
 			  <br/>
 			  <div class="form-label-group">

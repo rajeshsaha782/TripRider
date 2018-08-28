@@ -30,7 +30,7 @@ class AddPackageRequest extends FormRequest
             'Description' => 'required',
             'TotalSits' => 'required|numeric',
             'TotalCost' => 'required|numeric',
-            // 'image' => 'required|image|mimes:jpg,jpeg,png',
+            'image' => 'required|mimes:jpg,jpeg,png',
             'startaddress' => 'required',
             'endaddress' => 'required',
 

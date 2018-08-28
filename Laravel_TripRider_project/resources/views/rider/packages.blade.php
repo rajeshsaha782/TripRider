@@ -23,7 +23,7 @@
         </div>
         <div class="panel-body">
 
-            <img src="/img/p1.jpg" class="img-rounded" alt="Cinque Terre" style="width: 70%;height: 15%" >
+             <img src="/uploads/package/{{$package->image}}" height="200" width="280" class="img-rounded" alt="Cinque Terre">
             <p>
                 <b>From:</b>{{$package->from}}<br/>
                 <b>To:</b>{{$package->to}}<br/>

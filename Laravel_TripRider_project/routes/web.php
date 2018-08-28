@@ -26,8 +26,7 @@ Route::post('/signupDriver', 'HomeController@createDriver');
 
 Route::get('/emailVerification/{email}/{token}', 'HomeController@emailVerification')->name('emailVerification');
 
-Route::get('/start', 'DriverController@start');
-Route::get('/end', 'DriverController@end');
+
 
 Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
 Route::get('/admin/adminview', 'AdminController@adminview')->name('admin.adminview');
@@ -45,6 +44,9 @@ Route::post('/admin/editprofile/{id}', 'AdminController@saveeditprofile');
 Route::get('/admin/changepassword', 'AdminController@changepassword')->name('admin.changepassword');
 Route::post('/admin/changepassword', 'AdminController@savechangepassword');
 
+
+Route::get('/start', 'DriverController@start');
+Route::get('/end', 'DriverController@end');
 
 Route::get('/driver/dashboard', 'DriverController@dashboard')->name('driver.dashboard');
 Route::get('/driver/addpackage', 'DriverController@addpackage')->name('driver.addpackage');
