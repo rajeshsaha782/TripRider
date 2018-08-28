@@ -42,19 +42,29 @@ class DriverController extends Controller
                         ->where('booked_package_trips.driver_id',session('user')->id)
                         ->where('booked_package_trips.status',"Ongoing")
                         ->first();
-                }        
+                }  
+
 
            //dd($activetrip);
+
+
+            $requestedtrips=DB::table('users')
+                    ->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', 'users.id')
+                    ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
+                    ->where('rider_requested_trips.car_type',session('user')->cartype)
+                    ->where('booked_manual_trips.status',"Pending")
+                    ->get();
                     
         
 
                 
-                
+                //dd($requestedtrips);
 
     	return view('driver.dashboard')
             ->with('driver',$driver)
             ->with('totalPackages',$totalPackages)
-            ->with('activetrip',$activetrip);
+            ->with('activetrip',$activetrip)
+            ->with('requestedtrips',$requestedtrips);
     }
 
     public function addpackage(Request $request)

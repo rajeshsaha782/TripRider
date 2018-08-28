@@ -54,8 +54,8 @@
                                     <i class="fa fa-car fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>Total Active Trips</div>
+                                    <div class="huge">1</div>
+                                    <div>Total Completed Trips</div>
                                 </div>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                                     <i class="fa fa-shopping-cart fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
+                                    <div class="huge">{{count($requestedtrips)}}</div>
                                     <div>Requested Texi Trips</div>
                                 </div>
                             </div>
@@ -115,11 +115,13 @@
             </div>
 			
 			<div class="row">
+                @if($activetrip!=null)
 				<div class="col-lg-12">
                     <div class="panel panel-green">
                         <div class="panel-heading">
                             Active Trip
                         </div>
+                        
                         
 						<div class="panel-body">
                                      <p>
@@ -135,15 +137,19 @@
                                     <hr/>
                                     <b style="font-size:16px">Trip Type: {{$activetrip->trip_type}}<br/>
                                     Payment Status: {{$activetrip->payment_info}}<br/>
-                                    Trip Fare: {{$activetrip->total_cost}}</b>
+                                    Trip Fare: {{$activetrip->total_cost}}Tk</b>
                                     <button class="pull-right btn btn-primary" onclick="window.location='activetrip.html'">View</button>
                                 </div>
+                        
                         
                     </div>
                     <!-- /.col-lg-4 -->
                 </div>
+                @endif
 			</div>
 			
+
+            @if($requestedtrips!=null)
 			<div class="row">
 				<div class="col-lg-12">
                     <div class="panel panel-yellow">
@@ -152,22 +158,30 @@
                         </div>
                         
 						<div class="panel-body">
+                            @foreach($requestedtrips as $requestedtrip)
                             <div class="panel panel-default">
                                     <p>
-                                        <img class="rounded" width="10%" src="../img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Rider</strong><!--<img class="rounded" style="padding-left:15%" width="40%" src="../img/p1.jpg"/>-->
-                                        <span class="pull-right text-muted" style="font-size:16px"><br/>From-Bashundhara-To-Narayanganj</span>
+                                        <img class="rounded" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Rider: {{$requestedtrip->name}}</strong>
+                                        <span class="pull-right text-muted" style="font-size:16px"><br/>
+                                            <b>From</b>-{{$requestedtrip->from}}<br/>
+                                            <b>To</b>-{{$requestedtrip->to}}<br/>
+                                            <b>Trip Started</b>- {{$requestedtrip->start_date}}<br/>
+                                            <b>Trip Ended</b>- {{$requestedtrip->end_date}}<br/>
+                                        </span>
                                     </p>
                                     <button class="pull-right btn btn-primary" onclick="window.location='pendingtrip.html'">View</button>
-                                    <i>Phone no: 019xxxxxxxx</i><br/><br/>
-                                    <b style="font-size:16px">Trip Type: Both Way<br/>
-                                    Trip Fare: 120</b>
+                                    <i>Phone no: {{$requestedtrip->phonenumber}}</i><br/><br/>
+                                    <b style="font-size:16px">Trip Type: {{$requestedtrip->trip_type}}<br/>
+                                    Trip Fare: {{$requestedtrip->total_cost}}</b>
                                     </div>
                                     
-                                    <hr/>      
+                                    <hr/>   
+                            @endforeach   
                         </div>
                         
                     </div>
                     <!-- /.col-lg-4 -->
                 </div>
 			</div>
+            @endif
 @endsection
