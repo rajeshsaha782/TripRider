@@ -28,6 +28,11 @@ Route::get('/emailVerification/{email}/{token}', 'HomeController@emailVerificati
 
 
 
+
+Route::group(['middleware' => 'sesChk'], function(){
+
+Route::group(['middleware' => 'adminChk'], function(){
+
 Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
 Route::get('/admin/adminview', 'AdminController@adminview')->name('admin.adminview');
 Route::get('/admin/driverview', 'AdminController@driverview')->name('admin.driverview');
@@ -44,6 +49,11 @@ Route::post('/admin/editprofile/{id}', 'AdminController@saveeditprofile');
 Route::get('/admin/changepassword', 'AdminController@changepassword')->name('admin.changepassword');
 Route::post('/admin/changepassword', 'AdminController@savechangepassword');
 
+});
+
+
+
+Route::group(['middleware' => 'driverChk'], function(){
 
 Route::get('/start', 'DriverController@start');
 Route::get('/end', 'DriverController@end');
@@ -62,6 +72,8 @@ Route::post('/driver/editprofile/{id}', 'DriverController@saveeditprofile');
 Route::get('/driver/changepassword', 'DriverController@changepassword')->name('driver.changepassword');
 Route::post('/driver/changepassword', 'DriverController@savechangepassword');
 
+});
+
 
 Route::get('/rider/dashboard', 'RiderController@dashboard')->name('rider.dashboard');
 Route::get('/rider/packages', 'RiderController@packages')->name('rider.packages');
@@ -72,4 +84,11 @@ Route::get('/rider/editprofile/{id}', 'RiderController@editprofile')->name('ride
 Route::post('/rider/editprofile/{id}', 'RiderController@saveeditprofile');
 Route::get('/rider/changepassword', 'RiderController@changepassword')->name('rider.changepassword');
 Route::post('/rider/changepassword', 'RiderController@savechangepassword');
+
+
+
+
+});
+
+
 
