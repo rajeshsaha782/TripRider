@@ -29,6 +29,23 @@ Route::get('/emailVerification/{email}/{token}', 'HomeController@emailVerificati
 Route::get('/start', 'DriverController@start');
 Route::get('/end', 'DriverController@end');
 
+Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
+Route::get('/admin/adminview', 'AdminController@adminview')->name('admin.adminview');
+Route::get('/admin/driverview', 'AdminController@driverview')->name('admin.driverview');
+Route::get('/admin/riderview', 'AdminController@riderview')->name('admin.riderview');
+Route::get('/admin/riderviewprofile/{id}', 'AdminController@riderviewprofile')->name('admin.riderviewprofile');
+Route::get('/admin/adminviewprofile/{id}', 'AdminController@adminviewprofile')->name('admin.adminviewprofile');
+Route::get('/admin/driverviewprofile/{id}', 'AdminController@riderviewprofile')->name('admin.driverviewprofile');
+Route::get('/admin/packages', 'AdminController@packages')->name('admin.packages');
+Route::get('/admin/packages/{id}', 'AdminController@packagedetails')->name('admin.packagedetails');
+
+Route::get('/admin/viewprofile/{id}', 'AdminController@viewprofile')->name('admin.viewprofile');
+Route::get('/admin/editprofile/{id}', 'AdminController@editprofile')->name('admin.editprofile');
+Route::post('/admin/editprofile/{id}', 'AdminController@saveeditprofile');
+Route::get('/admin/changepassword', 'AdminController@changepassword')->name('admin.changepassword');
+Route::post('/admin/changepassword', 'AdminController@savechangepassword');
+
+
 Route::get('/driver/dashboard', 'DriverController@dashboard')->name('driver.dashboard');
 Route::get('/driver/addpackage', 'DriverController@addpackage')->name('driver.addpackage');
 Route::post('/driver/addpackage', 'DriverController@saveaddpackage');
