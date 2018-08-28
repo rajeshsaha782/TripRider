@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Package;
+
 use Illuminate\Support\Facades\DB;
 
 
@@ -24,6 +26,7 @@ class AdminController extends Controller
         $result = DB::table('booked_package_trips')
          ->join('packages', 'booked_package_trips.package_id', '=', 'packages.id')
          ->join('users', 'booked_package_trips.rider_id', '=', 'users.id')
+         //->select('users.*', 'contacts.phone', 'orders.price')
          ->get()->toArray();
         //dd($TotalAdmin,$TotalDriver,$TotalRider,$result);
           
@@ -41,9 +44,34 @@ class AdminController extends Controller
       ///dd(session('user'));
 
         $admin=User::Find(session('user')->id);
+        $packages=DB::table('packages')->get()->toArray();
+      //dd($packages);
         return view('admin.packages')
-            ->with('admin',$admin);
+            ->with('admin',$admin)
+            ->with('packages',$packages);
     }
+
+    public function packagedetails($id,Request $request)
+    {
+      //dd($id);
+
+        $admin=User::Find(session('user')->id);
+        $package=Package::Find($id);
+
+        //dd($package->id);
+        $driver=User::Find($package->driver_id);
+        //dd($driver);
+
+
+        return view('admin.packagedetails') 
+        ->with('admin',$admin)
+        ->with('driver',$driver)
+        
+        ->with('package',$package);
+
+    }
+
+
      public function adminview(Request $request)
     {
       ///dd(session('user'));
