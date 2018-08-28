@@ -31,7 +31,30 @@ class DriverController extends Controller
                     ->where('driver_id',session('user')->id)
                     ->where('booked_trips.status',"Ongoing")
                     ->first();
-        //dd($activetrip);
+
+
+                    
+        
+
+                if($activetrip->type=="Manual")
+                {
+                    $activetrip=DB::table('users')
+                    ->join('booked_trips', 'booked_trips.rider_id', '=', 'users.id')
+                    ->where('driver_id',session('user')->id)
+                    ->where('booked_trips.status',"Ongoing")
+                    ->join('rider_requested_trips','rider_requested_trips.id','=','booked_trips.trip_id')
+                    ->first();
+                }
+                else
+                {
+                    $activetrip=DB::table('users')
+                    ->join('booked_trips', 'booked_trips.rider_id', '=', 'users.id')
+                    ->where('driver_id',session('user')->id)
+                    ->where('booked_trips.status',"Ongoing")
+                    ->join('packages','packages.id','=','booked_trips.trip_id')
+                    ->first();
+                }
+                dd($activetrip);
 
     	return view('driver.dashboard')
             ->with('driver',$driver)
