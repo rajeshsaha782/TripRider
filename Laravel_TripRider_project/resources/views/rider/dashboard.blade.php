@@ -48,7 +48,7 @@
               <div class="card-body-icon">
                 <i class="fa fa-fw fa-list"></i>
               </div>
-              <div class="mr-5">11 New Tasks!</div>
+              <div class="mr-5">{{count($requestedmanualtrips) + count($requestedpackagetrips)}} Pending Trips!</div>
             </div>
             <a class="card-footer text-white clearfix small z-1" href="#">
               <span class="float-left">View Details</span>
@@ -64,7 +64,7 @@
               <div class="card-body-icon">
                 <i class="fa fa-fw fa-shopping-cart"></i>
               </div>
-              <div class="mr-5">123 Completed Trips!</div>
+              <div class="mr-5">{{$totalcompletedtrips}} Completed Trips!</div>
             </div>
             <a class="card-footer text-white clearfix small z-1" href="{{route('rider.completedtrips')}}">
               <span class="float-left">View Details</span>
@@ -114,7 +114,8 @@
               <b style="font-size:16px">Trip Type: {{$activetrip->trip_type}}<br/>
                                     Payment Status: {{$activetrip->payment_info}}<br/>
                                     Trip Fare: {{$activetrip->total_cost}}Tk</b>
-              <button class="pull-right btn btn-primary" onclick="window.location='tripsdetails.html'">View</button>
+             <a href="{{route('rider.requestedtripdetail',$activetrip->id)}}"><button class="pull-right btn btn-primary" >View</button></a>
+                                </div>
                             </div>
         </div>
                     
@@ -125,7 +126,7 @@
           <br/>
           <br/>
     <!--pending-->  
- @if($requestedmanualtrips!=null)
+ @if(count($requestedmanualtrips)!=0)
           <div class="card ">
                         <div class="card-header bg-warning text-white">
                             <b>Pending Your Requested Trips</b>
@@ -150,7 +151,7 @@
                   <hr/>
                   <b style="font-size:16px">Trip Type: {{$requestedmanualtrip->trip_type}}<br/>
                   Trip Fare: {{$requestedmanualtrip->total_cost}}Tk</b>
-                  <button class="pull-right btn btn-primary" onclick="window.location='pendingtripsdetails.html'">View</button>
+                  <a href="{{route('rider.requestedtripdetail',$requestedmanualtrip->id)}}"><button class="pull-right btn btn-primary" >View</button></a>
                                 </div>
                 </div>
                 @endforeach
@@ -165,9 +166,9 @@
                     </div>
      @endif
 
-     @if($requestedpackagetrips!=null)
+     @if(count($requestedpackagetrips)!=0)
           <div class="card ">
-                        <div class="card-header bg-warning text-white">
+                        <div class="card-header bg-secondary text-white">
                             <b>Pending Package Request Trips</b>
                         </div>
                         
@@ -178,7 +179,7 @@
                 <div class="card">
                 <div class="card-block">
                                     <p>
-                                        <img class="rounded" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Rider: {{$requestedpackagetrip->name}}</strong>
+                                        <img class="rounded" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Driver: {{$requestedpackagetrip->name}}</strong>
                                         <span class="pull-right text-muted" style="font-size:16px"><br/>
                                             <b>From</b>-{{$requestedpackagetrip->from}}<br/>
                                             <b>To</b>-{{$requestedpackagetrip->to}}<br/>

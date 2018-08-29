@@ -6,138 +6,197 @@
 
 @section('content')
 
-    <div class="container-fluid">
-      <!-- Breadcrumbs
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.html">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">Blank Page</li>
-      </ol>
-	  -->
-      <div class="row">
-	  
- 
-  
-        <div class="col-12">
-					
-	
-					<div class="panel panel-primary ">
-                        <div class="panel-heading ">
-                            Student Pack
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs">
-                                
-                                <li class="nav-item"><a class="nav-link  active" href="#Details1" data-toggle="tab">Details</a>
-                                </li>
-								<li class="nav-item"><a class="nav-link" href="#Package1" data-toggle="tab">Package</a>
-                                </li>
-                                <li class="nav-item"><a class="nav-link" href="#Driver1" data-toggle="tab">Driver</a>
-                                </li>
-                            </ul>
-
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-								<div class="tab-pane fade in active" id="Details1">
-									<table width="100%">
-									<tr>
-									<td width="50%">
-										<h4>Details</h4>
-										<p>
-										Starting Point: Bashundhara<br/>
-										Type: Round Trip
-										<br/>
-										Starting Time: 8am<br/>
-										Estimated Time Elasped: From 8am to 6pm <br/>
-										<br/>
-										Trip Dstination: <br/>
-										From Starting point (8am) to Fantasy Kingdom (9am) <br/>
-										From Fantasy Kingdom (6pm) to Starting point (7.30pm) <br/>
-										<br/></p>
-									</td>
-									<td>
-										<img class="rounded" width="70%" src="../img/p5.jpg"/>
-									</td>
-									</tr>
-									</table>
-								</div>
-                                <div class="tab-pane fade" id="Package1">
-                                    <h4>Advertisment</h4>
-									<table>
-									<tr>
-									<td width="30%">
-                                    <img class="img-thumbnail center" alt="Cinque Terre"  style="width:100%;" src="../img/p4.jpg"/>
-									</td>
-									<td width="3%">
-									</td>
-									<td>
-										শুধুমাত্র শিক্ষার্থীদের জন্য আকর্ষণীয় Student Pack নিয়ে এলো Fantasy Kingdom. সর্বনিম্ন ১০ জন হলেই প্যাকেজটিতে পাচ্ছেন মাত্র ১০০০  টাকায় (মাথাপিছু)  Starting Trip+Entry + Fantasy Kingdom (all rides) + Water Kingdom (all rides) + Returning Trip উপভোগ করার সুযোগ। তাই আর দেরি না করে এখনই চলে আসুন Fantasy Kingdom-এ। </td>
-									</tr>
-									</table>
-                                </div>
-                                
-                                <div class="tab-pane fade" id="Driver1">
-                                    <h4>Driver</h4>
-									<table>
-										<tr>
-											<td width="30%">
-											<img class="rounded-circle" width="70%" src="../img/user_pic.jpg"/>
-											</td>
-											<td style="text-align:center">
-												<table width="100%">
-													<tr>
-														<td  style="text-align:center" width="40%">
-															<h4>Driver Name</h4>
-														</td>
-														<td style="text-align:center">
-															Completed Trips:111
-														</td>
-													</tr>
-													<tr>
-														<td style="text-align:center">Rate
-															<i class="fa fa-star" style="font-size: 20px;color:#00000"></i>
-															<i class="fa fa-star" style="font-size: 20px;color:#00000"></i>
-															<i class="fa fa-star" style="font-size: 20px;color:#00000"></i>
-															<i class="fa fa-star" style="font-size: 20px;color:#00000"></i>
-															<i class="fa fa-star" style="font-size: 20px;color:#00000"></i>
-														</td>
-														<td style="text-align:center">
-															Contact No:019xxxxxxxx
-														</td>
-													</tr>
-													<tr>
-														<td style="text-align:center" colspan="2">
-															<br/>
-															<br/>
-															<h4> Give Review</h4>
-															<textarea height="50px" width="150px"></textarea><br/> <br/>
-															<button class="btn btn-primary">Submut</button>
-														</td>
-													</tr>
-												</table>
-											</td>
-											<td>
-											</td>
-										</tr>
-									</table>
-									
+    @if($activetrip!=null)
+      <div class="card ">
+                    <div class="card-header bg-primary text-white">
+                        <b>Active Trip</b>
+                    </div>
+                    
+        <div class="card-block">
+        <div style="padding:10px">
+              <p>
+                  <img class="rounded-circle" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Driver:{{$activetrip->name}}</strong>
+                 <span class="pull-right text-muted" style="font-size:16px"><br/>
+                                            <b>From</b>-{{$activetrip->from}}<br/>
+                                            <b>To</b>-{{$activetrip->to}}<br/>
+                                            <b>Trip Started</b>- {{$activetrip->start_date}}<br/>
+                                            <b>Trip Ended</b>- {{$activetrip->end_date}}<br/>
+                                        </span>
+              </p>
+              <i>Phone no: {{$activetrip->phonenumber}}</i>
+              <hr/>
+              <b style="font-size:16px">Trip Type: {{$activetrip->trip_type}}<br/>
+                                    Payment Status: {{$activetrip->payment_info}}<br/>
+                                    Trip Fare: {{$activetrip->total_cost}}Tk</b>
+             <a href="{{route('rider.requestedtripdetail',$activetrip->id)}}"><button class="pull-right btn btn-primary" >View</button></a>
                                 </div>
                             </div>
-                        </div>
-						<div class="panel-footer">
-						<h3>Total Charge: 12000 taka</h3>
-						</div>
-                        <!-- /.panel-body -->
-                    </div>
-					
-					
-					
-					
         </div>
-      </div>
-    </div>
-    
+                    
+                </div>
+                 @endif
+          <br/>
+          
+          <br/>
+          <br/>
+    <!--pending-->  
+ @if(count($requestedmanualtrips)!=0)
+          <div class="card ">
+                        <div class="card-header bg-warning text-white">
+                            <b>Pending Your Requested Trips</b>
+                        </div>
+                        
+            <div class="card-block">
+              <div style="padding:10px">
+                
+                @foreach($requestedmanualtrips as $requestedmanualtrip)
+                <div class="card">
+                <div class="card-block">
+                                    <p>
+                                        <img class="rounded" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Rider: {{$requestedmanualtrip->name}}</strong>
+                                        <span class="pull-right text-muted" style="font-size:16px"><br/>
+                                            <b>From</b>-{{$requestedmanualtrip->from}}<br/>
+                                            <b>To</b>-{{$requestedmanualtrip->to}}<br/>
+                                            <b>Trip Started</b>- {{$requestedmanualtrip->start_date}}<br/>
+                                            <b>Trip Ended</b>- {{$requestedmanualtrip->end_date}}<br/>
+                                        </span>
+                                    </p>
+                  <i>Phone no: {{$requestedmanualtrip->phonenumber}}</i>
+                  <hr/>
+                  <b style="font-size:16px">Trip Type: {{$requestedmanualtrip->trip_type}}<br/>
+                  Trip Fare: {{$requestedmanualtrip->total_cost}}Tk</b>
+                  <a href="{{route('rider.requestedtripdetail',$requestedmanualtrip->id)}}"><button class="pull-right btn btn-primary" >View</button>
+                                </div>
+                </div>
+                @endforeach
+                <br/>
+                <br/>
+                
+                
+                
+              </div>
+            </div>
+                        
+                    </div>
+     @endif
+
+     @if(count($requestedpackagetrips)!=0)
+          <div class="card ">
+                        <div class="card-header bg-secondary text-white">
+                            <b>Pending Package Request Trips</b>
+                        </div>
+                        
+            <div class="card-block">
+              <div style="padding:10px">
+                
+                @foreach($requestedpackagetrips as $requestedpackagetrip)
+                <div class="card">
+                <div class="card-block">
+                                    <p>
+                                        <img class="rounded" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Driver: {{$requestedpackagetrip->name}}</strong>
+                                        <span class="pull-right text-muted" style="font-size:16px"><br/>
+                                            <b>From</b>-{{$requestedpackagetrip->from}}<br/>
+                                            <b>To</b>-{{$requestedpackagetrip->to}}<br/>
+                                            <b>Trip Started</b>- {{$requestedpackagetrip->start_date}}<br/>
+                                            <b>Trip Ended</b>- {{$requestedpackagetrip->end_date}}<br/>
+                                        </span>
+                                    </p>
+                  <i>Phone no: {{$requestedpackagetrip->phonenumber}}</i>
+                  <hr/>
+                  <b style="font-size:16px">Trip Type: {{$requestedpackagetrip->trip_type}}<br/>
+                  Trip Fare: {{$requestedpackagetrip->total_cost}}Tk</b>
+                  <button class="pull-right btn btn-primary" onclick="window.location='pendingtripsdetails.html'">View</button>
+                                </div>
+                </div>
+                @endforeach
+                <br/>
+                <br/>
+                
+                
+                
+              </div>
+            </div>
+                        
+                    </div>
+     @endif
+    @if(count($completedmanualtrips)!=0)
+          <div class="card ">
+                        <div class="card-header bg-success text-white">
+                            <b>Completed Requested Trips</b>
+                        </div>
+                        
+            <div class="card-block">
+              <div style="padding:10px">
+                
+                @foreach($completedmanualtrips as $completedmanualtrip)
+                <div class="card">
+                <div class="card-block">
+                                    <p>
+                                        <img class="rounded" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Rider: {{$completedmanualtrip->name}}</strong>
+                                        <span class="pull-right text-muted" style="font-size:16px"><br/>
+                                            <b>From</b>-{{$completedmanualtrip->from}}<br/>
+                                            <b>To</b>-{{$completedmanualtrip->to}}<br/>
+                                            <b>Trip Started</b>- {{$completedmanualtrip->start_date}}<br/>
+                                            <b>Trip Ended</b>- {{$completedmanualtrip->end_date}}<br/>
+                                        </span>
+                                    </p>
+                  <i>Phone no: {{$completedmanualtrip->phonenumber}}</i>
+                  <hr/>
+                  <b style="font-size:16px">Trip Type: {{$completedmanualtrip->trip_type}}<br/>
+                  Trip Fare: {{$completedmanualtrip->total_cost}}Tk</b>
+                  <a href="{{route('rider.requestedtripdetail',$completedmanualtrip->id)}}"><button class="pull-right btn btn-primary" >View</button></a>
+                                </div>
+                </div>
+                @endforeach
+                <br/>
+                <br/>
+                
+                
+                
+              </div>
+            </div>
+                        
+                    </div>
+     @endif
+
+
+     @if(count($completedpackagetrips)!=0)
+          <div class="card ">
+                        <div class="card-header bg-success text-white">
+                            <b>Completed Package Trips</b>
+                        </div>
+                        
+            <div class="card-block">
+              <div style="padding:10px">
+                
+                @foreach($completedpackagetrips as $completedpackagetrips)
+                <div class="card">
+                <div class="card-block">
+                                    <p>
+                                        <img class="rounded" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Rider: {{$completedpackagetrips->name}}</strong>
+                                        <span class="pull-right text-muted" style="font-size:16px"><br/>
+                                            <b>From</b>-{{$completedpackagetrips->from}}<br/>
+                                            <b>To</b>-{{$completedpackagetrips->to}}<br/>
+                                            <b>Trip Started</b>- {{$completedpackagetrips->start_date}}<br/>
+                                            <b>Trip Ended</b>- {{$completedpackagetrips->end_date}}<br/>
+                                        </span>
+                                    </p>
+                  <i>Phone no: {{$completedpackagetrips->phonenumber}}</i>
+                  <hr/>
+                  <b style="font-size:16px">Trip Type: {{$completedpackagetrips->trip_type}}<br/>
+                  Trip Fare: {{$completedpackagetrips->total_cost}}Tk</b>
+                  <a href="{{route('rider.requestedtripdetail',$completedpackagetrips->id)}}"><button class="pull-right btn btn-primary" >View</button></a>
+                                </div>
+                </div>
+                @endforeach
+                <br/>
+                <br/>
+                
+                
+                
+              </div>
+            </div>
+                        
+                    </div>
+     @endif
 @endsection

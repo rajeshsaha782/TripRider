@@ -1,26 +1,26 @@
-@extends('layouts.rider')
+@extends('layouts.driver')
 
 @section('title')
- Completed Trips | Rider
+ Completed Trips | Driver
 @endsection
 
 @section('content')
 
 
 @if(count($completedmanualtrips)!=0)
-          <div class="card ">
-                        <div class="card-header bg-success text-white">
+          <div class="panel panel-green ">
+                        <div class="panel-heading">
                             <b>Completed Requested Trips</b>
                         </div>
                         
-            <div class="card-block">
+            <div class="panel-body">
               <div style="padding:10px">
                 
                 @foreach($completedmanualtrips as $completedmanualtrip)
-                <div class="card">
-                <div class="card-block">
+                <div class="panel panel-deafult">
+                <div class="panel-body">
                                     <p>
-                                        <img class="rounded" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Driver: {{$completedmanualtrip->name}}</strong>
+                                        <img class="rounded" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Rider: {{$completedmanualtrip->name}}</strong>
                                         <span class="pull-right text-muted" style="font-size:16px"><br/>
                                             <b>From</b>-{{$completedmanualtrip->from}}<br/>
                                             <b>To</b>-{{$completedmanualtrip->to}}<br/>
@@ -32,9 +32,10 @@
                   <hr/>
                   <b style="font-size:16px">Trip Type: {{$completedmanualtrip->trip_type}}<br/>
                   Trip Fare: {{$completedmanualtrip->total_cost}}Tk</b>
-                  <a href="{{route('rider.requestedtripdetail',$completedmanualtrip->id)}}"><button class="pull-right btn btn-primary" >View</button></a>
+                  <a href="{{route('driver.requestedtripdetail',$completedmanualtrip->id)}}"><button class="pull-right btn btn-primary" >View</button></a>
                                 </div>
                 </div>
+                <hr/>
                 @endforeach
                 <br/>
                 <br/>
@@ -49,19 +50,19 @@
 
 
      @if(count($completedpackagetrips)!=0)
-          <div class="card ">
-                        <div class="card-header bg-success text-white">
+          <div class="panel panel-green  ">
+                        <div class="panel-heading ">
                             <b>Completed Package Trips</b>
                         </div>
                         
-            <div class="card-block">
+            <div class="panel-body">
               <div style="padding:10px">
                 
                 @foreach($completedpackagetrips as $completedpackagetrips)
-                <div class="card">
-                <div class="card-block">
+                <div class="panel">
+                <div class="panel-body">
                                     <p>
-                                        <img class="rounded" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Driver: {{$completedpackagetrips->name}}</strong>
+                                        <img class="rounded" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Rider: {{$completedpackagetrips->name}}</strong>
                                         <span class="pull-right text-muted" style="font-size:16px"><br/>
                                             <b>From</b>-{{$completedpackagetrips->from}}<br/>
                                             <b>To</b>-{{$completedpackagetrips->to}}<br/>
@@ -73,7 +74,7 @@
                   <hr/>
                   <b style="font-size:16px">Trip Type: {{$completedpackagetrips->trip_type}}<br/>
                   Trip Fare: {{$completedpackagetrips->total_cost}}Tk</b>
-                  <a href="{{route('rider.requestedtripdetail',$completedpackagetrips->id)}}"><button class="pull-right btn btn-primary" >View</button></a>
+                  <a href="{{route('driver.requestedtripdetail',$completedpackagetrips->id)}}"><button class="pull-right btn btn-primary" >View</button></a>
                                 </div>
                 </div>
                 @endforeach

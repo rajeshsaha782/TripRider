@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="{{route('driver.completedtrips')}}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -117,7 +117,7 @@
 			<div class="row">
                 @if($activetrip!=null)
 				<div class="col-lg-12">
-                    <div class="panel panel-green">
+                    <div class="panel panel-primary">
                         <div class="panel-heading">
                             Active Trip
                         </div>
@@ -138,7 +138,7 @@
                                     <b style="font-size:16px">Trip Type: {{$activetrip->trip_type}}<br/>
                                     Payment Status: {{$activetrip->payment_info}}<br/>
                                     Trip Fare: {{$activetrip->total_cost}}Tk</b>
-                                    <button class="pull-right btn btn-primary" onclick="window.location='activetrip.html'">View</button>
+                                    <a href="{{route('driver.requestedtripdetail',$activetrip->id)}}"><button class="pull-right btn btn-primary" >View</button></a>
                                 </div>
                         
                         
@@ -149,7 +149,7 @@
 			</div>
 			
 
-            @if($requestedtrips!=null)
+            @if(count($requestedtrips)!=0)
 			<div class="row">
 				<div class="col-lg-12">
                     <div class="panel panel-yellow">
@@ -169,11 +169,11 @@
                                             <b>Trip Ended</b>- {{$requestedtrip->end_date}}<br/>
                                         </span>
                                     </p>
-                                    <button class="pull-right btn btn-primary" onclick="window.location='pendingtrip.html'">View</button>
+                                    <a href="{{route('driver.requestedtripdetail',$requestedtrip->id)}}"><button class="pull-right btn btn-primary" >View</button></a>
                                     <i>Phone no: {{$requestedtrip->phonenumber}}</i><br/><br/>
                                     <b style="font-size:16px">Trip Type: {{$requestedtrip->trip_type}}<br/>
                                     Trip Fare: {{$requestedtrip->total_cost}}Tk</b>
-                                    </div>
+                            </div>
                                     
                                     <hr/>   
                             @endforeach   

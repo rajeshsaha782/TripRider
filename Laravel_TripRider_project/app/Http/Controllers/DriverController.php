@@ -77,6 +77,75 @@ class DriverController extends Controller
             ->with('completedtrips',$completedtrips);
     }
 
+    public function requestedtripdetail($id,Request $request)
+    {
+        $driver=User::Find(session('user')->id);
+
+        $requestedtrip=DB::table('users')
+                    ->where('booked_manual_trips.id',$id)
+                    ->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', 'users.id')
+                    ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
+                    ->first();
+        //dd($requestedtrip);
+        $map= DriverController::map($requestedtrip);
+
+        $distance=DriverController::getdistance($requestedtrip->start_latitude,$requestedtrip->start_longitude,$requestedtrip->end_latitude,$requestedtrip->end_longitude);
+        //dd($distance);
+        return view('driver.requestedtripdetail')
+                ->with('driver',$driver)
+                ->with('requestedtrip',$requestedtrip)
+                ->with('distance',$distance)
+                ->with('map',$map);
+    }
+    public function confirmmanualtrip($id,Request $request)
+    {
+        $trip=Booked_manual_trip::find($id);
+
+        $trip->status="Ongoing";
+        $trip->driver_id=session('user')->id;
+        $trip->save();
+
+        $request->session()->flash('message', 'You have accepted the Trip.');
+        return redirect()->route('driver.dashboard');
+    }
+    public function endtrip($id,Request $request)
+    {
+        $trip=Booked_manual_trip::find($id);
+
+        $trip->status="Completed";
+        $trip->save();
+
+        $request->session()->flash('message', 'You  Trip is Successfully Completed !!!');
+        return redirect()->route('driver.dashboard');
+    }
+
+    public function completedtrips(Request $request)
+    {
+        $driver=User::Find(session('user')->id);
+
+        $completedmanualtrips=DB::table('users')
+                    ->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', 'users.id')
+                    ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
+                    ->where('rider_requested_trips.car_type',session('user')->cartype)
+                    ->where('booked_manual_trips.status',"Completed")
+                    ->get(); 
+
+        
+
+        //dd($requestedmanualtrips);
+        $completedpackagetrips=DB::table('users')
+                        ->where('booked_package_trips.driver_id',session('user')->id)
+                        ->join('booked_package_trips', 'booked_package_trips.rider_id', '=', 'users.id')
+                        ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
+                    ->where('booked_package_trips.status',"Completed")
+                    ->get();
+        
+        return view('driver.completedtrips')
+                ->with('driver',$driver)
+                ->with('completedmanualtrips',$completedmanualtrips)
+                ->with('completedpackagetrips',$completedpackagetrips);
+    }
+
     public function addpackage(Request $request)
     {
         $driver=User::Find(session('user')->id);
@@ -209,6 +278,8 @@ class DriverController extends Controller
                 ->with('driver',$driver)
                 ->with('packages',$packages);
     }
+
+    
 
     public static function getdistance($lat1,$lon1,$lat2,$lon2)
     {
@@ -466,4 +537,51 @@ class DriverController extends Controller
         return  redirect()->route('driver.changepassword');
     	
     }
+
+    public static function map($package)
+    {
+        $config['zoom']='auto';
+        $config['map_height']='500px';
+        $config['scrollwheel']=true;
+
+        // $request->session()->put('start_lat',$package->start_latitude);
+        // $request->session()->put('start_lan',$package->start_longitude);
+        // $request->session()->put('end_lat',$package->end_latitude);
+        // $request->session()->put('end_lan',$package->end_longitude);
+
+        $start_pos=$package->start_latitude.','.$package->start_longitude;
+        $end_pos=$package->end_latitude.','.$package->end_longitude;
+
+
+
+        $marker_start['animation']= 'DROP';
+        $marker_start['icon'] = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=S|9999FF|000000';
+        $marker_start['position'] = $start_pos;
+        // $marker_start['draggable'] = true;
+        // $marker_start['ondragend'] = 'set_start(event.latLng.lat(), event.latLng.lng());';
+        $marker_start['infowindow_content'] = 'Start Address: '.$package->from;
+        // $marker_start['onclick'] = 'alert(\'Start Address: \' +  document.getElementById(\'startaddress\').value);';
+        GMaps::add_marker($marker_start);
+
+
+        $marker_end = array();
+
+        $marker_end['animation']= 'DROP';
+        $marker_end['icon'] = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=E|9999FF|000000';
+        $marker_end['position'] = $end_pos;
+        // $marker_end['draggable'] = true;
+        // $marker_end['ondragend'] = 'set_end(event.latLng.lat(), event.latLng.lng());';
+        $marker_end['infowindow_content'] = 'End Address: '.$package->to;
+        // $marker_end['onclick'] = 'alert(\'End Address: \' +  document.getElementById(\'endaddress\').value);';
+        GMaps::add_marker($marker_end);
+
+
+        GMaps:: initialize($config);
+
+        $map=GMaps::create_map();
+
+        return $map;
+    }
+
+
 }

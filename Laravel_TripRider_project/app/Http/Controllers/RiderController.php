@@ -35,12 +35,12 @@ class RiderController extends Controller
                 }  
 
         $requestedmanualtrips=DB::table('users')
-                    ->join('booked_manual_trips', 'booked_manual_trips.driver_id', '=', 'users.id')
+                    ->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', 'users.id')
                     ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
                     ->where('rider_requested_trips.rider_id',session('user')->id)
                     ->where('booked_manual_trips.status',"Pending")
                     ->get();
-
+        //dd($requestedmanualtrips);
         $requestedpackagetrips=DB::table('users')
                         ->join('booked_package_trips', 'booked_package_trips.driver_id', '=', 'users.id')
                         ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
@@ -48,11 +48,57 @@ class RiderController extends Controller
                     ->where('booked_package_trips.status',"Pending")
                     ->get();
 
+        $completedmanualtrips=DB::table('users')
+                    ->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', 'users.id')
+                    ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
+                    ->where('rider_requested_trips.rider_id',session('user')->id)
+                    ->where('booked_manual_trips.status',"Completed")
+                    ->get();
+        //dd($requestedmanualtrips);
+        $completedpackagetrips=DB::table('users')
+                        ->join('booked_package_trips', 'booked_package_trips.driver_id', '=', 'users.id')
+                        ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
+                    ->where('booked_package_trips.rider_id',session('user')->id)
+                    ->where('booked_package_trips.status',"Completed")
+                    ->get();
+
     	return view('rider.dashboard')
             ->with('activetrip',$activetrip)
             ->with('requestedmanualtrips',$requestedmanualtrips)
-            ->with('requestedpackagetrips',$requestedpackagetrips);
+            ->with('requestedpackagetrips',$requestedpackagetrips)
+            ->with('totalcompletedtrips',count($completedmanualtrips) + count($completedpackagetrips));
     }
+
+    public function requestedtripdetail($id,Request $request)
+    {
+        
+
+        $requestedtrip=DB::table('users')
+                    ->where('booked_manual_trips.id',$id)
+                    ->join('booked_manual_trips', 'booked_manual_trips.driver_id', '=', 'users.id')
+                    ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
+                    ->first();
+        //dd($requestedtrip);
+        $map= RiderController::map($requestedtrip);
+
+        $distance=DriverController::getdistance($requestedtrip->start_latitude,$requestedtrip->start_longitude,$requestedtrip->end_latitude,$requestedtrip->end_longitude);
+        //dd($distance);
+        return view('rider.requestedtripdetail')
+                ->with('requestedtrip',$requestedtrip)
+                ->with('distance',$distance)
+                ->with('map',$map);
+    }
+    public function cancelmanualtrip($id,Request $request)
+    {
+        $trip=Booked_manual_trip::find($id);
+
+        Rider_requested_trip::destroy($trip->rider_requested_trip_id);
+        Booked_manual_trip::destroy($id);
+
+        $request->session()->flash('message', 'You Trip Request Successfully Cancelled.');
+        return redirect()->route('driver.dashboard');
+    }
+
     public function packages(Request $request)
     {
         $packages=DB::table('users')
@@ -171,11 +217,62 @@ class RiderController extends Controller
         $packagebook->save();
 
     $request->session()->flash('message', 'Your Package Request Successfully Booked.Please Wait for the Driver\'s Response.');
-        return view('rider.dashboard');
+        return redirect()->route('rider.dashboard');
     }
     public function mytrips(Request $request)
     {
-        return view('rider.mytrips');
+        $activetrip=DB::table('users')
+                    ->join('booked_manual_trips', 'booked_manual_trips.driver_id', '=', 'users.id')
+                    ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
+                    ->where('booked_manual_trips.rider_id',session('user')->id)
+                    ->where('booked_manual_trips.status',"Ongoing")
+                    ->first();
+
+                if($activetrip==null)
+                {
+                    $activetrip=DB::table('users')
+                        ->join('booked_package_trips', 'booked_package_trips.driver_id', '=', 'users.id')
+                        ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
+                        ->where('booked_package_trips.rider_id',session('user')->id)
+                        ->where('booked_package_trips.status',"Ongoing")
+                        ->first();
+                }  
+
+        $requestedmanualtrips=DB::table('users')
+                    ->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', 'users.id')
+                    ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
+                    ->where('rider_requested_trips.rider_id',session('user')->id)
+                    ->where('booked_manual_trips.status',"Pending")
+                    ->get();
+        //dd($requestedmanualtrips);
+        $requestedpackagetrips=DB::table('users')
+                        ->join('booked_package_trips', 'booked_package_trips.driver_id', '=', 'users.id')
+                        ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
+                    ->where('booked_package_trips.rider_id',session('user')->id)
+                    ->where('booked_package_trips.status',"Pending")
+                    ->get();
+
+        $completedmanualtrips=DB::table('users')
+                    ->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', 'users.id')
+                    ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
+                    ->where('rider_requested_trips.rider_id',session('user')->id)
+                    ->where('booked_manual_trips.status',"Completed")
+                    ->get();
+        //dd($requestedmanualtrips);
+        $completedpackagetrips=DB::table('users')
+                        ->join('booked_package_trips', 'booked_package_trips.driver_id', '=', 'users.id')
+                        ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
+                    ->where('booked_package_trips.rider_id',session('user')->id)
+                    ->where('booked_package_trips.status',"Completed")
+                    ->get();
+
+        return view('rider.mytrips')
+            ->with('activetrip',$activetrip)
+            ->with('requestedmanualtrips',$requestedmanualtrips)
+            ->with('requestedpackagetrips',$requestedpackagetrips)
+            ->with('completedmanualtrips',$completedmanualtrips)
+            ->with('completedpackagetrips',$completedpackagetrips);
+
     }
     public function start(Request $request)
     {
@@ -305,7 +402,7 @@ class RiderController extends Controller
 
 
         $request->session()->flash('message', 'Your Trip Request Successfully Booked.Please Wait for the Driver\' Response.');
-        return view('rider.dashboard');
+        return redirect()->route('rider.dashboard');
     }
     public function viewprofile($id,Request $request)
     {
@@ -315,8 +412,24 @@ class RiderController extends Controller
 
     public function completedtrips(Request $request)
     {
+        $completedmanualtrips=DB::table('users')
+                    ->where('booked_manual_trips.rider_id',session('user')->id)
+                    ->join('booked_manual_trips', 'booked_manual_trips.driver_id', '=', 'users.id')
+                    ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
+                    ->where('booked_manual_trips.status',"Completed")
+                    ->get();
+        //dd($requestedmanualtrips);
+        $completedpackagetrips=DB::table('users')
+                        ->where('booked_package_trips.rider_id',session('user')->id)
+                        ->join('booked_package_trips', 'booked_package_trips.driver_id', '=', 'users.id')
+                        ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
+                    
+                    ->where('booked_package_trips.status',"Completed")
+                    ->get();
         
-    	return view('rider.completedtrips');
+    	return view('rider.completedtrips')
+                ->with('completedmanualtrips',$completedmanualtrips)
+                ->with('completedpackagetrips',$completedpackagetrips);
     }
     public function editprofile($id,Request $request)
     {
@@ -365,5 +478,49 @@ class RiderController extends Controller
         $request->session()->flash('message', 'Password Successfully Changed.');
         return  redirect()->route('rider.changepassword');
         
+    }
+    public static function map($package)
+    {
+        $config['zoom']='auto';
+        $config['map_height']='500px';
+        $config['scrollwheel']=true;
+
+        // $request->session()->put('start_lat',$package->start_latitude);
+        // $request->session()->put('start_lan',$package->start_longitude);
+        // $request->session()->put('end_lat',$package->end_latitude);
+        // $request->session()->put('end_lan',$package->end_longitude);
+
+        $start_pos=$package->start_latitude.','.$package->start_longitude;
+        $end_pos=$package->end_latitude.','.$package->end_longitude;
+
+
+
+        $marker_start['animation']= 'DROP';
+        $marker_start['icon'] = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=S|9999FF|000000';
+        $marker_start['position'] = $start_pos;
+        // $marker_start['draggable'] = true;
+        // $marker_start['ondragend'] = 'set_start(event.latLng.lat(), event.latLng.lng());';
+        $marker_start['infowindow_content'] = 'Start Address: '.$package->from;
+        // $marker_start['onclick'] = 'alert(\'Start Address: \' +  document.getElementById(\'startaddress\').value);';
+        GMaps::add_marker($marker_start);
+
+
+        $marker_end = array();
+
+        $marker_end['animation']= 'DROP';
+        $marker_end['icon'] = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=E|9999FF|000000';
+        $marker_end['position'] = $end_pos;
+        // $marker_end['draggable'] = true;
+        // $marker_end['ondragend'] = 'set_end(event.latLng.lat(), event.latLng.lng());';
+        $marker_end['infowindow_content'] = 'End Address: '.$package->to;
+        // $marker_end['onclick'] = 'alert(\'End Address: \' +  document.getElementById(\'endaddress\').value);';
+        GMaps::add_marker($marker_end);
+
+
+        GMaps:: initialize($config);
+
+        $map=GMaps::create_map();
+
+        return $map;
     }
 }

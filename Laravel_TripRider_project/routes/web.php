@@ -61,16 +61,26 @@ Route::group(['middleware' => 'driverChk'], function(){
 Route::get('/driver/dashboard', 'DriverController@dashboard')->name('driver.dashboard');
 Route::get('/driver/addpackage', 'DriverController@addpackage')->name('driver.addpackage');
 Route::post('/driver/addpackage', 'DriverController@saveaddpackage');
+
 Route::get('/driver/packages', 'DriverController@packages')->name('driver.packages');
 Route::get('/driver/packagedetail/{id}', 'DriverController@packagedetail')->name('driver.packagedetail');
 Route::get('/driver/packageedit/{id}', 'DriverController@packageedit')->name('driver.packageedit');
 Route::post('/driver/packageedit/{id}', 'DriverController@savepackageedit');
 Route::get('/driver/packagedelete/{id}', 'DriverController@packagedelete')->name('driver.packagedelete');
+
+Route::get('/driver/requestedtripdetail/{id}', 'DriverController@requestedtripdetail')->name('driver.requestedtripdetail');
+Route::get('/driver/confirmmanualtrip/{id}', 'DriverController@confirmmanualtrip')->name('driver.confirmmanualtrip');
+Route::get('/driver/endtrip/{id}', 'DriverController@endtrip')->name('driver.endtrip');
+Route::get('/driver/completedtrips', 'DriverController@completedtrips')->name('driver.completedtrips');
+
+
 Route::get('/driver/viewprofile/{id}', 'DriverController@viewprofile')->name('driver.viewprofile');
 Route::get('/driver/editprofile/{id}', 'DriverController@editprofile')->name('driver.editprofile');
 Route::post('/driver/editprofile/{id}', 'DriverController@saveeditprofile');
 Route::get('/driver/changepassword', 'DriverController@changepassword')->name('driver.changepassword');
 Route::post('/driver/changepassword', 'DriverController@savechangepassword');
+
+
 
 });
 
@@ -93,7 +103,8 @@ Route::post('/rider/manualtrip', 'RiderController@savemanualtrip');
 Route::get('/rider/packagebook/{id}', 'RiderController@packagebook')->name('rider.packagebook');
 Route::get('/rider/completedtrips', 'RiderController@completedtrips')->name('rider.completedtrips');
 
-
+Route::get('/rider/requestedtripdetail/{id}', 'RiderController@requestedtripdetail')->name('rider.requestedtripdetail');
+Route::get('/rider/cancelmanualtrip/{id}', 'RiderController@cancelmanualtrip')->name('rider.cancelmanualtrip');
 });
 
 
