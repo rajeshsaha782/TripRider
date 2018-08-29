@@ -219,6 +219,7 @@ class RiderController extends Controller
     $request->session()->flash('message', 'Your Package Request Successfully Booked.Please Wait for the Driver\'s Response.');
         return redirect()->route('rider.dashboard');
     }
+    
     public function mytrips(Request $request)
     {
         $activetrip=DB::table('users')

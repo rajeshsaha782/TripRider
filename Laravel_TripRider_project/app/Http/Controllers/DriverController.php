@@ -136,6 +136,7 @@ class DriverController extends Controller
         $trip=Booked_manual_trip::find($id);
 
         $trip->status="Completed";
+        $trip->payment_info="Fullpaid";
         $trip->save();
 
         $request->session()->flash('message', 'You  Trip is Successfully Completed !!!');
@@ -246,6 +247,7 @@ class DriverController extends Controller
         $trip=Booked_package_trip::find($id);
 
         $trip->status="Completed";
+        $trip->payment_info="Fullpaid";
         $trip->save();
 
         $request->session()->flash('message', 'You Package Trip is Successfully Completed !!!');
@@ -564,10 +566,10 @@ class DriverController extends Controller
         $Package->start_longitude=session('start_lan');
         $Package->end_latitude=session('end_lat');
         $Package->end_longitude=session('end_lan');
-        if($Package->image!=null)
-        {
-            $Package->image=$file->getClientOriginalName();
-        }
+        // if($Package->image!=null)
+        // {
+        //     $Package->image=$file->getClientOriginalName();
+        // }
         
         $Package->save();
 
