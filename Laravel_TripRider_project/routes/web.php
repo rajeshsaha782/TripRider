@@ -37,6 +37,11 @@ Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboa
 Route::get('/admin/adminview', 'AdminController@adminview')->name('admin.adminview');
 Route::get('/admin/driverview', 'AdminController@driverview')->name('admin.driverview');
 Route::get('/admin/riderview', 'AdminController@riderview')->name('admin.riderview');
+
+Route::get('/admin/completetrips', 'AdminController@completetrips')->name('admin.completetrips');
+Route::get('/admin/currenttrips', 'AdminController@currenttrips')->name('admin.currenttrips');
+Route::get('/admin/pendingtrips', 'AdminController@pendingtrips')->name('admin.pendingtrips');
+
 Route::get('/admin/riderviewprofile/{id}', 'AdminController@riderviewprofile')->name('admin.riderviewprofile');
 Route::get('/admin/adminviewprofile/{id}', 'AdminController@adminviewprofile')->name('admin.adminviewprofile');
 Route::get('/admin/driverviewprofile/{id}', 'AdminController@driverviewprofile')->name('admin.driverviewprofile');

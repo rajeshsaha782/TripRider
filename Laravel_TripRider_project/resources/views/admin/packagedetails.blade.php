@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">  {{$package->name}}</h1>
+        <h1 class="page-header">  {{$package->title}}</h1>
         
     </div>
 </div>
@@ -28,10 +28,10 @@
                     2days-3nights<br/>
                     {{$package->total_cost}}tk<br/>
     </div>
+            
     <div class="col-sm-4" style="color: blue;">
         <div class="row" align="center" >
             <img src="/img/rajesh.jpg" class="img-rounded" alt="Cinque Terre" style="width: 90%;height: 25%">
-
         </div>
     </div>
     <div class="col-sm-4" align="center">
@@ -39,34 +39,18 @@
                     <tbody>
                         <tr>
                           <th>Task</th>
-                          <th>Progress</th>
                           <th style="width: 40px">Number</th>
                         </tr>
                         <tr>
                           <td> Complete Rides</td>
-                          <td>
-                            <div class="progress progress-xs">
-                              <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                            </div>
-                          </td>
                           <td><span class="badge bg-red">50</span></td>
                         </tr>
                         <tr>
                           <td>Pending Rides</td>
-                          <td>
-                            <div class="progress progress-xs">
-                              <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                            </div>
-                          </td>
                           <td><span class="badge bg-yellow">30</span></td>
                         </tr>
                         <tr>
                           <td>Cancel Rides</td>
-                          <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                            </div>
-                          </td>
                           <td><span class="badge bg-light-blue">20</span></td>
                         </tr>
                   </tbody>

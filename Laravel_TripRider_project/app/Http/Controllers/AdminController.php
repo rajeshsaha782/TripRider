@@ -78,10 +78,18 @@ class AdminController extends Controller
       ///dd(session('user'));
 
         $admin=User::Find(session('user')->id);
-        $packages=DB::table('packages')->get()->toArray();
-      //dd($packages);
+       // $packages=DB::table('packages')->get()->toArray();
+
+        $packages=DB::table('users')
+                ->join('packages', 'packages.driver_id', '=', 'users.id')
+                ->select('users.name as driverName', 'users.*','packages.title as packageName','packages.*','packages.driver_id as driver_id')
+                ->get()->toArray();
+
+     //dd($packages);
+
         return view('admin.packages')
             ->with('admin',$admin)
+            //->with('result',$result)
             ->with('packages',$packages);
     }
 

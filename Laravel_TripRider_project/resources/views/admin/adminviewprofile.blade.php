@@ -21,12 +21,6 @@
               <td class="text-justify">{{$adminview->email}}</td>
             </tr>
             <tr >
-              <td width="40%">Address</td>
-              <td>
-                Bashundhara
-              </td>
-            </tr>
-            <tr >
               <td width="40%">Phone number</td>
               <td class="text-justify">{{$adminview->phonenumber}}</td>
             </tr>

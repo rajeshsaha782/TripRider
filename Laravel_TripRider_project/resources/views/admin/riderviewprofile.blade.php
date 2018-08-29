@@ -18,12 +18,6 @@
               <td class="text-justify">{{$rider->email}}</td>
             </tr>
             <tr >
-              <td width="40%">Address</td>
-              <td>
-                Bashundhara
-              </td>
-            </tr>
-            <tr >
               <td width="40%">Phone number</td>
               <td class="text-justify">{{$rider->phonenumber}}</td>
             </tr>
@@ -39,41 +33,25 @@
                     <tbody>
                         <tr>
                           <th>Task</th>
-                          <th>Progress</th>
                           <th style="width: 40px">Number</th>
                         </tr>
                         <tr>
                           <td> Complete Rides</td>
-                          <td>
-                            <div class="progress progress-xs">
-                              <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                            </div>
-                          </td>
                           <td><span class="badge bg-red">{{$completetrip}}</span></td>
                         </tr>
                         <tr>
                           <td>Pending Rides</td>
-                          <td>
-                            <div class="progress progress-xs">
-                              <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                            </div>
-                          </td>
                           <td><span class="badge bg-yellow">{{$pendingtrip}}</span></td>
                         </tr>
                         <tr>
                           <td>On going Rides</td>
-                          <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                            </div>
-                          </td>
                           <td><span class="badge bg-light-blue">{{$ongoingtrip}}</span></td>
                         </tr>
                   </tbody>
                 </table>
             </div>
     </div>
-<h3>Noraml Trip</h3>
+<h3>Packages Trip</h3>
 
 <div class="row">
     <div class="panel-body">
@@ -131,7 +109,7 @@
                     <td>{{$result->to}}</td>
                     <td class="center">{{$result->start_date}}</td>
                     <td class="center">{{$result->end_date}}</td>
-                    <td class="center">{{$result->cost}}</td>
+                    <td class="center">{{$result->total_cost}}</td>
                 </tr>
                  @endforeach
                 

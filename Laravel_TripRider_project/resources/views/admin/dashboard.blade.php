@@ -82,7 +82,7 @@
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">{{$pendingtrip}}</div>
-                        <div>Pending</div>
+                        <div>Pending Trips</div>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">{{$ongoingtrip}}</div>
-                        <div>Current Rides</div>
+                        <div>Current Trips</div>
                     </div>
                 </div>
             </div>
@@ -131,11 +131,11 @@
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">{{$completetrip}}</div>
-                        <div>Complete Rides</div>
+                        <div>Complete Trips</div>
                     </div>
                 </div>
             </div>
-            <a href="completerides.html">
+            <a href="{{route('admin.adminview')}}">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -193,7 +193,7 @@ function drawChart() {
 ]);
 
   // Optional; add a title and set the width and height of the chart
-  var options = {'title':'Total Service:25', 'width':550, 'height':400};
+  var options = {'title':'Total Service:{{$pendingtrip+$completetrip+$ongoingtrip}}', 'width':550, 'height':400};
 
   // Display the chart inside the <div> element with id="piechart"
   var chart = new google.visualization.PieChart(document.getElementById('piechart'));
