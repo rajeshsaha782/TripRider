@@ -1,14 +1,16 @@
+@extends('layouts.admin')
 
+@section('content')
 
 
 <div class="panel-body">
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-8">
             <div class="table-responsive">
                 <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                     <thead>
                         <tr>
-                            <th>Drider</th>
+                            <th>Driver</th>
                             <th>Rider</th>
                             <th>Package Name</th>
                             <th>From</th>
@@ -40,3 +42,4 @@
         </div>
     </div>
 </div>
+@endsection

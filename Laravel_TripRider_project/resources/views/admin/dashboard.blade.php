@@ -135,7 +135,7 @@
                     </div>
                 </div>
             </div>
-            <a href="{{route('admin.adminview')}}">
+            <a href="{{route('admin.completetrips')}}">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

@@ -43,15 +43,15 @@
                         </tr>
                         <tr>
                           <td> Complete Rides</td>
-                          <td><span class="badge bg-red">50</span></td>
+                          <td><span class="badge bg-red">{{$completetrip}}</span></td>
                         </tr>
                         <tr>
                           <td>Pending Rides</td>
-                          <td><span class="badge bg-yellow">30</span></td>
+                          <td><span class="badge bg-yellow">{{$pendingtrip}}</span></td>
                         </tr>
                         <tr>
                           <td>Cancel Rides</td>
-                          <td><span class="badge bg-light-blue">20</span></td>
+                          <td><span class="badge bg-light-blue">{{$ongoingtrip}}</span></td>
                         </tr>
                   </tbody>
                 </table>
@@ -65,18 +65,27 @@
             <thead>
                 <tr>
                     <th>Rider</th>
-                    <th>Starting Date</th>
-                    <th>End Date</th>
+                    <th>Title</th>
+                    <th>From</th>
+                    <th>To</th>
+
                     <th>Amount</th>
                 </tr>
             </thead>
             <tbody>
+             @foreach($packages as $package)
+
                 <tr class="odd gradeX">
-                    <td><a href="viewprofilerider.html">rakib</a></td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">12-05-18</td>
-                    <td class="center">1200</td>
+                   
+                    <td><a href="viewprofilerider.html">{{$package->name}}</a></td>
+                    <td class="center">{{$package->title}}</td>
+                    <td class="center">{{$package->from}}</td>
+                    <td class="center">{{$package->to}}</td>
+                    <td class="center">{{$package->total_cost}}</td>
+
                 </tr>
+                        @endforeach
+
             </tbody>
         </table>
     </div>
