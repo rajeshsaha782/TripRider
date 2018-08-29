@@ -63,7 +63,6 @@
             </div>
     </div>
 <h3>Packages Trip</h3>
-
 <div class="row">
     <div class="panel-body">
          <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
