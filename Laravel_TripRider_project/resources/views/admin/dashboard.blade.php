@@ -86,7 +86,7 @@
                     </div>
                 </div>
             </div>
-            <a href="#">
+            <a href="{{route('admin.pendingtrips')}}">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -112,7 +112,7 @@
                     </div>
                 </div>
             </div>
-            <a href="currentrides.html">
+            <a href="{{route('admin.currenttrips')}}">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

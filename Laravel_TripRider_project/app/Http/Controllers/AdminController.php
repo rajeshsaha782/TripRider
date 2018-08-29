@@ -388,12 +388,28 @@ class AdminController extends Controller
      public function pendingtrips(Request $request)
     {
         
-        return view('admin.viewprofile');
+        $admin=User::Find(session('user')->id);
+         $result = DB::table('booked_package_trips')
+         ->join('packages', 'booked_package_trips.package_id', '=', 'packages.id')
+         ->join('users', 'booked_package_trips.rider_id', '=', 'users.id')
+         ->get()->toArray();
+        return view('admin.completetrips')
+            ->with('admin',$admin)
+            ->with('result',$result);
+
     }
      public function currenttrips(Request $request)
     {
         
-        return view('admin.viewprofile');
+       $admin=User::Find(session('user')->id);
+         $result = DB::table('booked_package_trips')
+         ->join('packages', 'booked_package_trips.package_id', '=', 'packages.id')
+         ->join('users', 'booked_package_trips.rider_id', '=', 'users.id')
+         ->get()->toArray();
+        return view('admin.completetrips')
+            ->with('admin',$admin)
+            ->with('result',$result);
+            
     }
     public function viewprofile($id,Request $request)
     {
