@@ -17,7 +17,16 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            
+                            @if(session('message'))
+                                    <div class="card-body"style="background-color: red;opacity: 0.7;">
+                                    <ul>
+                                     
+                                        <li style="color: white">{{session('message')}}</li>
+                                      
+                                    </ul>
+                                  </div>
+                              
+                            @endif
                             <div class="panel panel-default">
                                     <p>
                                         <img class="rounded" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Rider: {{$requestedtrip->name}}</strong>
@@ -67,13 +76,13 @@
 
                             @if($requestedtrip->status=="Pending")
                             
-                                 <a href="{{route('driver.confirmmanualtrip',$requestedtrip->id)}}"><button class="btn btn-primary" >Accept</button></a>
+                                 <a href="{{route('driver.confirmpackagetrip',$requestedtrip->id)}}"><button class="btn btn-primary" >Accept</button></a>
                             
                             @endif
 
                             @if($requestedtrip->status=="Ongoing")
                             
-                                <a href="{{route('driver.endtrip',$requestedtrip->id)}}"><button class="btn btn-primary" >Payment Recieved and End Trip</button></a>
+                                <a href="{{route('driver.endpackage',$requestedtrip->id)}}"><button class="btn btn-primary" >Payment Recieved and End Trip</button></a>
                             
                             @endif
                        

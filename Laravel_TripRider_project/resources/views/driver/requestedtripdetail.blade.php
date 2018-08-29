@@ -17,7 +17,16 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            
+                            @if(session('message'))
+                    <div class="card-body"style="background-color: red;opacity: 0.7;">
+                    <ul>
+                     
+                        <li style="color: white">{{session('message')}}</li>
+                      
+                    </ul>
+                  </div>
+              
+            @endif
                             <div class="panel panel-default">
                                     <p>
                                         <img class="rounded" width="10%" src="/img/user_pic.jpg"/> &nbsp &nbsp &nbsp <strong style="font-size:20px"> Rider: {{$requestedtrip->name}}</strong>

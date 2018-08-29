@@ -1,7 +1,7 @@
 @extends('layouts.driver')
 
 @section('title')
- Completed Trips | Driver
+ Pending Package Requests | Driver
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
 @if(count($requestedpackages)!=0)
           <div class="panel panel-red ">
                         <div class="panel-heading">
-                            <b>Completed Requested Trips</b>
+                            <b>Pending Package Requests</b>
                         </div>
                         
             <div class="panel-body">
