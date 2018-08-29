@@ -100,6 +100,28 @@ class DriverController extends Controller
 
     public function confirmmanualtrip($id,Request $request)
     {
+
+        $isbooked=Booked_package_trip::where('driver_id',session('user')->id)
+                            ->where('status',"Ongoing")
+                            ->get();
+
+        if(count($isbooked)!=0)
+        {
+            $request->session()->flash('message', 'You already Have an Active Package!!!');
+            return redirect()->route('driver.requestedtripdetail',$id);
+        }
+
+        $isbooked=Booked_manual_trip::where('driver_id',session('user')->id)
+                            ->where('status',"Ongoing")
+                            ->get();
+
+        if(count($isbooked)!=0)
+        {
+            $request->session()->flash('message', 'You already Have an Active Rider Request!!!');
+            return redirect()->route('driver.requestedtripdetail',$id);
+        }
+
+
         $trip=Booked_manual_trip::find($id);
 
         $trip->status="Ongoing";
@@ -185,6 +207,49 @@ class DriverController extends Controller
                 ->with('requestedtrip',$requestedtrip)
                 ->with('distance',$distance)
                 ->with('map',$map);
+    }
+    public function confirmpackagetrip($id,Request $request)
+    {
+        $isbooked=Booked_package_trip::where('driver_id',session('user')->id)
+                            ->where('status',"Ongoing")
+                            ->get();
+
+        if(count($isbooked)!=0)
+        {
+            $request->session()->flash('message', 'You already Have an Active Package!!!');
+            return redirect()->route('driver.requestedpackagedetail',$id);
+        }
+
+        $isbooked=Booked_manual_trip::where('driver_id',session('user')->id)
+                            ->where('status',"Ongoing")
+                            ->get();
+
+        if(count($isbooked)!=0)
+        {
+            $request->session()->flash('message', 'You already Have an Active Rider Request!!!');
+            return redirect()->route('driver.requestedpackagedetail',$id);
+        }
+
+
+
+        $trip=Booked_package_trip::find($id);
+
+        $trip->status="Ongoing";
+        $trip->driver_id=session('user')->id;
+        $trip->save();
+
+        $request->session()->flash('message', 'You have accepted the Package Trip.');
+        return redirect()->route('driver.dashboard');
+    }
+    public function endpackage($id,Request $request)
+    {
+        $trip=Booked_package_trip::find($id);
+
+        $trip->status="Completed";
+        $trip->save();
+
+        $request->session()->flash('message', 'You Package Trip is Successfully Completed !!!');
+        return redirect()->route('driver.dashboard');
     }
 
     public function addpackage(Request $request)
