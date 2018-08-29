@@ -26,7 +26,7 @@
                                
                                 <td><a href="viewprofile.html">{{$result->name}}</a></td>
                                 <td><a href="viewprofilerider.html">{{$result->rider_id}}</a></td>
-                                <td><a href="packagedetails.html">{{$result->id}}</a></td>
+                                <td><a href="packagedetails.html">{{$result->title}}</a></td>
                                 <td>{{$result->from}}</td>
                                 <td>{{$result->to}}</td>
                                 <td class="center">12-05-18</td>

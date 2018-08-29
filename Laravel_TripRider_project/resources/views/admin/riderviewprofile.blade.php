@@ -71,7 +71,7 @@
                 @foreach($result as $result)
                 <tr class="odd gradeX">
                     <td><a href="{{route('admin.driverviewprofile', ['id' => $result->driver_id])}}">{{$result->name}}</a></td>
-                    <td><a href="{{route('admin.packagedetails', ['id' => $result->id])}}">Prremium</a></td>
+                    <td><a href="{{route('admin.packagedetails', ['id' => $result->id])}}">{{$result->title}}</a></td>
                     <td>{{$result->from}}</td>
                     <td>{{$result->to}}</td>
                     <td class="center">{{$result->start_date}}</td>
@@ -92,7 +92,7 @@
             <thead>
                 <tr>
                     <th>Driver</th>
-                    <th>Package Name</th>
+                    
                     <th>From</th>
                     <th>To</th>
                     <th>Starting Date</th>
@@ -104,7 +104,7 @@
                 @foreach($resultmanultrip as $result)
                 <tr class="odd gradeX">
                     <td><a href="{{route('admin.driverviewprofile', ['id' => $result->driver_id])}}">{{$result->name}}</a></td>
-                    <td><a href="{{route('admin.packagedetails', ['id' => $result->id])}}">Prremium</a></td>
+                    
                     <td>{{$result->from}}</td>
                     <td>{{$result->to}}</td>
                     <td class="center">{{$result->start_date}}</td>

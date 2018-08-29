@@ -406,7 +406,7 @@ class AdminController extends Controller
          ->join('packages', 'booked_package_trips.package_id', '=', 'packages.id')
          ->join('users', 'booked_package_trips.rider_id', '=', 'users.id')
          ->get()->toArray();
-        return view('admin.completetrips')
+        return view('admin.ongoingtrips')
             ->with('admin',$admin)
             ->with('result',$result);
             
