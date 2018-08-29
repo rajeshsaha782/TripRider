@@ -22,7 +22,36 @@ class AdminController extends Controller
         $TotalAdmin= count(DB::table('users')->where('type','=','Admin') ->get());
         $TotalDriver= count(DB::table('users')->where('type','=','Driver') ->get());
         $TotalRider= count(DB::table('users')->where('type','=','Rider') ->get());
+        $TotalPackage= count(DB::table('packages')->get());
+
         
+        $completetripbooked = DB::table('booked_package_trips')
+                ->where('booked_package_trips.status',"completed")
+                ->get()->count();
+
+        $completetripmanual = DB::table('booked_manual_trips')
+                ->where('booked_manual_trips.status',"completed")
+                ->get()->count();
+
+        $completetrip=$completetripbooked+$completetripmanual;
+
+        $pendingtripbooked = DB::table('booked_package_trips')
+                ->where('booked_package_trips.status',"pending")
+                ->get()->count();
+        $pendingtripmanual = DB::table('booked_manual_trips')
+                ->where('booked_manual_trips.status',"pending")
+                ->get()->count();
+       $pendingtrip=$pendingtripmanual+$pendingtripbooked;
+
+        $ongoingtripbooked = DB::table('booked_package_trips')
+                ->where('booked_package_trips.status',"ongoing")
+                ->get()->count(); 
+         $ongoingtripmanual = DB::table('booked_manual_trips')
+                ->where('booked_manual_trips.status',"ongoing")
+                ->get()->count();   
+         $ongoingtrip=$ongoingtripbooked+$ongoingtripmanual;
+
+
         $result = DB::table('booked_package_trips')
          ->join('packages', 'booked_package_trips.package_id', '=', 'packages.id')
          ->join('users', 'booked_package_trips.rider_id', '=', 'users.id')
@@ -36,6 +65,11 @@ class AdminController extends Controller
             ->with('result',$result)
             ->with('TotalAdmin',$TotalAdmin)
             ->with('TotalDriver',$TotalDriver)
+            ->with('TotalPackage',$TotalPackage)
+            ->with('completetrip',$completetrip)
+            ->with('pendingtrip',$pendingtrip)
+            ->with('ongoingtrip',$ongoingtrip)
+
             ->with('TotalRider',$TotalRider);
     }
 
@@ -139,11 +173,68 @@ class AdminController extends Controller
         $result = DB::table('booked_package_trips')
          ->join('packages', 'booked_package_trips.package_id', '=', 'packages.id')
          ->join('users', 'booked_package_trips.driver_id', '=', 'users.id')
+        ->where('booked_package_trips.rider_id',$id)
          ->get()->toArray();
+
+         $resultmanultrip = DB::table('booked_manual_trips')
+         ->join('rider_requested_trips', 'rider_requested_trips.rider_id', '=', 'booked_manual_trips.rider_id')
+         ->join('users', 'booked_manual_trips.driver_id', '=', 'users.id')
+        ->where('booked_manual_trips.rider_id',$id)
+         ->get()->toArray();
+        //dd($resultmanultrip);
+
+        $completetripbooked = DB::table('booked_package_trips')
+                //->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', $id)
+                ->where('booked_package_trips.status',"completed")
+                ->where('booked_package_trips.rider_id',$id)
+                ->get()->count();
+
+        $completetripmanual = DB::table('booked_manual_trips')
+                 //->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', $id)
+                ->where('booked_manual_trips.status',"completed")
+                ->where('booked_manual_trips.rider_id',$id)
+                ->get()->count();
+
+        $completetrip=$completetripbooked+$completetripmanual;
+
+        $pendingtripbooked = DB::table('booked_package_trips')
+                //->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', $id)
+                ->where('booked_package_trips.status',"pending")
+                ->where('booked_package_trips.rider_id',$id)
+
+                ->get()->count();
+        $pendingtripmanual = DB::table('booked_manual_trips')
+                //->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', $id)
+                ->where('booked_manual_trips.status',"pending")
+                ->where('booked_manual_trips.rider_id',$id)
+
+                ->get()->count();
+
+       $pendingtrip=$pendingtripmanual+$pendingtripbooked;
+
+        $ongoingtripbooked = DB::table('booked_package_trips')
+                //->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', $id)
+                ->where('booked_package_trips.status',"ongoing")
+                ->where('booked_package_trips.rider_id',$id)
+
+                ->get()->count(); 
+
+         $ongoingtripmanual = DB::table('booked_manual_trips')
+                //->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', $id)
+                ->where('booked_manual_trips.status',"ongoing")
+                ->where('booked_manual_trips.rider_id',$id)
+
+                ->get()->count();   
+         $ongoingtrip=$ongoingtripbooked+$ongoingtripmanual;
+        //dd($ongoingtrip);
 
         return view('admin.riderviewprofile')
             ->with('admin',$admin)
             ->with('result',$result)
+            ->with('resultmanultrip',$resultmanultrip)
+            ->with('completetrip',$completetrip)
+            ->with('pendingtrip',$pendingtrip)
+            ->with('ongoingtrip',$ongoingtrip)
 
             ->with('rider',$rider);
 
@@ -156,17 +247,69 @@ class AdminController extends Controller
         $admin=User::Find(session('user')->id);
         $driver=User::Find($id);
 
-     $result = DB::table('booked_package_trips')
-         ->join('packages', 'booked_package_trips.package_id', '=', 'packages.id')
-         ->join('users', 'booked_package_trips.rider_id', '=', 'users.id')
-         //->where('driver_id',$driver->id)
+         $result = DB::table('booked_package_trips')
+             ->join('packages', 'booked_package_trips.package_id', '=', 'packages.id')
+             ->join('users', 'booked_package_trips.rider_id', '=', 'users.id')
+             ->get()->toArray();
 
-         ->get()->toArray();
+
+        $resultmanultrip = DB::table('booked_manual_trips')
+             ->join('rider_requested_trips', 'rider_requested_trips.rider_id', '=', 'booked_manual_trips.rider_id')
+             ->join('users', 'booked_manual_trips.rider_id', '=', 'users.id')
+             ->where('booked_manual_trips.rider_id',$id)
+             ->get()->toArray();
+
+
+         $completetripbooked = DB::table('booked_package_trips')
+                //->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', $id)
+                ->where('booked_package_trips.status',"completed")
+                ->where('booked_package_trips.driver_id',$id)
+                ->get()->count();
+
+        $completetripmanual = DB::table('booked_manual_trips')
+        //->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', $id)
+        ->where('booked_manual_trips.status',"completed")
+        ->where('booked_manual_trips.driver_id',$id)
+
+        ->get()->count();
+        $completetrip=$completetripbooked+$completetripmanual;
+
+        $pendingtripbooked = DB::table('booked_package_trips')
+                //->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', $id)
+                ->where('booked_package_trips.status',"pending")
+                ->where('booked_package_trips.driver_id',$id)
+
+                ->get()->count();
+        $pendingtripmanual = DB::table('booked_manual_trips')
+                //->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', $id)
+                ->where('booked_manual_trips.status',"pending")
+                ->where('booked_manual_trips.driver_id',$id)
+
+                ->get()->count();
+
+       $pendingtrip=$pendingtripmanual+$pendingtripbooked;
+
+        $ongoingtripbooked = DB::table('booked_package_trips')
+                //->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', $id)
+                ->where('booked_package_trips.status',"ongoing")
+                ->where('booked_package_trips.driver_id',$id)
+
+                ->get()->count(); 
+
+         $ongoingtripmanual = DB::table('booked_manual_trips')
+                //->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', $id)
+                ->where('booked_manual_trips.status',"ongoing")
+                ->where('booked_manual_trips.driver_id',$id)
+                ->get()->count();   
+         $ongoingtrip=$ongoingtripbooked+$ongoingtripmanual;
        //dd($result);
         return view('admin.driverviewprofile')
             ->with('admin',$admin)
             ->with('result',$result)
-
+            ->with('resultmanultrip',$resultmanultrip)
+            ->with('completetrip',$completetrip)
+            ->with('pendingtrip',$pendingtrip)
+            ->with('ongoingtrip',$ongoingtrip)
             ->with('driver',$driver);
 
     }

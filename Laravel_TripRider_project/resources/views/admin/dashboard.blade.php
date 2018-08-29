@@ -81,8 +81,8 @@
                         <i class="fa fa-exclamation-circle fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">13</div>
-                        <div>Requests</div>
+                        <div class="huge">{{$pendingtrip}}</div>
+                        <div>Pending</div>
                     </div>
                 </div>
             </div>
@@ -107,7 +107,7 @@
                         <i class="fa fa-tags fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">26</div>
+                        <div class="huge">{{$ongoingtrip}}</div>
                         <div>Current Rides</div>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
                         <i class="fa fa-check-circle fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">12</div>
+                        <div class="huge">{{$completetrip}}</div>
                         <div>Complete Rides</div>
                     </div>
                 </div>
@@ -153,12 +153,12 @@
                         <i class="fa fa-cubes fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">12</div>
+                        <div class="huge">{{$TotalPackage}}</div>
                         <div>Packages</div>
                     </div>
                 </div>
             </div>
-            <a href="packages.html">
+            <a href="{{route('admin.packages')}}">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -169,6 +169,38 @@
     </div>
     
 </div>
+
+ <h4>Overall Service Status</h4>
+      <br/>
+      
+      <div style="padding-left:25%" id="piechart"></div>
+     
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Task', 'Count'],
+  ['Pending', {{$pendingtrip}}],
+  ['Completed', {{$completetrip}}],
+  ['On Going', {{$ongoingtrip}}]
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Total Service:25', 'width':550, 'height':400};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+
+</script>
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">

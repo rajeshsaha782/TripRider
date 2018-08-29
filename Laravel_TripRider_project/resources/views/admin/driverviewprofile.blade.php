@@ -57,7 +57,7 @@
                               <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
                             </div>
                           </td>
-                          <td><span class="badge bg-red">50</span></td>
+                          <td><span class="badge bg-red">{{$completetrip}}</span></td>
                         </tr>
                         <tr>
                           <td>Pending Rides</td>
@@ -66,7 +66,7 @@
                               <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
                             </div>
                           </td>
-                          <td><span class="badge bg-yellow">30</span></td>
+                          <td><span class="badge bg-yellow">{{$pendingtrip}}</span></td>
                         </tr>
                         <tr>
                           <td>Cancel Rides</td>
@@ -75,19 +75,21 @@
                               <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
                             </div>
                           </td>
-                          <td><span class="badge bg-light-blue">20</span></td>
+                          <td><span class="badge bg-light-blue">{{$ongoingtrip}}</span></td>
                         </tr>
                   </tbody>
                 </table>
                                          
             </div>
     </div>
+<h3>Noraml Trip</h3>
+
 <div class="row">
     <div class="panel-body">
          <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
             <thead>
                 <tr>
-                    <th>Rider</th>
+                    <th>Driver</th>
                     <th>Package Name</th>
                     <th>From</th>
                     <th>To</th>
@@ -97,9 +99,9 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach($result as $result)
+                @foreach($result as $result)
                 <tr class="odd gradeX">
-                    <td><a href="{{route('admin.riderviewprofile', ['id' => $result->rider_id])}}">{{$result->name}}</a></td>
+                    <td><a href="{{route('admin.driverviewprofile', ['id' => $result->driver_id])}}">{{$result->name}}</a></td>
                     <td><a href="{{route('admin.packagedetails', ['id' => $result->id])}}">Prremium</a></td>
                     <td>{{$result->from}}</td>
                     <td>{{$result->to}}</td>
@@ -108,8 +110,41 @@
                     <td class="center">{{$result->total_cost}}</td>
                 </tr>
                  @endforeach
+                
+            </tbody>
+        </table>
+    </div>
+</div>
 
-               </tbody>
+<h3>Manual Trip</h3>
+<div class="row">
+    <div class="panel-body">
+         <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+            <thead>
+                <tr>
+                    <th>Driver</th>
+                    <th>Package Name</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Starting Date</th>
+                    <th>End Date</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($resultmanultrip as $result)
+                <tr class="odd gradeX">
+                    <td><a href="{{route('admin.driverviewprofile', ['id' => $result->driver_id])}}">{{$result->name}}</a></td>
+                    <td><a href="{{route('admin.packagedetails', ['id' => $result->id])}}">Prremium</a></td>
+                    <td>{{$result->from}}</td>
+                    <td>{{$result->to}}</td>
+                    <td class="center">{{$result->start_date}}</td>
+                    <td class="center">{{$result->end_date}}</td>
+                    <td class="center">{{$result->cost}}</td>
+                </tr>
+                 @endforeach
+                
+            </tbody>
         </table>
     </div>
 </div>
