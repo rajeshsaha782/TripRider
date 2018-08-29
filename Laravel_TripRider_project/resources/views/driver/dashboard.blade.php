@@ -54,7 +54,7 @@
                                     <i class="fa fa-car fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">{{count($completedtrips)}}</div>
+                                    <div class="huge">{{$totalcompletedtrips}}</div>
                                     <div>Total Completed Trips</div>
                                 </div>
                             </div>

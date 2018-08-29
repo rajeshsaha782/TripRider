@@ -62,6 +62,13 @@ class DriverController extends Controller
                     ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
                     ->where('rider_requested_trips.car_type',session('user')->cartype)
                     ->where('booked_manual_trips.status',"Completed")
+                    ->get();
+
+            $completedpackages=DB::table('users')
+                    ->join('booked_package_trips', 'booked_package_trips.rider_id', '=', 'users.id')
+                    ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
+                    ->where('packages.car_type',session('user')->cartype)
+                    ->where('booked_package_trips.status',"Completed")
                     ->get();        
         
 
@@ -74,7 +81,8 @@ class DriverController extends Controller
             ->with('activetrip',$activetrip)
             ->with('requestedtrips',$requestedtrips)
             ->with('requestedpackages',$requestedpackages)
-            ->with('completedtrips',$completedtrips);
+            ->with('totalcompletedtrips',count($completedtrips)+count($completedpackages));
+            
     }
 
     public function requestedtripdetail($id,Request $request)
