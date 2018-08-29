@@ -97,6 +97,7 @@ class DriverController extends Controller
                 ->with('distance',$distance)
                 ->with('map',$map);
     }
+
     public function confirmmanualtrip($id,Request $request)
     {
         $trip=Booked_manual_trip::find($id);
@@ -144,6 +145,46 @@ class DriverController extends Controller
                 ->with('driver',$driver)
                 ->with('completedmanualtrips',$completedmanualtrips)
                 ->with('completedpackagetrips',$completedpackagetrips);
+    }
+    public function requestedpackages(Request $request)
+    {
+        $driver=User::Find(session('user')->id);
+
+       
+        $requestedpackages=DB::table('users')
+                        ->where('booked_package_trips.driver_id',session('user')->id)
+                        
+                        ->join('booked_package_trips', 'booked_package_trips.rider_id', '=', 'users.id')
+                        ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
+                        ->where('booked_package_trips.status',"Pending")
+                        ->select('booked_package_trips.id as bid','users.*' ,'booked_package_trips.*','packages.id as package_id','packages.*')
+                         ->get();
+
+                    //dd($requestedpackages);
+        
+        return view('driver.requestedpackages')
+                ->with('driver',$driver)
+                ->with('requestedpackages',$requestedpackages);
+    }
+    public function requestedpackagedetail($id,Request $request)
+    {
+        $driver=User::Find(session('user')->id);
+
+        $requestedtrip=DB::table('users')
+                    ->where('booked_package_trips.id',$id)
+                    ->join('booked_package_trips', 'booked_package_trips.rider_id', '=', 'users.id')
+                    ->join('packages', 'packages.id', '=', 'booked_package_trips.package_id')
+                    ->first();
+        //dd($requestedtrip);
+        $map= DriverController::map($requestedtrip);
+
+        $distance=DriverController::getdistance($requestedtrip->start_latitude,$requestedtrip->start_longitude,$requestedtrip->end_latitude,$requestedtrip->end_longitude);
+        //dd($distance);
+        return view('driver.requestedpackagedetail')
+                ->with('driver',$driver)
+                ->with('requestedtrip',$requestedtrip)
+                ->with('distance',$distance)
+                ->with('map',$map);
     }
 
     public function addpackage(Request $request)

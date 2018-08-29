@@ -99,11 +99,11 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">{{count($requestedpackages)}}</div>
-                                    <div>Request for Package</div>
+                                    <div>Requested Packages</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="{{route('driver.requestedpackages')}}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

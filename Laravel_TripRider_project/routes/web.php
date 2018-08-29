@@ -72,6 +72,8 @@ Route::get('/driver/requestedtripdetail/{id}', 'DriverController@requestedtripde
 Route::get('/driver/confirmmanualtrip/{id}', 'DriverController@confirmmanualtrip')->name('driver.confirmmanualtrip');
 Route::get('/driver/endtrip/{id}', 'DriverController@endtrip')->name('driver.endtrip');
 Route::get('/driver/completedtrips', 'DriverController@completedtrips')->name('driver.completedtrips');
+Route::get('/driver/requestedpackages', 'DriverController@requestedpackages')->name('driver.requestedpackages');
+Route::get('/driver/requestedpackagedetail/{id}', 'DriverController@requestedpackagedetail')->name('driver.requestedpackagedetail');
 
 
 Route::get('/driver/viewprofile/{id}', 'DriverController@viewprofile')->name('driver.viewprofile');
