@@ -154,7 +154,7 @@
 				<div class="col-lg-12">
                     <div class="panel panel-yellow">
                         <div class="panel-heading">
-                            Rider Requested Trips for Texi
+                            Rider Requested Trips for {{session('user')->cartype}}
                         </div>
                         
 						<div class="panel-body">
@@ -171,7 +171,8 @@
                                     </p>
                                     <a href="{{route('driver.requestedtripdetail',$requestedtrip->id)}}"><button class="pull-right btn btn-primary" >View</button></a>
                                     <i>Phone no: {{$requestedtrip->phonenumber}}</i><br/><br/>
-                                    <b style="font-size:16px">Trip Type: {{$requestedtrip->trip_type}}<br/>
+                                    <b style="font-size:16px">Car Type: {{$requestedtrip->car_type}}<br/>
+                                    Trip Type: {{$requestedtrip->trip_type}}<br/>
                                     Trip Fare: {{$requestedtrip->total_cost}}Tk</b>
                             </div>
                                     

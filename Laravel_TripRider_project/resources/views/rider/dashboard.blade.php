@@ -149,7 +149,8 @@
                                     </p>
                   <i>Phone no: {{$requestedmanualtrip->phonenumber}}</i>
                   <hr/>
-                  <b style="font-size:16px">Trip Type: {{$requestedmanualtrip->trip_type}}<br/>
+                  <b style="font-size:16px">Car Type: {{$requestedmanualtrip->car_type}}<br/>
+                  Trip Type: {{$requestedmanualtrip->trip_type}}<br/>
                   Trip Fare: {{$requestedmanualtrip->total_cost}}Tk</b>
                   <a href="{{route('rider.requestedtripdetail',$requestedmanualtrip->id)}}"><button class="pull-right btn btn-primary" >View</button></a>
                                 </div>
