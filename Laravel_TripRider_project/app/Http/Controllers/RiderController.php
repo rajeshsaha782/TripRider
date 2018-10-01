@@ -75,13 +75,13 @@ class RiderController extends Controller
 
         $requestedtrip=DB::table('users')
                     ->where('booked_manual_trips.id',$id)
-                    ->join('booked_manual_trips', 'booked_manual_trips.driver_id', '=', 'users.id')
+                    ->join('booked_manual_trips', 'booked_manual_trips.rider_id', '=', 'users.id')
                     ->join('rider_requested_trips', 'rider_requested_trips.id', '=', 'booked_manual_trips.rider_requested_trip_id')
                     ->first();
         //dd($requestedtrip);
         $map= RiderController::map($requestedtrip);
 
-        $distance=DriverController::getdistance($requestedtrip->start_latitude,$requestedtrip->start_longitude,$requestedtrip->end_latitude,$requestedtrip->end_longitude);
+        $distance=RiderController::getdistance($requestedtrip->start_latitude,$requestedtrip->start_longitude,$requestedtrip->end_latitude,$requestedtrip->end_longitude);
         //dd($distance);
         return view('rider.requestedtripdetail')
                 ->with('requestedtrip',$requestedtrip)
@@ -111,28 +111,28 @@ class RiderController extends Controller
     }
     public static function getdistance($lat1,$lon1,$lat2,$lon2)
     {
-        // $theta = $lon1 - $lon2;
-        // $miles = (sin(deg2rad($lat1)) * sin(deg2rad($lat2))) + (cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta)));
-        // $miles = acos($miles);
-        // $miles = rad2deg($miles);
-        // $miles = $miles * 60 * 1.1515;
-        // $kilometers = $miles * 1.609344;
+        $theta = $lon1 - $lon2;
+        $miles = (sin(deg2rad($lat1)) * sin(deg2rad($lat2))) + (cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta)));
+        $miles = acos($miles);
+        $miles = rad2deg($miles);
+        $miles = $miles * 60 * 1.1515;
+        $dist = $miles * 1.609344;
         // return $kilometers; 
 
-        $url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=".$lat1.",".$lon1."&destinations=".$lat2.",".$lon2."&mode=driving&language=pl-PL";
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $response_a = json_decode($response, true);
-        $dist = $response_a['rows'][0]['elements'][0]['distance']['value'];
-        $time = $response_a['rows'][0]['elements'][0]['duration']['text'];
+        // $url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=".$lat1.",".$lon1."&destinations=".$lat2.",".$lon2."&mode=driving&language=pl-PL";
+        // $ch = curl_init();
+        // curl_setopt($ch, CURLOPT_URL, $url);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        // $response = curl_exec($ch);
+        // curl_close($ch);
+        // $response_a = json_decode($response, true);
+        // $dist = $response_a['rows'][0]['elements'][0]['distance']['value'];
+        // $time = $response_a['rows'][0]['elements'][0]['duration']['text'];
 
-        return array('distance' => $dist, 'time' => $time);
+        return array('distance' => $dist, 'time' => '0');
     }
 
     public function packagedetail($id,Request $request)
@@ -144,7 +144,7 @@ class RiderController extends Controller
                 ->where('packages.id',$id)
                 ->first();
 
-       // dd($package);
+       //dd($package);
 
 
         
@@ -482,6 +482,7 @@ class RiderController extends Controller
     }
     public static function map($package)
     {
+        //dd($package);
         $config['zoom']='auto';
         $config['map_height']='500px';
         $config['scrollwheel']=true;
