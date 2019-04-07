@@ -221,7 +221,7 @@
                 //alert(data);
                 document.getElementById('totalcost').value = data['cost'];
                 document.getElementById('cost').value = data['cost'];
-                document.getElementById('dist').value = data['distance']/1000;
+                document.getElementById('dist').value = data['distance'];
                 document.getElementById('time').value = data['time'];
             }
             });
